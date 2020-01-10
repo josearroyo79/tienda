@@ -2,34 +2,21 @@
 
 // Incluimos los ficheros que ncesitamos
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/dirs.php";
-require_once CONTROLLER_PATH . "ControladorLuchador.php";
-require_once MODEL_PATH . "Luchador.php";
+require_once CONTROLLER_PATH . "ControladorUsuario.php";
+require_once MODEL_PATH . "Usuario.php";
 require_once VENDOR_PATH . "autoload.php";
 use Spipu\Html2Pdf\HTML2PDF;
 
-
-/**
- * Controlador de descargas
- */
 class ControladorDescarga
 {
-
-    // Configuración del servidor
     private $fichero;
-
-    // Variable instancia para Singleton
+    
     static private $instancia = null;
 
-    // constructor--> Private por el patrón Singleton
     private function __construct()
     {
         //echo "Conector creado";
     }
-
-    /**
-     * Patrón Singleton. Ontiene una instancia del Controlador de Descargas
-     * @return instancia de conexion
-     */
     public static function getControlador()
     {
         if (self::$instancia == null) {
@@ -38,40 +25,40 @@ class ControladorDescarga
         return self::$instancia;
     }
     public function descargarXML(){
-        $this->fichero = "luchadores.xml";
-        $lista = $controlador = ControladorLuchador::getControlador();
-        $lista = $controlador->listarLuchadores("", "");
+        $this->fichero = "usuarios.xml";
+        $lista = $controlador = ControladorUsuario::getControlador();
+        $lista = $controlador->listarUsuarios("", "");
         $doc = new DOMDocument('1.0', 'UTF-8');
-        $luchadores = $doc->createElement('luchadores');
+        $usuarios = $doc->createElement('usuarios');
 
         foreach ($lista as $a) {
             // Creamos el nodo
-            $luchador = $doc->createElement('luchador');
+            $usuario = $doc->createElement('usuario');
             // Añadimos elementos
-            $luchador->appendChild($doc->createElement('nombre', $a->getNombre()));
-            $luchador->appendChild($doc->createElement('raza', $a->getRaza()));
-            $luchador->appendChild($doc->createElement('ki', $a->getKi()));
-            $luchador->appendChild($doc->createElement('transformacion', $a->getTransformacion()));
-            $luchador->appendChild($doc->createElement('ataque', $a->getAtaque()));
-            $luchador->appendChild($doc->createElement('planeta', $a->getPlaneta()));
-            $luchador->appendChild($doc->createElement('imagen', $a->getImagen()));
+            $usuario->appendChild($doc->createElement('nombre', $a->getNombre()));
+            $usuario->appendChild($doc->createElement('apellidos', $a->getApellidos()));
+            $usuario->appendChild($doc->createElement('email', $a->getEmail()));
+            $usuario->appendChild($doc->createElement('admin', $a->getAdmin()));
+            $usuario->appendChild($doc->createElement('telefono', $a->getTelefono()));
+            $usuario->appendChild($doc->createElement('imagen', $a->getImagen()));
+            $usuario->appendChild($doc->createElement('fecha', $a->getFecha()));
 
             //Insertamos
-            $luchadores->appendChild($luchador);
+            $usuarios->appendChild($usuario);
         }
 
-        $doc->appendChild($luchadores);
+        $doc->appendChild($usuarios);
         header('Content-type: application/xml');
-        //header("Content-Disposition: attachment; filename=" . $nombre . ""); //archivo de salida
+       
         echo $doc->saveXML();
 
         exit;
     }
 
     public function descargarPDF(){
-        $slu ='<h2 class="pull-left">Fichas de los luchadores:</h2>';
-        $lista = $controlador = ControladorLuchador::getControlador();
-        $lista = $controlador->listarLuchadores("", "");
+        $slu ='<h2 class="pull-left">Fichas de los usuarios:</h2>';
+        $lista = $controlador = ControladorUsuario::getControlador();
+        $lista = $controlador->listarUsuarios("", "");
         if (!is_null($lista) && count($lista) > 0) {
             $slu.="<table class='table table-bordered table-striped'>";
             $slu.="<thead>";
@@ -88,16 +75,15 @@ class ControladorDescarga
             $slu.="</thead>";
             $slu.="<tbody>";
             // Recorremos los registros encontrados
-            foreach ($lista as $luchador) {
+            foreach ($lista as $usuario) {
                 // Pintamos cada fila
                 $slu.="<tr>";
-                $slu.="<td>" . $luchador->getNombre() . "</td>";
-                $slu.="<td>" . $luchador->getRaza() . "</td>";
-                //$slu.="<td>" . str_repeat("*",strlen($luchador->getPassword())) . "</td>";
-                $slu.="<td>" . $luchador->getKi() . "</td>";
-                $slu.="<td>" . $luchador->getTransformacion() . "</td>";
-                $slu.="<td>" . $luchador->getAtaque() . "</td>";
-                $slu.="<td>" . $luchador->getPlaneta() . "</td>";
+                $slu.="<td>" . $usuario->getNombre() . "</td>";
+                $slu.="<td>" . $usuario->getRaza() . "</td>";
+                $slu.="<td>" . $usuario->getKi() . "</td>";
+                $slu.="<td>" . $usuario->getTransformacion() . "</td>";
+                $slu.="<td>" . $usuario->getAtaque() . "</td>";
+                $slu.="<td>" . $usuario->getPlaneta() . "</td>";
                 // Para sacar una imagen hay que decirle el directorio real donde está
                 $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/iaw/dragonball/imagenes/".$luchador->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
                 $slu.="</tr>";
@@ -106,20 +92,20 @@ class ControladorDescarga
             $slu.="</table>";
         } else {
             // Si no hay nada seleccionado
-            $slu.="<p class='lead'><em>No se ha encontrado datos de luchadores</em></p>";
+            $slu.="<p class='lead'><em>No se ha encontrado datos de usuarios</em></p>";
         }
         //https://github.com/spipu/html2pdf/blob/master/doc/basic.md
         $pdf=new HTML2PDF('L','A4','es','true','UTF-8');
         $pdf->writeHTML($slu);
-        $pdf->output('luchadores.pdf');
+        $pdf->output('usuarios.pdf');
 
     }
 
-    public function descargarPDFLuchador($id){
+    public function descargarPDFUsuario($id){
         $id = decode($id);
-        $slu ='<h2 class="pull-left">Fichas de los luchadores:</h2>';
-        $lista = $controlador = ControladorLuchador::getControlador();
-        $lista = $controlador->listarLuchador($id);
+        $slu ='<h2 class="pull-left">Fichas de los usuarios:</h2>';
+        $lista = $controlador = ControladorUsuario::getControlador();
+        $lista = $controlador->listarUsuario($id);
         if (!is_null($lista) && count($lista) > 0) {
             $slu.="<table class='table table-bordered table-striped'>";
             $slu.="<thead>";
@@ -136,30 +122,28 @@ class ControladorDescarga
             $slu.="</thead>";
             $slu.="<tbody>";
             // Recorremos los registros encontrados
-            foreach ($lista as $luchador) {
+            foreach ($lista as $usuario) {
                 // Pintamos cada fila
                 $slu.="<tr>";
-                $slu.="<td>" . $luchador->getNombre() . "</td>";
-                $slu.="<td>" . $luchador->getRaza() . "</td>";
-                //$slu.="<td>" . str_repeat("*",strlen($luchador->getPassword())) . "</td>";
-                $slu.="<td>" . $luchador->getKi() . "</td>";
-                $slu.="<td>" . $luchador->getTransformacion() . "</td>";
-                $slu.="<td>" . $luchador->getAtaque() . "</td>";
-                $slu.="<td>" . $luchador->getPlaneta() . "</td>";
-                // Para sacar una imagen hay que decirle el directorio real donde está
-                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/iaw/dragonball/imagenes/".$luchador->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
+                $slu.="<td>" . $usuario->getNombre() . "</td>";
+                $slu.="<td>" . $usuario->getRaza() . "</td>";
+                $slu.="<td>" . $usuario->getKi() . "</td>";
+                $slu.="<td>" . $usuario->getTransformacion() . "</td>";
+                $slu.="<td>" . $usuario->getAtaque() . "</td>";
+                $slu.="<td>" . $usuario->getPlaneta() . "</td>";
+                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
                 $slu.="</tr>";
             }
             $slu.="</tbody>";
             $slu.="</table>";
         } else {
             // Si no hay nada seleccionado
-            $slu.="<p class='lead'><em>No se ha encontrado datos de luchadores</em></p>";
+            $slu.="<p class='lead'><em>No se ha encontrado datos de usuarios</em></p>";
         }
         //https://github.com/spipu/html2pdf/blob/master/doc/basic.md
         $pdf=new HTML2PDF('L','A4','es','true','UTF-8');
         $pdf->writeHTML($slu);
-        $pdf->output('luchadores.pdf');
+        $pdf->output('usuarios.pdf');
 
     }
 }
