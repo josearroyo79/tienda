@@ -1,10 +1,10 @@
 <?php
 error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-session_start();
+/*session_start();
 if (!isset($_SESSION['USUARIO']['correo'])) {
     header("location: /tienda/vistas/login.php");
     exit();
-}
+}*/
 ?>
 <div class="container-fluid">
     <div class="row">
