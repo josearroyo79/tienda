@@ -213,7 +213,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                 <!-- TELEFONO -->
                                 <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                                     <b><label>TELEFONO</label></b>
-                                    <input type="tel" required name="telefono" class="form-control" value="<?php echo $telefono; ?>" minlength="1">
+                                    <input pattern="([0-9]{9})" type="tel" required name="telefono" class="form-control" value="<?php echo $telefono; ?>" minlength="9" maxlength="9" title="El teléfono tiene que tener 9 números. Sin letras.">
                                     <span class="help-block"><?php echo $telefonoErr; ?></span>
                                 </div>
                             </td>

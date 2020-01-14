@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once MODEL_PATH . "Usuario.php";
 require_once VENDOR_PATH . "autoload.php";
@@ -77,7 +77,7 @@ class ControladorDescarga
                 $slu.="<td>" . $usuario->getEmail() . "</td>";
                 $slu.="<td>" . $usuario->getAdmin() . "</td>";
                 $slu.="<td>" . $usuario->getTelefono() . "</td>";
-                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
+                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
                 $slu.="<td>" . $usuario->getFecha() . "</td>";
                 $slu.="</tr>";
             }
@@ -118,7 +118,7 @@ class ControladorDescarga
                 $slu.="<td>" . $usuario->getEmail() . "</td>";
                 $slu.="<td>" . $usuario->getAdmin() . "</td>";
                 $slu.="<td>" . $usuario->getTelefono() . "</td>";
-                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
+                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
                 $slu.="<td>" . $usuario->getFecha() . "</td>";
                 $slu.="</tr>";
             }
