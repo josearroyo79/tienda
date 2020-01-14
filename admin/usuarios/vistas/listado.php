@@ -20,22 +20,22 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 <!-- <button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>-->
                 <!-- Aquí va el nuevo botón para dar de alta, podría ir al final -->
                 <?php
-                if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com" ){
+                /*if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com" ){
                     //Botones usuario normal
                 echo "<a href='utilidades/descargar.php?opcion=XML' type='button' class='btn btn-deep-orange' target='_blank'><i class='fas fa-cloud-download-alt'></i> XML</a>";
-                echo "<a href='utilidades/descargar.php?opcion=JSON' type='button' class='btn btn-deep-purple' target='_blank'><i class='fas fa-cloud-download-alt'></i> JSON</a>";
-                echo "<a href='utilidades/descargar.php?opcion=TXT' type='button' class='btn btn-outline-default waves-effect' target='_blank'><i class='fas fa-file-download'></i> TXT</a>";
+                //echo "<a href='utilidades/descargar.php?opcion=JSON' type='button' class='btn btn-deep-purple' target='_blank'><i class='fas fa-cloud-download-alt'></i> JSON</a>";
+                //echo "<a href='utilidades/descargar.php?opcion=TXT' type='button' class='btn btn-outline-default waves-effect' target='_blank'><i class='fas fa-file-download'></i> TXT</a>";
                 echo "<a href='utilidades/descargar.php?opcion=PDF' type='button' class='btn btn-outline-secondary waves-effect' target='_blank'><i class='fas fa-file-pdf'></i> PDF</a>";
                 echo "<a href='javascript:window.print()' type='button' class='btn btn-outline-info waves-effect'><i class='fas fa-print'></i> IMPRIMIR</a>";
-                } else {
+                } else {*/
                         //Botones administrador
                 echo "<a href='utilidades/descargar.php?opcion=XML' type='button' class='btn btn-deep-orange' target='_blank'><i class='fas fa-cloud-download-alt'></i> XML</a>";
-                echo "<a href='utilidades/descargar.php?opcion=JSON' type='button' class='btn btn-deep-purple' target='_blank'><i class='fas fa-cloud-download-alt'></i> JSON</a>";
-                echo "<a href='utilidades/descargar.php?opcion=TXT' type='button' class='btn btn-outline-default waves-effect' target='_blank'><i class='fas fa-file-download'></i> TXT</a>";
+                //echo "<a href='utilidades/descargar.php?opcion=JSON' type='button' class='btn btn-deep-purple' target='_blank'><i class='fas fa-cloud-download-alt'></i> JSON</a>";
+                //echo "<a href='utilidades/descargar.php?opcion=TXT' type='button' class='btn btn-outline-default waves-effect' target='_blank'><i class='fas fa-file-download'></i> TXT</a>";
                 echo "<a href='utilidades/descargar.php?opcion=PDF' type='button' class='btn btn-outline-secondary waves-effect' target='_blank'><i class='fas fa-file-pdf'></i> PDF</a>";
                 echo "<a href='javascript:window.print()' type='button' class='btn btn-outline-info waves-effect'><i class='fas fa-print'></i> IMPRIMIR</a>";
                 echo "<a href='vistas/create.php' class='btn aqua-gradient'><i class='fas fa-user-plus'></i> Añadir usuario</a>";
-                }
+                //}
                 ?>
                 <?php
                 //Codificacion admin:

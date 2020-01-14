@@ -13,8 +13,8 @@ require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $email = $admin = $telefono = $imagen = "";// $fecha = "";
-$nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr = "";// $fechaErr = "";
+$nombre = $apellidos = $email = $admin = $telefono = $imagen = ""; $fecha = "";
+$nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr = ""; $fechaErr = "";
 
     // Procesamos el formulario al pulsar el botón aceptar de esta ficha
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
