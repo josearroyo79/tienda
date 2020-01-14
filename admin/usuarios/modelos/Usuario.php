@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Description of Luchador
+ * Description of Usuario
  *
  * @author link
  */
-class Luchador {
+class Usuario {
     //put your code here
     private $id;
     private $nombre;
