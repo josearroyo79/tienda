@@ -16,8 +16,6 @@ class Luchador {
     private $imagen;
     private $fecha;
     
-
-    
     // Constructor
     public function __construct($id, $nombre, $apellidos, $email, $admin, $telefono, $imagen, $fecha) {
         $this->id = $id;
