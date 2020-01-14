@@ -45,12 +45,11 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $fecha_hoy = new DateTime($hoy);
     $interval = $fecha_hoy->diff($fecha_mat);
 
-    if($interval->format('%R%a días')>0){
+    if ($interval->format('%R%a días') > 0) {
         $fechaErr = "La fecha no puede ser superior a la fecha actual";
-        $errores[]=  $fechaErr;
-
-    }else{
-        $fecha = date("d/m/Y",strtotime($fecha));
+        $errores[] =  $fechaErr;
+    } else {
+        $fecha = date("d/m/Y", strtotime($fecha));
     }
 
     $telefono = filtrado($_POST["telefono"]);
@@ -102,7 +101,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     // Chequeamos los errores antes de insertar en la base de datos
     if (
         empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($adminErr) &&
-            empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
+        empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
     ) {
         // creamos el controlador de alumnado
         $controlador = ControladorUsuario::getControlador();
@@ -223,9 +222,8 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                             <td>
                                 <!-- Fecha -->
                                 <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
-                                    <label>Fecha de Matriculación</label>
-                                    <input type="date" required name="fecha" value="<¿php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha))); ?>"></input>
-                                <div>
+                                    <b><label>Fecha de registro</label></b>
+                                    <input type="date" required name="fecha" class="form-control" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha))); ?>" minlength="1">
                                     <span class="help-block"><?php echo $fechaErr; ?></span>
                                 </div>
                                 <!-- IMAGEN-->
