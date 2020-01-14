@@ -1,6 +1,4 @@
 <?php
-
-// Incluimos los ficheros que ncesitamos
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once MODEL_PATH . "Usuario.php";
@@ -32,9 +30,8 @@ class ControladorDescarga
         $usuarios = $doc->createElement('usuarios');
 
         foreach ($lista as $a) {
-            // Creamos el nodo
             $usuario = $doc->createElement('usuario');
-            // Añadimos elementos
+
             $usuario->appendChild($doc->createElement('nombre', $a->getNombre()));
             $usuario->appendChild($doc->createElement('apellidos', $a->getApellidos()));
             $usuario->appendChild($doc->createElement('email', $a->getEmail()));
@@ -64,37 +61,31 @@ class ControladorDescarga
             $slu.="<thead>";
             $slu.="<tr>";
             $slu.="<th>Nombre</th>";
-            $slu.="<th>Raza</th>";
-            //$slu.="<th>Contraseña</th>";
-            $slu.="<th>Ki</th>";
-            $slu.="<th>Transformacion</th>";
-            $slu.="<th>Ataque</th>";
-            $slu.="<th>Planeta</th>";
+            $slu.="<th>Apellidos</th>";
+            $slu.="<th>Email</th>";
+            $slu.="<th>Admin</th>";
+            $slu.="<th>Telefono</th>";
             $slu.="<th>Imagen</th>";
+            $slu.="<th>Fecha de registro</th>";
             $slu.="</tr>";
             $slu.="</thead>";
             $slu.="<tbody>";
-            // Recorremos los registros encontrados
             foreach ($lista as $usuario) {
-                // Pintamos cada fila
                 $slu.="<tr>";
                 $slu.="<td>" . $usuario->getNombre() . "</td>";
-                $slu.="<td>" . $usuario->getRaza() . "</td>";
-                $slu.="<td>" . $usuario->getKi() . "</td>";
-                $slu.="<td>" . $usuario->getTransformacion() . "</td>";
-                $slu.="<td>" . $usuario->getAtaque() . "</td>";
-                $slu.="<td>" . $usuario->getPlaneta() . "</td>";
-                // Para sacar una imagen hay que decirle el directorio real donde está
-                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/iaw/dragonball/imagenes/".$luchador->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
+                $slu.="<td>" . $usuario->getApellidos() . "</td>";
+                $slu.="<td>" . $usuario->getEmail() . "</td>";
+                $slu.="<td>" . $usuario->getAdmin() . "</td>";
+                $slu.="<td>" . $usuario->getTelefono() . "</td>";
+                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
+                $slu.="<td>" . $usuario->getFecha() . "</td>";
                 $slu.="</tr>";
             }
             $slu.="</tbody>";
             $slu.="</table>";
         } else {
-            // Si no hay nada seleccionado
             $slu.="<p class='lead'><em>No se ha encontrado datos de usuarios</em></p>";
         }
-        //https://github.com/spipu/html2pdf/blob/master/doc/basic.md
         $pdf=new HTML2PDF('L','A4','es','true','UTF-8');
         $pdf->writeHTML($slu);
         $pdf->output('usuarios.pdf');
@@ -111,39 +102,33 @@ class ControladorDescarga
             $slu.="<thead>";
             $slu.="<tr>";
             $slu.="<th>Nombre</th>";
-            $slu.="<th>Raza</th>";
-            //$slu.="<th>Contraseña</th>";
-            $slu.="<th>Ki</th>";
-            $slu.="<th>Transformacion</th>";
-            $slu.="<th>Ataque</th>";
-            $slu.="<th>Planeta</th>";
+            $slu.="<th>Apellidos</th>";
+            $slu.="<th>Email</th>";
+            $slu.="<th>Admin</th>";
+            $slu.="<th>Telefono</th>";
             $slu.="<th>Imagen</th>";
+            $slu.="<th>Fecha de registro</th>";
             $slu.="</tr>";
             $slu.="</thead>";
             $slu.="<tbody>";
-            // Recorremos los registros encontrados
             foreach ($lista as $usuario) {
-                // Pintamos cada fila
                 $slu.="<tr>";
                 $slu.="<td>" . $usuario->getNombre() . "</td>";
-                $slu.="<td>" . $usuario->getRaza() . "</td>";
-                $slu.="<td>" . $usuario->getKi() . "</td>";
-                $slu.="<td>" . $usuario->getTransformacion() . "</td>";
-                $slu.="<td>" . $usuario->getAtaque() . "</td>";
-                $slu.="<td>" . $usuario->getPlaneta() . "</td>";
+                $slu.="<td>" . $usuario->getApellidos() . "</td>";
+                $slu.="<td>" . $usuario->getEmail() . "</td>";
+                $slu.="<td>" . $usuario->getAdmin() . "</td>";
+                $slu.="<td>" . $usuario->getTelefono() . "</td>";
                 $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
+                $slu.="<td>" . $usuario->getFecha() . "</td>";
                 $slu.="</tr>";
             }
             $slu.="</tbody>";
             $slu.="</table>";
         } else {
-            // Si no hay nada seleccionado
             $slu.="<p class='lead'><em>No se ha encontrado datos de usuarios</em></p>";
         }
-        //https://github.com/spipu/html2pdf/blob/master/doc/basic.md
         $pdf=new HTML2PDF('L','A4','es','true','UTF-8');
         $pdf->writeHTML($slu);
         $pdf->output('usuarios.pdf');
-
     }
 }
