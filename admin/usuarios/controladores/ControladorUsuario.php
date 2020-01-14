@@ -19,7 +19,7 @@ class ControladorUsuario {
      */
     public static function getControlador() {
         if (self::$instancia == null) {
-            self::$instancia = new ControladoUsuario();
+            self::$instancia = new ControladorUsuario();
         }
         return self::$instancia;
     }
