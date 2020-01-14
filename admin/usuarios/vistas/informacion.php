@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
 require_once CONTROLLER_PATH . "ControladorBD.php";
 require_once CONTROLLER_PATH . "ControladorAcceso.php";
 ?>

@@ -29,14 +29,14 @@ if (isset($_COOKIE['ACCESO'])) {
     <meta charset="UTF-8">
     <title>Gestión de Luchadores</title>
     <!-- MDB icon -->
-    <link rel="icon" type="image/png" href="/tienda/favicon.ico">
+    <link rel="icon" type="image/png" href="/tienda/favicon.png">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <link rel="stylesheet" href="/tienda/estilos/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/tienda/estilos/css/mdb.css">
-    <link rel="stylesheet" href="/tienda/estilos/css/style.css">
-    <script src="/tienda/estilos/js/jquery.min.js"></script>
-    <script src="/tienda/estilos/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/tienda/admin/usuarios/estilos/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/tienda/admin/usuarios/estilos/css/mdb.css">
+    <link rel="stylesheet" href="/tienda/admin/usuarios/estilos/css/style.css">
+    <script src="/tienda/admin/usuarios/estilos/js/jquery.min.js"></script>
+    <script src="/tienda/admin/usuarios/estilos/js/bootstrap.js"></script>
 
     <style type="text/css">
         * {

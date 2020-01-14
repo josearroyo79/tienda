@@ -1,6 +1,6 @@
 <?php
 // Incluimos el controlador a los objetos a usar
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
@@ -17,7 +17,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     // Get hidden input value
     $id = $_POST["id"];
 
-    // Voy a hacer un array list de errores para no procesar la foto
+    // Voy a hacer un array list de errores para no procesar la imagen
 
     /// Procesamos el nombre
     $nombreVal = filtrado(($_POST["nombre"]));
@@ -109,8 +109,8 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $email, $admin, $telefono, $imagen, $fecha);
         if ($estado) {
             $errores = [];
-            // El registro se ha lamacenado corectamente
-            header("location: ../index.php");
+            // El registro se ha almacenado corectamente
+            header("location: ../../index.php");
             exit();
         } else {
             header("location: error.php");
@@ -169,9 +169,9 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                     <span class="help-block"><?php echo $nombreErr; ?></span>
                                 </div>
                             </td>
-                            <!-- Fotografía -->
+                            <!-- IMAGEN -->
                             <td>
-                                <b><label>FOTOGRAFÍA</label></b><br>
+                                <b><label>IMAGEN</label></b><br>
                                 <img src='<?php echo "../imagenes/" . $usuario->getImagen() ?>' class='rounded' class='img-thumbnail' width='150' height='auto'>
                             </td>
                         </tr>
@@ -228,9 +228,9 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                 <div>
                                     <span class="help-block"><?php echo $fechaErr; ?></span>
                                 </div>
-                                <!-- Foto-->
+                                <!-- IMAGEN-->
                                 <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
-                                    <label>Fotografía</label>
+                                    <label>IMAGEN</label>
                                     <!-- Solo acepto imagenes jpg -->
                                     <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg" accept="image/png">
                                     <span class="help-block"><?php echo $imagenErr; ?></span>
@@ -242,7 +242,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     <input type="hidden" name="id" value="<?php echo $id; ?>" />
                     <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>" />
                     <button type="submit" value="aceptar" class="btn purple-gradient"><i class="fas fa-sync-alt"></i> Modificar</button>
-                    <a href="../index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
+                    <a href="../../index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
                 </form>
             </div>
         </div>

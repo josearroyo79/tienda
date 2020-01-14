@@ -1,6 +1,6 @@
 <?php
     // Incluimos los ficheros que ncesitamos
-    require_once $_SERVER['DOCUMENT_ROOT']."/tienda/dirs.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
     require_once CONTROLLER_PATH."ControladorUsuario.php";
     require_once UTILITY_PATH."funciones.php";
 
@@ -46,17 +46,17 @@ class ControladorImagen {
         return false;;
     }
     
-    function actualizarFoto(){
-        $fotoAnterior = trim($_POST["fotoAnterior"]);
+    function actualizarImagen(){
+        $imagenAnterior = trim($_POST["imagenAnterior"]);
         // Procesamos la imagen
-        $extension = explode("/", $_FILES['foto']['type']);
-        $nombreFoto = md5($_FILES['foto']['tmp_name'] . $_FILES['foto']['name']) . "." . $extension[1];
-        if (!move_uploaded_file($_FILES['foto']['tmp_name'], ROOT_PATH . "/fotos/$nombreFoto")) {
+        $extension = explode("/", $_FILES['imagen']['type']);
+        $nombreImagen = md5($_FILES['imagen']['tmp_name'] . $_FILES['imagen']['name']) . "." . $extension[1];
+        if (!move_uploaded_file($_FILES['imagen']['tmp_name'], ROOT_PATH . "imagenes/$nombreImagen")) {
             //header("location: error.php");
             //exit();
-            $nombreFoto = $fotoAnterior;
+            $nombreImagen = $imagenAnterior;
         }
-        return $nombreFoto;
+        return $nombreImagen;
     }
 
 }

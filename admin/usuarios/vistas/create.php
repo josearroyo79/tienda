@@ -7,7 +7,7 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 }*/
 
 // Incluimos los directorios a trabajar
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
@@ -85,7 +85,7 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
             $fecha = date("d/m/Y",strtotime($fecha));
         }
 
-        // Procesamos la foto
+        // Procesamos la imagen
         if ($_FILES['imagen']['size'] > 0) {
             $propiedades = explode("/", $_FILES['imagen']['type']);
             $extension = $propiedades[1];
@@ -125,7 +125,7 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
             if ($estado) {
                 //El registro se ha lamacenado corectamente
                 alerta("Usuario creado con éxito");
-                header("location: ../index.php");
+                header("location: ../../index.php");
                 exit();
             } else {
                 header("location: error.php");
@@ -182,9 +182,9 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
                         <span class="help-block"><?php echo $telefonoErr; ?></span>
                     </div>
                     </br>
-                    <!-- Foto-->
+                    <!-- IMAGEN-->
                     <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
-                        <b><label>FOTOGRAFÍA</label></b>
+                        <b><label>IMAGEN</label></b>
                         <!-- Solo acepto imagenes jpg -->
                         <input type="file" required name="imagen" class="form-control-file" id="imagen" accept="image/jpeg, image/png">
                         <span class="help-block"><?php echo $imagenErr; ?></span>
@@ -199,7 +199,7 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
                     <!-- Botones -->
                     <button type="submit" name="aceptar" value="aceptar" class="btn peach-gradient"><i class="fas fa-save"></i> Aceptar</button>
                     <button type="reset" value="reset" class="btn btn-brown"><i class="fas fa-broom"></i> Limpiar</button>
-                    <a href="../index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
+                    <a href="/tienda/admin/index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
                 </form>
             </div>
         </div>
