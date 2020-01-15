@@ -30,7 +30,7 @@
    <?php
     if (!isset($_SESSION['USUARIO']['correo'])) {
       echo '<li class="nav-item">';
-      echo '<a class="nav-link2" href="/tienda/admin/usuarios/vistas/login.php"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>';
+      //echo '<a class="nav-link2" href="/tienda/admin/usuarios/vistas/login.php"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>';
       echo '</li>';
     } else {
       echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['USUARIO']['correo'] . '</a></li>';
