@@ -11,7 +11,7 @@
     if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com" ){
       // Menú normal
       echo '<li class="nav-item"><a class="nav-link" href="/tienda/vistas/contacto.php">Contacto</a></li>';
-    } else {*/
+    } else {
       // Menu de administrador
       echo '<li class="nav-item">';
       echo '<a class="nav-link" href="#"><i class="fas fa-tools"></i> Administrador</a>';
@@ -20,7 +20,7 @@
       echo '<li><a href=""><i class="fas fa-arrow-right"></i> Menu admin 1</a></li>';
       echo '</ul>';
       echo '</li>';
-    //}
+    }*/
     ?>
    <!--Para todos-->
    <li class="nav-item">
