@@ -5,7 +5,7 @@
 //Importante: las cookies se envían al cliente mediante encabezados HTTP. 
 //Como cualquier otro encabezado, las cookies se deben enviar antes que cualquier salida que genere la página 
 //(antes que <html>, <head> o un simple espacio en blanco).
-if (isset($_COOKIE['CONTADOR'])) {
+/*if (isset($_COOKIE['CONTADOR'])) {
     // Caduca en un día
     setcookie('CONTADOR', $_COOKIE['CONTADOR'] + 1, time() + 24 * 60 * 60); // un día
     $contador = 'Número de visitas hoy: ' . $_COOKIE['CONTADOR'];
@@ -20,14 +20,14 @@ if (isset($_COOKIE['ACCESO'])) {
 } else {
     setcookie('ACCESO', date("d/m/Y  H:i:s"), time() + 39 * 27 * 5); // 39h 27min 5seg
     $acceso = '<br>Último acceso el día ' . date("d/m/Y H:i:s");
-}
+}*/
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Luchadores</title>
+    <title>Gestión de usuarios</title>
     <!-- MDB icon -->
     <link rel="icon" type="image/png" href="/tienda/favicon.png">
     <!-- Font Awesome -->
