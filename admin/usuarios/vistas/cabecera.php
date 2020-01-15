@@ -29,7 +29,7 @@ if (isset($_COOKIE['ACCESO'])) {
     <meta charset="UTF-8">
     <title>Gestión de usuarios</title>
     <!-- MDB icon -->
-    <link rel="icon" type="image/png" href="/tienda/favicon.png">
+    <link rel="icon" type="image/png" href="/tienda/favicon-user.png">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="/tienda/admin/usuarios/estilos/css/bootstrap.min.css">
