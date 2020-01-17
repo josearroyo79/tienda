@@ -143,9 +143,11 @@ if (isset($_POST["EMAIL"]) && isset($_POST["admin"])) {
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						<select name="admin" class="custom-select custom-select-sm">
+                        	<option value="SI" <?php echo (strstr($admin, 'SI')) ? 'selected' : ''; ?>>SI</option>
+                        	<option value="NO" <?php echo (strstr($admin, 'NO')) ? 'selected' : ''; ?>>NO</option>
+                    		</select>
 						</div>
-						<input type="password" required class="form-control" placeholder="Contraseña">
 					</div>
 					<div class="row align-items-center remember">
 						<input type="checkbox">Recordar sesión
