@@ -17,7 +17,7 @@ if ( !defined('UTILITY_PATH') )
 if ( !defined('IMAGE_PATH') )
     define('IMAGE_PATH', ROOT_PATH."imagenes/");
 
-    if ( !defined('VENDOR_PATH') )
+if ( !defined('VENDOR_PATH') )
     define('VENDOR_PATH', ROOT_PATH."../vendor/");
 
 ?>

@@ -136,24 +136,26 @@ if (isset($_POST["EMAIL"]) && isset($_POST["admin"])) {
 				<form action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="post">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-user"></i></span>
+							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
 						</div>
-						<input type="text" required class="form-control" placeholder="Nombre de usuario">
+						<input type="text" required class="form-control" placeholder="Correo electrónico">
 						
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-toolbox"></i></span>
+						</div>
 						<select name="admin" class="custom-select custom-select-sm">
+						<option selected>¿Eres administrador? Elige una opción</option>
                         	<option value="SI" <?php echo (strstr($admin, 'SI')) ? 'selected' : ''; ?>>SI</option>
                         	<option value="NO" <?php echo (strstr($admin, 'NO')) ? 'selected' : ''; ?>>NO</option>
-                    		</select>
-						</div>
+                    	</select>
 					</div>
 					<div class="row align-items-center remember">
 						<input type="checkbox">Recordar sesión
 					</div>
 					<div class="form-group">
-						<input type="submit" value="Entrar" class="btn float-right login_btn">
+						<input type="submit" value="Entrar" class="btn btn-mdb-color">
 					</div>
 				</form>
 			</div>

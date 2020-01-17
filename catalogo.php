@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
-require_once VIEW_PATH . "cabecera.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/producto/dirs.php";
+//require_once VIEW_PATH . "cabecera.php";
 ?>
 <!------ Include the above in your HEAD tag ---------->
 <style>
@@ -193,4 +193,4 @@ $('.add-to-cart').on('click', function () {
     <!--/ items -->
 </div>
 <!--/ wrapper -->
-<?php require_once VIEW_PATH . "pie.php"; ?>
+<?php //require_once VIEW_PATH . "pie.php"; ?>
