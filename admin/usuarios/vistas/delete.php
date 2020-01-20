@@ -81,6 +81,12 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                     </tr>
                     <tr>
                         <td>
+                            <b><label>CONTRASEÑA</label></b>
+                            <p class="form-control-static"><?php echo $usuario->getPassword(); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <b><label>ADMIN</label></b>
                             <p class="form-control-static"><?php echo $usuario->getAdmin(); ?></p>
                         </td>

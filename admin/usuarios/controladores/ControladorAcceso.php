@@ -26,15 +26,15 @@ class ControladorAcceso {
     }
     
     
-    public function procesarIdentificacion($email, $admin){
+    public function procesarIdentificacion($email, $password){
             //$password = hash("sha256",$password);
 
             // Conexion BBDD
             $bd = ControladorBD::getControlador();
             $bd->abrirBD();
             
-            $consulta = "SELECT * FROM usuarios WHERE email=:email and admin=:admin";
-            $parametros = array(':email' => $email, ':admin' => $admin);
+            $consulta = "SELECT * FROM usuarios WHERE email=:email and password=:password";
+            $parametros = array(':email' => $email, ':password' => $password);
             
             $res = $bd->consultarBD($consulta,$parametros);
             $filas=$res->fetchAll(PDO::FETCH_OBJ);

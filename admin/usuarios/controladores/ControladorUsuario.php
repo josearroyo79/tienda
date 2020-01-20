@@ -36,7 +36,7 @@ class ControladorUsuario {
         //var_dump($filas);
         if (count($filas) > 0) {
             foreach ($filas as $a) {
-                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->admin, $a->telefono, $a->imagen, $a->fecha);
+                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->imagen, $a->fecha);
                 // Lo añadimos
                 $lista[] = $usuario;
             }
@@ -61,7 +61,7 @@ class ControladorUsuario {
         //var_dump($filas);
         if (count($filas) > 0) {
             foreach ($filas as $a) {
-                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->admin, $a->telefono, $a->imagen, $a->fecha);
+                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->imagen, $a->fecha);
                 // Lo añadimos
                 $lista[] = $usuario;
             }
@@ -72,14 +72,14 @@ class ControladorUsuario {
         }    
     }
     
-    public function almacenarUsuario($nombre, $apellidos, $email, $admin, $telefono, $imagen, $fecha){
+    public function almacenarUsuario($nombre, $apellidos, $email, $password, $admin, $telefono, $imagen, $fecha){
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "INSERT INTO usuarios (nombre, apellidos, email, 
-            admin, telefono, imagen, fecha) VALUES (:nombre, :apellidos, :email, :admin, 
+        $consulta = "INSERT INTO usuarios (nombre, apellidos, email, password,
+            admin, telefono, imagen, fecha) VALUES (:nombre, :apellidos, :email, :password, :admin, 
             :telefono, :imagen, :fecha)";
         
-        $parametros= array(':nombre'=>$nombre, ':apellidos'=>$apellidos,':email'=>$email,
+        $parametros= array(':nombre'=>$nombre, ':apellidos'=>$apellidos,':email'=>$email, ':password'=>$password,
                             ':admin'=>$admin, ':telefono'=>$telefono,':imagen'=>$imagen,':fecha'=>$fecha);
         $estado = $bd->actualizarBD($consulta,$parametros);
         $bd->cerrarBD();
@@ -95,7 +95,7 @@ class ControladorUsuario {
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
         if (count($filas) > 0) {
             foreach ($filas as $a) {
-                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->admin, $a->telefono, $a->imagen, $a->fecha);
+                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->imagen, $a->fecha);
             }
             $bd->cerrarBD();
             return $usuario;
@@ -114,7 +114,7 @@ class ControladorUsuario {
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
         if (count($filas) > 0) {
             foreach ($filas as $a) {
-                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->admin, $a->telefono, $a->imagen, $a->fecha);
+                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->imagen, $a->fecha);
             }
             $bd->cerrarBD();
             return $usuario;
@@ -134,12 +134,12 @@ class ControladorUsuario {
         return $estado;
     }
     
-    public function actualizarUsuario($id, $nombre, $apellidos, $email, $admin, $telefono, $imagen, $fecha){
+    public function actualizarUsuario($id, $nombre, $apellidos, $email, $password, $admin, $telefono, $imagen, $fecha){
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "UPDATE usuarios SET nombre=:nombre, apellidos=:apellidos, email=:email, admin=:admin, 
+        $consulta = "UPDATE usuarios SET nombre=:nombre, apellidos=:apellidos, email=:email, password=:password, admin=:admin, 
             telefono=:telefono, imagen=:imagen, fecha=:fecha WHERE id=:id";
-        $parametros= array(':id' => $id, ':nombre'=>$nombre, ':apellidos'=>$apellidos,':email'=>$email,
+        $parametros= array(':id' => $id, ':nombre'=>$nombre, ':apellidos'=>$apellidos,':email'=>$email, ':password'=>$password,
                             ':admin'=>$admin, ':telefono'=>$telefono,':imagen'=>$imagen,':fecha'=>$fecha);
         $estado = $bd->actualizarBD($consulta,$parametros);
         $bd->cerrarBD();

@@ -8,10 +8,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>Operación no permitida</h1>
+                        <h1>ERROR!</h1>
                     </div>
                     <div class="alert alert-danger fade in">
-                        <p>Lo siento, estás intentando realizar una operación no válida o ha habido un error de procesamiento. <br> Por favor <a href="../index.php" class="alert-link">regresa</a> e inténtelo de nuevo.</p>
+                        <p>No tienes permisos para acceder aquí.</p>
                     </div>
                 </div>
             </div>        
