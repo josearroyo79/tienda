@@ -22,7 +22,7 @@ if(!isset($_SESSION['USUARIO']['email'])){
                         <label for="producto" class="sr-only">Nombre o marca</label>
                         <input type="text" class="form-control" id="buscar" name="producto" placeholder="Nombre o Marca">
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>
+                    <!--<button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>-->
                     <!-- Aquí va el nuevo botón para dar de alta, podría ir al final -->
                     <a href="utilidades/descargar.php?opcion=TXT" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-floppy-save"></span> TXT</a>
                     <a href="utilidades/descargar.php?opcion=PDF" class="btn btn-primary btn-warning"><span class="glyphicon glyphicon-floppy-save"></span> PDF</a>
@@ -95,9 +95,9 @@ if(!isset($_SESSION['USUARIO']['email'])){
                     echo "<td>" . $producto->getUnidades() . "</td>";
                     echo "<td><img src='imagen_producto/".$producto->getImagen()."' width='48px' height='48px'></td>";
                     echo "<td>";
-                    echo "<a href='vistas/read.php?id=" . encode($producto->getId()) . "' title='Ver Alumno/a' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                    echo "<a href='vistas/update.php?id=" . encode($producto->getId()) . "' title='Actualizar Alumno/a' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                    echo "<a href='/tienda/admin/producto/vistas/delete.php?id=" . encode($producto->getId()) . "' title='Borar Producto' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                    echo "<a href='vistas/read.php?id=" . encode($producto->getId()) . "' title='Ver usuario' data-toggle='tooltip'><i class='fas fa-eye'></i></a>&nbsp;&nbsp;";
+                    echo "<a href='vistas/update.php?id=" . encode($producto->getId()) . "' title='Actualizar usuario' data-toggle='tooltip'><i class='fas fa-edit'></i></a>&nbsp;&nbsp;";
+                    echo "<a href='/tienda/admin/producto/vistas/delete.php?id=" . encode($producto->getId()) . "' title='Borrar usuario' data-toggle='tooltip'><i class='fas fa-trash-alt'></i></a>";
                     echo "</td>";
                     echo "</tr>";
                 }
