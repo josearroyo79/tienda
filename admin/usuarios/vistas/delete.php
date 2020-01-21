@@ -1,6 +1,6 @@
 <?php
 // Incluimos el controlador a los objetos a usar
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
@@ -24,7 +24,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
         $controlador = ControladorImagen::getControlador();
         if ($controlador->eliminarImagen($usuario->getImagen())) {
-            header("location: ../../index.php");
+            header("location: ../index.php");
             exit();
         } else {
             header("location: error.php");
@@ -81,6 +81,12 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                     </tr>
                     <tr>
                         <td>
+                            <b><label>CONTRASEÑA</label></b>
+                            <p class="form-control-static"><?php echo $usuario->getPassword(); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <b><label>ADMIN</label></b>
                             <p class="form-control-static"><?php echo $usuario->getAdmin(); ?></p>
                         </td>
@@ -105,7 +111,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                         <p>¿Está seguro que desea borrar este usuario?</p><br>
                         <p>
                             <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Borrar</button>
-                            <a href="/tienda/admin/index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
+                            <a href="/tienda/admin/usuarios/index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
                         </p>
                     </div>
                 </form>

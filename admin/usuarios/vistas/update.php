@@ -1,13 +1,13 @@
 <?php
 // Incluimos el controlador a los objetos a usar
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $email = $admin = $telefono = $imagen =  $fecha = "";
-$nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr = $fechaErr = "";
+$nombre = $apellidos = $email = $password = $admin = $telefono = $imagen =  $fecha = "";
+$nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $imagenErr = $fechaErr = "";
 $imagenAnterior = "";
 
 $errores = [];
@@ -33,6 +33,8 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $apellidos = filtrado($_POST["apellidos"]);
 
     $email = filtrado($_POST["email"]);
+
+    $password = filtrado($_POST["password"]);
 
     $admin = filtrado($_POST["admin"]);
 
@@ -100,16 +102,16 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     // Chequeamos los errores antes de insertar en la base de datos
     if (
-        empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($adminErr) &&
+        empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($passwordErr) && empty($adminErr) &&
         empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
     ) {
         // creamos el controlador de alumnado
         $controlador = ControladorUsuario::getControlador();
-        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $email, $admin, $telefono, $imagen, $fecha);
+        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $email, $password, $admin, $telefono, $imagen, $fecha);
         if ($estado) {
             $errores = [];
             // El registro se ha almacenado corectamente
-            header("location: ../../index.php");
+            header("location: ../index.php");
             exit();
         } else {
             header("location: error.php");
@@ -129,6 +131,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $nombre = $usuario->getNombre();
         $apellidos = $usuario->getApellidos();
         $email = $usuario->getEmail();
+        $password = $usuario->getPassword();
         $admin = $usuario->getAdmin();
         $telefono = $usuario->getTelefono();
         $imagen = $usuario->getImagen();
@@ -198,6 +201,16 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                         </tr>
                         <tr>
                             <td>
+                                <!-- CONTRASEÑA -->
+                                <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
+                                    <b><label>CONTRASEÑA</label></b>
+                                    <input disabled type="password" name="password" class="form-control" value="<?php echo $password; ?>" minlength="1">
+                                    <span class="help-block"><?php echo $passwordErr; ?></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <!--ADMIN-->
                                 <div class="form-group">
                                     <b><label>ADMIN</label></b>
@@ -240,7 +253,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     <input type="hidden" name="id" value="<?php echo $id; ?>" />
                     <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>" />
                     <button type="submit" value="aceptar" class="btn purple-gradient"><i class="fas fa-sync-alt"></i> Modificar</button>
-                    <a href="../../index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
+                    <a href="../index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
                 </form>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
-require_once VIEW_PATH . "cabecera.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/producto/dirs.php";
+//require_once VIEW_PATH . "cabecera.php";
 ?>
 <!------ Include the above in your HEAD tag ---------->
 <style>
@@ -106,91 +106,79 @@ $('.add-to-cart').on('click', function () {
 
 <!-- wrapper -->
 <div class="wrapper">
-     <h1>Catálogo tienda</h1>
+     <h1 align="left">Catálogo tienda</h1>
  <span><i class="shopping-cart"></i></span>
-
+<br><br><br>
     <div class="clear"></div>
     <!-- items -->
     <div class="items">
         <!-- single item -->
         <div class="item">
-            <a href="item1">
-            <img src="http://img.tjskl.org.cn/pic/z2577d9d-200x200-1/pinarello_lungavita_2010_single_speed_bike.jpg" alt="item" />
-             <h2>Item 1</h2>
+            <a href="/tienda/admin/producto/vistas/ficha.php?id=MQ%3D%3D">
+            <img src="/tienda/admin/producto/imagen_producto/tractor.jpg" width="200px" height="auto" alt="item" />
+             <h2>Tractor</h2>
              </a>
-            <p>Precio: <em>500€</em>
+            <p>Precio: <em>4,50€</em>
+            </p>
+            <button class="add-to-cart" type="button">Añadir al carrito</button>
+        </div><br><br><br><br>
+        <!--/ single item -->
+        <!-- single item -->
+        <div class="item">
+        <a href="/tienda/admin/producto/vistas/ficha.php?id=Mg%3D%3D">
+        <img src="/tienda/admin/producto/imagen_producto/camionbomberos.jpg" width="200px" height="auto" alt="item" />
+             <h2>Camión de Bomberos</h2>
+        </a>
+            <p>Precio: <em>49,99€</em>
             </p>
             <button class="add-to-cart" type="button">Añadir al carrito</button>
         </div>
         <!--/ single item -->
         <!-- single item -->
         <div class="item">
-        <a href="item2">
-            <img src="http://img.tjskl.org.cn/pic/z2577d9d-200x200-1/pinarello_lungavita_2010_single_speed_bike.jpg" alt="item" />
-             <h2>Item 2</h2>
+        <a href="/tienda/admin/producto/vistas/ficha.php?id=Mw%3D%3D">
+        <img src="/tienda/admin/producto/imagen_producto/moto.jpg" width="200px" height="auto" alt="item" />
+             <h2>Moto</h2>
         </a>
-            <p>Precio: <em>550€</em>
+            <p>Precio: <em>106,99€</em>
             </p>
             <button class="add-to-cart" type="button">Añadir al carrito</button>
         </div>
         <!--/ single item -->
         <!-- single item -->
         <div class="item">
-        <a href="item3">
-            <img src="http://img1.exportersindia.com/product_images/bc-small/dir_55/1620613/cannondale-jekyll-1-2011-mountain-bike-309779.jpg" alt="item" />
-             <h2>Item 3</h2>
+        <a href="/tienda/admin/producto/vistas/ficha.php?id=NA%3D%3D">
+        <img src="/tienda/admin/producto/imagen_producto/muñeco.jpg" width="138.5px" height="auto" alt="item" />
+             <h2>Muñeco BabyBoom</h2>
         </a>
-            <p>Precio: <em>700€</em>
+            <p>Precio: <em>9,99€</em>
             </p>
             <button class="add-to-cart" type="button">Añadir al carrito</button>
         </div>
         <!--/ single item -->
         <!-- single item -->
         <div class="item">
-        <a href="item4">
-            <img src="http://img1.exportersindia.com/product_images/bc-small/dir_55/1620613/cannondale-jekyll-1-2011-mountain-bike-309779.jpg" alt="item" />
-             <h2>Item 4</h2>
+        <a href="/tienda/admin/producto/vistas/ficha.php?id=NQ%3D%3D">
+        <img src="/tienda/admin/producto/imagen_producto/oso.jpg" width="200px" height="auto" alt="item" />
+             <h2>Oso de Peluche</h2>
         </a>
-            <p>Precio: <em>800€</em>
+            <p>Precio: <em>2€</em>
             </p>
             <button class="add-to-cart" type="button">Añadir al carrito</button>
         </div>
         <!--/ single item -->
         <!-- single item -->
         <div class="item">
-        <a href="item4">
-            <img src="http://img1.exportersindia.com/product_images/bc-small/dir_55/1620613/cannondale-jekyll-1-2011-mountain-bike-309779.jpg" alt="item" />
-             <h2>Item 4</h2>
+        <a href="/tienda/admin/producto/vistas/ficha.php?id=Ng%3D%3D">
+        <img src="/tienda/admin/producto/imagen_producto/monopoly.jpg" width="200px" height="auto" alt="item" />
+             <h2>Monopoly</h2>
         </a>
-            <p>Precio: <em>800€</em>
+            <p>Precio: <em>19,99€</em>
             </p>
             <button class="add-to-cart" type="button">Añadir al carrito</button>
         </div>
-        <!--/ single item -->
-        <!-- single item -->
-        <div class="item">
-        <a href="item4">
-            <img src="http://img1.exportersindia.com/product_images/bc-small/dir_55/1620613/cannondale-jekyll-1-2011-mountain-bike-309779.jpg" alt="item" />
-             <h2>Item 4</h2>
-        </a>
-            <p>Precio: <em>800€</em>
-            </p>
-            <button class="add-to-cart" type="button">Añadir al carrito</button>
-        </div>
-        <!--/ single item -->
-        <!-- single item -->
-        <div class="item">
-        <a href="item4">
-            <img src="http://img1.exportersindia.com/product_images/bc-small/dir_55/1620613/cannondale-jekyll-1-2011-mountain-bike-309779.jpg" alt="item" />
-             <h2>Item 4</h2>
-        </a>
-            <p>Precio: <em>800€</em>
-            </p>
-            <button class="add-to-cart" type="button">Añadir al carrito</button>
-        </div>
-        <!--/ single item -->
     </div>
     <!--/ items -->
 </div>
 <!--/ wrapper -->
-<?php require_once VIEW_PATH . "pie.php"; ?>
+<?php //require_once VIEW_PATH . "pie.php"; ?>

@@ -1,6 +1,6 @@
 <?php
 
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
     require_once CONTROLLER_PATH."ControladorUsuario.php";
     require_once UTILITY_PATH."funciones.php";
 

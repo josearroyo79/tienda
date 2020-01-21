@@ -1,20 +1,15 @@
 <?php
 error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-/*session_start();
-if (!isset($_SESSION['USUARIO']['correo'])) {
-    header("location: login.php");
-    exit();
-}*/
 
 // Incluimos los directorios a trabajar
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $email = $admin = $telefono = $imagen = ""; $fecha = "";
-$nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr = ""; $fechaErr = "";
+$nombre = $apellidos = $email = $password = $admin = $telefono = $imagen = ""; $fecha = "";
+$nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $imagenErr = ""; $fechaErr = "";
 
     // Procesamos el formulario al pulsar el botón aceptar de esta ficha
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
@@ -52,6 +47,13 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
             $email = filtrado($_POST["email"]);
         } else {
             $emailErr = "Email no válido";
+        }
+
+        // Procesamos la contraseña
+        if (isset($_POST["password"])) {
+            $password = filtrado($_POST["password"]);
+        } else {
+            $passwordErr = "Contraseña no válida";
         }
 
         // Procesamos admin
@@ -116,16 +118,16 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
         }
         // Chequeamos los errores antes de insertar en la base de datos
         if (
-            empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($adminErr) &&
+            empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($passwordErr) && empty($adminErr) &&
             empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
         ) {
             // Creamos el controlador de alumnado
             $controlador = ControladorUsuario::getControlador();
-            $estado = $controlador->almacenarUsuario($nombre, $apellidos, $email, $admin, $telefono, $imagen, $fecha);
+            $estado = $controlador->almacenarUsuario($nombre, $apellidos, $email, $password, $admin, $telefono, $imagen, $fecha);
             if ($estado) {
                 //El registro se ha lamacenado corectamente
                 alerta("Usuario creado con éxito");
-                header("location: ../../index.php");
+                header("location: ../index.php");
                 exit();
             } else {
                 header("location: error.php");
@@ -168,6 +170,13 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
                         <span class="help-block"><?php echo $emailErr; ?></span>
                     </div>
                     </br>
+                    <!-- Contraseña -->
+                    <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
+                        <b><label>Contraseña</label></b>
+                        <input type="password" required name="password" class="form-control" value="<?php echo $password; ?>" minlength="1">
+                        <span class="help-block"><?php echo $passwordErr; ?></span>
+                    </div>
+                    </br>
                     <!--Admin-->
                     <b><label>Admin</label></b>
                     <select name="admin" class="custom-select custom-select-sm">
@@ -199,7 +208,7 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
                     <!-- Botones -->
                     <button type="submit" name="aceptar" value="aceptar" class="btn peach-gradient"><i class="fas fa-save"></i> Aceptar</button>
                     <button type="reset" value="reset" class="btn btn-brown"><i class="fas fa-broom"></i> Limpiar</button>
-                    <a href="/tienda/admin/index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
+                    <a href="/tienda/admin/usuarios/index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
                 </form>
             </div>
         </div>

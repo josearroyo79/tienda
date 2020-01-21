@@ -2,7 +2,7 @@
 error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
 /*session_start();
 if (!isset($_SESSION['USUARIO']['correo'])) {
-    header("location: /tienda/vistas/login.php");
+    header("location: /tienda/login.php");
     exit();
 }*/
 ?>
@@ -29,12 +29,12 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 echo "<a href='javascript:window.print()' type='button' class='btn btn-outline-info waves-effect'><i class='fas fa-print'></i> IMPRIMIR</a>";
                 } else {*/
                         //Botones administrador
-                echo "<a href='usuarios/utilidades/descargar.php?opcion=XML' type='button' class='btn btn-deep-orange' target='_blank'><i class='fas fa-cloud-download-alt'></i> XML</a>";
+                echo "<a href='utilidades/descargar.php?opcion=XML' type='button' class='btn btn-deep-orange' target='_blank'><i class='fas fa-cloud-download-alt'></i> XML</a>";
                 //echo "<a href='utilidades/descargar.php?opcion=JSON' type='button' class='btn btn-deep-purple' target='_blank'><i class='fas fa-cloud-download-alt'></i> JSON</a>";
                 //echo "<a href='utilidades/descargar.php?opcion=TXT' type='button' class='btn btn-outline-default waves-effect' target='_blank'><i class='fas fa-file-download'></i> TXT</a>";
-                echo "<a href='usuarios/utilidades/descargar.php?opcion=PDF' type='button' class='btn btn-outline-secondary waves-effect' target='_blank'><i class='fas fa-file-pdf'></i> PDF</a>";
+                echo "<a href='utilidades/descargar.php?opcion=PDF' type='button' class='btn btn-outline-secondary waves-effect' target='_blank'><i class='fas fa-file-pdf'></i> PDF</a>";
                 echo "<a href='javascript:window.print()' type='button' class='btn btn-outline-info waves-effect'><i class='fas fa-print'></i> IMPRIMIR</a>";
-                echo "<a href='/tienda/admin/usuarios/vistas/create.php' class='btn aqua-gradient'><i class='fas fa-user-plus'></i> Añadir usuario</a>";
+                echo "<a href='vistas/create.php' class='btn aqua-gradient'><i class='fas fa-user-plus'></i> Añadir usuario</a>";
                 //}
                 ?>
                 <?php
@@ -141,6 +141,7 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 echo "<th scope='col'>NOMBRE</th>";
                 echo "<th scope='col'>APELLIDOS</th>";
                 echo "<th scope='col'>EMAIL</th>";
+                echo "<th scope='col'>CONTRASEÑA</th>";
                 echo "<th scope='col'>ADMIN</th>";
                 echo "<th scope='col'>TELEFONO</th>";
                 echo "<th scope='col'>IMAGEN</th>";
@@ -152,21 +153,22 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 // Recorremos los registros encontrados
                 foreach ($resultados->datos as $a) {
                     
-                    $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->admin, $a->telefono, $a->imagen, $a->fecha);
+                    $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->email, $a->password, $a->admin, $a->telefono, $a->imagen, $a->fecha);
                     // Pintamos cada fila
                     echo "<tr>";
                     echo "<td>" . base64_encode($usuario->getId()) . "</td>";
                     echo "<td>" . $usuario->getNombre() . "</td>";
                     echo "<td>" . $usuario->getApellidos() . "</td>";
                     echo "<td>" . $usuario->getEmail() . "</td>";
+                    echo "<td>" . hash("sha256",$usuario->getPassword()) . "</td>";
                     echo "<td>" . $usuario->getAdmin() . "</td>";
                     echo "<td>" . $usuario->getTelefono() . "</td>";
                     echo "<td><img src='/tienda/admin/usuarios/imagenes/" . $usuario->getImagen() . "' width='80px' height='70px'></td>";
                     echo "<td>" . $usuario->getFecha() . "</td>";
                     echo "<td id='no_imprimir'>";
-                    echo "<a href='usuarios/vistas/read.php?id=" . encode($usuario->getId()) . "' title='Ver usuario' data-toggle='tooltip'><i class='fas fa-eye'></i></a>&nbsp;&nbsp;";
-                    echo "<a href='usuarios/vistas/update.php?id=" . encode($usuario->getId()) . "' title='Actualizar usuario' data-toggle='tooltip'><i class='fas fa-edit'></i></a>&nbsp;&nbsp;";
-                    echo "<a href='usuarios/vistas/delete.php?id=" . encode($usuario->getId()) . "' title='Borrar usuario' data-toggle='tooltip'><i class='fas fa-trash-alt'></i></a>";
+                    echo "<a href='vistas/read.php?id=" . encode($usuario->getId()) . "' title='Ver usuario' data-toggle='tooltip'><i class='fas fa-eye'></i></a>&nbsp;&nbsp;";
+                    echo "<a href='vistas/update.php?id=" . encode($usuario->getId()) . "' title='Actualizar usuario' data-toggle='tooltip'><i class='fas fa-edit'></i></a>&nbsp;&nbsp;";
+                    echo "<a href='vistas/delete.php?id=" . encode($usuario->getId()) . "' title='Borrar usuario' data-toggle='tooltip'><i class='fas fa-trash-alt'></i></a>";
                     echo "</td>";
                     echo "</tr>";
                 }
@@ -187,11 +189,11 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 <div id="no_imprimir">
     <?php
     // Leemos la cookie
-    if (isset($_COOKIE['CONTADOR'])) {
+    /*if (isset($_COOKIE['CONTADOR'])) {
         echo $contador;
         echo $acceso;
     } else
         echo "Es tu primera visita hoy";
-    ?>
+    */?>
 </div>
 <br><br><br>

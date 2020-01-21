@@ -1,6 +1,6 @@
 <?php
 // Incluimos el controlador a los objetos a usar
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once UTILITY_PATH . "funciones.php";
 
@@ -57,6 +57,12 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     </tr>
                     <tr>
                         <td>
+                            <b><label>CONTRASEÑA</label></b>
+                            <p class="form-control-static"><?php echo hash("sha256",$usuario->getPassword()); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <b><label>ADMIN</label></b>
                             <p class="form-control-static"><?php echo $usuario->getAdmin(); ?></p>
                         </td>
@@ -74,7 +80,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                         </td>
                     </tr>
                 </table>
-                <p><a href="/tienda/admin/index.php" class="btn btn-info"><i class="fas fa-check-circle"></i> Aceptar</a></p>
+                <p><a href="/tienda/admin/usuarios/index.php" class="btn btn-info"><i class="fas fa-check-circle"></i> Aceptar</a></p>
                 <a href="../utilidades/descargar.php?opcion=PDFUsuario&id=<?php echo $_GET["id"] ?>" type="button" class="btn btn-outline-secondary waves-effect" target="_blank"><i class="fas fa-file-pdf"></i> Descargar en PDF este usuario</a>
             </div>
         </div>
