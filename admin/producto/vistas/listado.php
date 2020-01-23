@@ -1,14 +1,14 @@
 <?php
-/*error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
 session_start();
-if(!isset($_SESSION['USUARIO']['email'])){
-    //echo $_SESSION['USUARIO']['email'];
-    //exit();
+if (!isset($_SESSION['USUARIO']['correo'])) {
     header("location: /tienda/login.php");
     exit();
-}*/
+} elseif (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com") {
+    header("location: /tienda/admin/producto/vistas/auth.php");
+    exit();
+}
 ?>
-
 <h2 align="center">GESTIÓN DE LOS PRODUCTOS</h2><hr>
 
 <div class="container-fluid">

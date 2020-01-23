@@ -75,8 +75,8 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                     </tr>
                     <tr>
                         <td>
-                            <b><label>EMAIL</label></b>
-                            <p class="form-control-static"><?php echo $usuario->getEmail(); ?></p>
+                            <b><label>CORREO</label></b>
+                            <p class="form-control-static"><?php echo $usuario->getCorreo(); ?></p>
                         </td>
                     </tr>
                     <tr>
@@ -87,8 +87,8 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                     </tr>
                     <tr>
                         <td>
-                            <b><label>ADMIN</label></b>
-                            <p class="form-control-static"><?php echo $usuario->getAdmin(); ?></p>
+                            <b><label>TIPO</label></b>
+                            <p class="form-control-static"><?php echo $usuario->getTipo(); ?></p>
                         </td>
                     </tr>
                     <tr>

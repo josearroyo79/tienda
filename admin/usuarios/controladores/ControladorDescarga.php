@@ -35,9 +35,9 @@ class ControladorDescarga
             
             $usuario->appendChild($doc->createElement('nombre', $a->getNombre()));
             $usuario->appendChild($doc->createElement('apellidos', $a->getApellidos()));
-            $usuario->appendChild($doc->createElement('email', $a->getEmail()));
+            $usuario->appendChild($doc->createElement('correo', $a->getCorreo()));
             $usuario->appendChild($doc->createElement('contraseña', hash("sha256",$a->getPassword())));
-            $usuario->appendChild($doc->createElement('admin', $a->getAdmin()));
+            $usuario->appendChild($doc->createElement('tipo', $a->getTipo()));
             $usuario->appendChild($doc->createElement('telefono', $a->getTelefono()));
             $usuario->appendChild($doc->createElement('imagen', $a->getImagen()));
             $usuario->appendChild($doc->createElement('fecha', $a->getFecha()));
@@ -63,9 +63,9 @@ class ControladorDescarga
             $slu.="<tr>";
             $slu.="<th>Nombre</th>";
             $slu.="<th>Apellidos</th>";
-            $slu.="<th>Email</th>";
+            $slu.="<th>Correo</th>";
             $slu.="<th>Contraseña</th>";
-            $slu.="<th>Admin</th>";
+            $slu.="<th>Tipo</th>";
             $slu.="<th>Telefono</th>";
             $slu.="<th>Imagen</th>";
             $slu.="<th>Fecha de registro</th>";
@@ -76,9 +76,9 @@ class ControladorDescarga
                 $slu.="<tr>";
                 $slu.="<td>" . $usuario->getNombre() . "</td>";
                 $slu.="<td>" . $usuario->getApellidos() . "</td>";
-                $slu.="<td>" . $usuario->getEmail() . "</td>";
+                $slu.="<td>" . $usuario->getCorreo() . "</td>";
                 $slu.="<td>" . hash("sha256",$usuario->getPassword()) . "</td>";
-                $slu.="<td>" . $usuario->getAdmin() . "</td>";
+                $slu.="<td>" . $usuario->getTipo() . "</td>";
                 $slu.="<td>" . $usuario->getTelefono() . "</td>";
                 $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
                 $slu.="<td>" . $usuario->getFecha() . "</td>";
@@ -106,9 +106,9 @@ class ControladorDescarga
             $slu.="<tr>";
             $slu.="<th>Nombre</th>";
             $slu.="<th>Apellidos</th>";
-            $slu.="<th>Email</th>";
+            $slu.="<th>Correo</th>";
             $slu.="<th>Contraseña</th>";
-            $slu.="<th>Admin</th>";
+            $slu.="<th>Tipo</th>";
             $slu.="<th>Telefono</th>";
             $slu.="<th>Imagen</th>";
             $slu.="<th>Fecha de registro</th>";
@@ -119,9 +119,9 @@ class ControladorDescarga
                 $slu.="<tr>";
                 $slu.="<td>" . $usuario->getNombre() . "</td>";
                 $slu.="<td>" . $usuario->getApellidos() . "</td>";
-                $slu.="<td>" . $usuario->getEmail() . "</td>";
+                $slu.="<td>" . $usuario->getCorreo() . "</td>";
                 $slu.="<td>" . hash("sha256",$usuario->getPassword()) . "</td>";
-                $slu.="<td>" . $usuario->getAdmin() . "</td>";
+                $slu.="<td>" . $usuario->getTipo() . "</td>";
                 $slu.="<td>" . $usuario->getTelefono() . "</td>";
                 $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
                 $slu.="<td>" . $usuario->getFecha() . "</td>";

@@ -6,8 +6,8 @@ require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $email = $admin = $telefono = $imagen =  $fecha = "";
-$nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr = $fechaErr = "";
+$nombre = $apellidos = $correo = $password = $telefono = $imagen = "";
+$nombreErr = $apellidosErr = $correoErr = $passwordErr = $telefonoErr = $imagenErr = "";
 $imagenAnterior = "";
 
 $errores = [];
@@ -32,24 +32,17 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     $apellidos = filtrado($_POST["apellidos"]);
 
-    $email = filtrado($_POST["email"]);
+    $controlador = ControladorUsuario::getControlador();
 
-    $admin = filtrado($_POST["admin"]);
+    if (($controlador->buscarCorreo($correo)!=0) && ($controlador->buscarCorreo($correo)!=$id)) {
+        $correoErr = "Ya existe un usuario en la BD con dicho correo electrónico";
+        $errores[] = $correoErr;
+    }
 
-    // Procesamos fecha
-    $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
-    $hoy = date("d-m-Y", time());
-
-    // Comparamos las fechas
-    $fecha_mat = new DateTime($fecha);
-    $fecha_hoy = new DateTime($hoy);
-    $interval = $fecha_hoy->diff($fecha_mat);
-
-    if ($interval->format('%R%a días') > 0) {
-        $fechaErr = "La fecha no puede ser superior a la fecha actual";
-        $errores[] =  $fechaErr;
-    } else {
-        $fecha = date("d/m/Y", strtotime($fecha));
+    $password = hash("sha256",(filtrado($_POST['password'])));
+    if (empty($password)) {
+        $passwordErr = "Contraseña incorrecta.";
+        $errores[] = $passwordErr;
     }
 
     $telefono = filtrado($_POST["telefono"]);
@@ -100,12 +93,12 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     // Chequeamos los errores antes de insertar en la base de datos
     if (
-        empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($adminErr) &&
-        empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
+        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($correoErr) &&
+        empty($telefonoErr) && empty($imagenErr)
     ) {
         // creamos el controlador de alumnado
         $controlador = ControladorUsuario::getControlador();
-        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $email, $admin, $telefono, $imagen, $fecha);
+        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $correo, $correo, $telefono, $imagen);
         if ($estado) {
             $errores = [];
             // El registro se ha almacenado corectamente
@@ -128,11 +121,10 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     if (!is_null($usuario)) {
         $nombre = $usuario->getNombre();
         $apellidos = $usuario->getApellidos();
-        $email = $usuario->getEmail();
-        $admin = $usuario->getAdmin();
+        $correo = $usuario->getCorreo();
+        $password = $usuario->getPassword();
         $telefono = $usuario->getTelefono();
         $imagen = $usuario->getImagen();
-        $fecha = $usuario->getFecha();
         $imagenAnterior = $imagen;
     } else {
         // hay un error
@@ -188,23 +180,11 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                         </tr>
                         <tr>
                             <td>
-                                <!-- EMAIL -->
-                                <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
-                                    <b><label>EMAIL</label></b>
-                                    <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>" minlength="1">
-                                    <span class="help-block"><?php echo $emailErr; ?></span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <!--ADMIN-->
-                                <div class="form-group">
-                                    <b><label>ADMIN</label></b>
-                                    <select name="admin" class="custom-select custom-select-sm">
-                                        <option value="SI" <?php echo (strstr($admin, 'SI')) ? 'selected' : ''; ?>>SI</option>
-                                        <option value="NO" <?php echo (strstr($admin, 'NO')) ? 'selected' : ''; ?>>NO</option>
-                                    </select>
+                                <!-- CORREO -->
+                                <div class="form-group <?php echo (!empty($correoErr)) ? 'error: ' : ''; ?>">
+                                    <b><label>CORREO</label></b>
+                                    <input type="email" required name="correo" class="form-control" value="<?php echo $correo; ?>" minlength="1">
+                                    <span class="help-block"><?php echo $correoErr; ?></span>
                                 </div>
                             </td>
                         </tr>
@@ -220,12 +200,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                         </tr>
                         <tr>
                             <td>
-                                <!-- Fecha -->
-                                <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
-                                    <b><label>Fecha de registro</label></b>
-                                    <input type="date" required name="fecha" class="form-control" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha))); ?>" minlength="1">
-                                    <span class="help-block"><?php echo $fechaErr; ?></span>
-                                </div>
                                 <!-- IMAGEN-->
                                 <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
                                     <label>IMAGEN</label>

@@ -1,11 +1,4 @@
 <?php
-error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-/*session_start();
-if (!isset($_SESSION['USUARIO']['correo'])) {
-    header("location: login.php");
-    exit();
-}*/
-
 // Incluimos los directorios a trabajar
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
@@ -13,8 +6,8 @@ require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $email = $admin = $telefono = $imagen = ""; $fecha = "";
-$nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr = ""; $fechaErr = "";
+$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen = ""; $fecha = "";
+$nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = ""; $fechaErr = "";
 
     // Procesamos el formulario al pulsar el botón aceptar de esta ficha
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
@@ -47,18 +40,25 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
             $apellidosErr = "Apellido no válido";
         }
 
-        // Procesamos email
-        if (isset($_POST["email"])) {
-            $email = filtrado($_POST["email"]);
+        // Procesamos correo
+        if (isset($_POST["correo"])) {
+            $correo = filtrado($_POST["correo"]);
         } else {
-            $emailErr = "Email no válido";
+            $correoErr = "Correo no válido";
         }
 
-        // Procesamos admin
-        if (isset($_POST["admin"])) {
-            $admin = filtrado($_POST["admin"]);
+        // Procesamos la contraseña
+        if (isset($_POST["password"])) {
+            $password = filtrado($_POST["password"]);
         } else {
-            $adminErr = "Debe elegir al menos una opción.";
+            $passwordErr = "Contraseña no válida";
+        }
+
+        // Procesamos tipo
+        if (isset($_POST["tipo"])) {
+            $tipo = filtrado($_POST["tipo"]);
+        } else {
+            $tipo = "USER";
         }
 
         // Procesamos telefono
@@ -82,7 +82,7 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
             $errores[]=  $fechaErr;
 
         }else{
-            $fecha = date("d/m/Y",strtotime($fecha));
+            $fecha = $hoy;
         }
 
         // Procesamos la imagen
@@ -116,12 +116,12 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
         }
         // Chequeamos los errores antes de insertar en la base de datos
         if (
-            empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($adminErr) &&
+            empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
             empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
         ) {
             // Creamos el controlador de alumnado
             $controlador = ControladorUsuario::getControlador();
-            $estado = $controlador->almacenarUsuario($nombre, $apellidos, $email, $admin, $telefono, $imagen, $fecha);
+            $estado = $controlador->almacenarUsuario($nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha);
             if ($estado) {
                 //El registro se ha lamacenado corectamente
                 alerta("Usuario creado con éxito");
@@ -143,9 +143,9 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
         <div>
             <div class="col-md-12">
                 <div>
-                    <h2>Crear Usuario</h2>
+                    <h2>Formulario de registro</h2>
                 </div>
-                <p>Por favor rellene este formulario para añadir un nuevo usuario a la base de datos de usuarios.</p>
+                <p>Por favor rellene este formulario para registrarse como usuario en el sistema.</p>
                 <!-- Formulario-->
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
 
@@ -161,20 +161,20 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
                         <span class="help-block"><?php echo $apellidosErr; ?></span>
                     </div>
                     </br>
-                    <!-- Email -->
-                    <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
-                        <b><label>Email</label></b>
-                        <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>" minlength="1">
-                        <span class="help-block"><?php echo $emailErr; ?></span>
+                    <!-- Correo -->
+                    <div class="form-group <?php echo (!empty($correoErr)) ? 'error: ' : ''; ?>">
+                        <b><label>Correo</label></b>
+                        <input type="email" required name="correo" class="form-control" value="<?php echo $correo; ?>" minlength="1">
+                        <span class="help-block"><?php echo $correoErr; ?></span>
                     </div>
                     </br>
-                    <!--Admin-->
-                    <b><label>Admin</label></b>
-                    <select name="admin" class="custom-select custom-select-sm">
-                        <option value="SI" <?php echo (strstr($admin, 'SI')) ? 'selected' : ''; ?>>SI</option>
-                        <option value="NO" <?php echo (strstr($admin, 'NO')) ? 'selected' : ''; ?>>NO</option>
-                    </select>
-                    </br></br></br>
+                    <!-- Contraseña -->
+                    <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
+                        <b><label>Contraseña</label></b>
+                        <input type="password" required name="password" class="form-control" value="<?php echo $password; ?>" minlength="1">
+                        <span class="help-block"><?php echo $passwordErr; ?></span>
+                    </div>
+                    </br>
                     <!-- Telefono -->
                     <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                         <b><label>Telefono</label></b>
@@ -190,12 +190,6 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
                         <span class="help-block"><?php echo $imagenErr; ?></span>
                     </div>
                     </br>
-                    <!-- Fecha -->
-                    <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
-                        <b><label>Fecha</label></b>
-                        <input type="date" required name="fecha" class="form-control" value="<?php echo $fecha; ?>" minlength="1">
-                        <span class="help-block"><?php echo $fechaErr; ?></span>
-                    </div>
                     <!-- Botones -->
                     <button type="submit" name="aceptar" value="aceptar" class="btn peach-gradient"><i class="fas fa-save"></i> Aceptar</button>
                     <button type="reset" value="reset" class="btn btn-brown"><i class="fas fa-broom"></i> Limpiar</button>
@@ -207,4 +201,5 @@ $nombreErr = $apellidosErr = $emailErr = $adminErr = $telefonoErr = $imagenErr =
 </div>
 <br><br><br>
 <!-- Pie de la página web -->
+
 <?php require_once VIEW_PATH . "pie.php"; ?>

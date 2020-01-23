@@ -1,6 +1,10 @@
 <?php
 error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-
+session_start();
+if (!isset($_SESSION['USUARIO']['correo'])) {
+    header("location: /tienda/login.php");
+    exit();
+}
 // Incluimos los directorios a trabajar
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
@@ -8,8 +12,8 @@ require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $email = $password = $admin = $telefono = $imagen = ""; $fecha = "";
-$nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $imagenErr = ""; $fechaErr = "";
+$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen = ""; $fecha = "";
+$nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = ""; $fechaErr = "";
 
     // Procesamos el formulario al pulsar el botón aceptar de esta ficha
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
@@ -42,11 +46,11 @@ $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr
             $apellidosErr = "Apellido no válido";
         }
 
-        // Procesamos email
-        if (isset($_POST["email"])) {
-            $email = filtrado($_POST["email"]);
+        // Procesamos correo
+        if (isset($_POST["correo"])) {
+            $correo = filtrado($_POST["correo"]);
         } else {
-            $emailErr = "Email no válido";
+            $correoErr = "Correo no válido";
         }
 
         // Procesamos la contraseña
@@ -56,11 +60,11 @@ $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr
             $passwordErr = "Contraseña no válida";
         }
 
-        // Procesamos admin
-        if (isset($_POST["admin"])) {
-            $admin = filtrado($_POST["admin"]);
+        // Procesamos tipo
+        if (isset($_POST["tipo"])) {
+            $tipo = filtrado($_POST["tipo"]);
         } else {
-            $adminErr = "Debe elegir al menos una opción.";
+            $tipoErr = "Debe elegir al menos una opción.";
         }
 
         // Procesamos telefono
@@ -118,12 +122,12 @@ $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr
         }
         // Chequeamos los errores antes de insertar en la base de datos
         if (
-            empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($passwordErr) && empty($adminErr) &&
+            empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
             empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
         ) {
             // Creamos el controlador de alumnado
             $controlador = ControladorUsuario::getControlador();
-            $estado = $controlador->almacenarUsuario($nombre, $apellidos, $email, $password, $admin, $telefono, $imagen, $fecha);
+            $estado = $controlador->almacenarUsuario($nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha);
             if ($estado) {
                 //El registro se ha lamacenado corectamente
                 alerta("Usuario creado con éxito");
@@ -163,11 +167,11 @@ $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr
                         <span class="help-block"><?php echo $apellidosErr; ?></span>
                     </div>
                     </br>
-                    <!-- Email -->
-                    <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
-                        <b><label>Email</label></b>
-                        <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>" minlength="1">
-                        <span class="help-block"><?php echo $emailErr; ?></span>
+                    <!-- Correo -->
+                    <div class="form-group <?php echo (!empty($correoErr)) ? 'error: ' : ''; ?>">
+                        <b><label>Correo</label></b>
+                        <input type="email" required name="correo" class="form-control" value="<?php echo $correo; ?>" minlength="1">
+                        <span class="help-block"><?php echo $correoErr; ?></span>
                     </div>
                     </br>
                     <!-- Contraseña -->
@@ -177,11 +181,11 @@ $nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr
                         <span class="help-block"><?php echo $passwordErr; ?></span>
                     </div>
                     </br>
-                    <!--Admin-->
-                    <b><label>Admin</label></b>
-                    <select name="admin" class="custom-select custom-select-sm">
-                        <option value="SI" <?php echo (strstr($admin, 'SI')) ? 'selected' : ''; ?>>SI</option>
-                        <option value="NO" <?php echo (strstr($admin, 'NO')) ? 'selected' : ''; ?>>NO</option>
+                    <!--Tipo-->
+                    <b><label>Tipo</label></b>
+                    <select name="tipo" class="custom-select custom-select-sm">
+                        <option value="ADMIN" <?php echo (strstr($tipo, 'ADMIN')) ? 'selected' : ''; ?>>ADMIN</option>
+                        <option value="USER" <?php echo (strstr($tipo, 'USER')) ? 'selected' : ''; ?>>USER</option>
                     </select>
                     </br></br></br>
                     <!-- Telefono -->

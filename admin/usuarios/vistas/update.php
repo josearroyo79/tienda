@@ -6,8 +6,8 @@ require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $email = $password = $admin = $telefono = $imagen =  $fecha = "";
-$nombreErr = $apellidosErr = $emailErr = $passwordErr = $adminErr = $telefonoErr = $imagenErr = $fechaErr = "";
+$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen =  $fecha = "";
+$nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = $fechaErr = "";
 $imagenAnterior = "";
 
 $errores = [];
@@ -32,11 +32,9 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     $apellidos = filtrado($_POST["apellidos"]);
 
-    $email = filtrado($_POST["email"]);
+    $correo = filtrado($_POST["correo"]);
 
-    $password = filtrado($_POST["password"]);
-
-    $admin = filtrado($_POST["admin"]);
+    $tipo = filtrado($_POST["tipo"]);
 
     // Procesamos fecha
     $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
@@ -102,12 +100,12 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     // Chequeamos los errores antes de insertar en la base de datos
     if (
-        empty($nombreErr) && empty($apellidosErr) && empty($emailErr) && empty($passwordErr) && empty($adminErr) &&
+        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
         empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
     ) {
         // creamos el controlador de alumnado
         $controlador = ControladorUsuario::getControlador();
-        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $email, $password, $admin, $telefono, $imagen, $fecha);
+        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha);
         if ($estado) {
             $errores = [];
             // El registro se ha almacenado corectamente
@@ -130,9 +128,9 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     if (!is_null($usuario)) {
         $nombre = $usuario->getNombre();
         $apellidos = $usuario->getApellidos();
-        $email = $usuario->getEmail();
+        $correo = $usuario->getCorreo();
         $password = $usuario->getPassword();
-        $admin = $usuario->getAdmin();
+        $tipo = $usuario->getTipo();
         $telefono = $usuario->getTelefono();
         $imagen = $usuario->getImagen();
         $fecha = $usuario->getFecha();
@@ -191,11 +189,11 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                         </tr>
                         <tr>
                             <td>
-                                <!-- EMAIL -->
-                                <div class="form-group <?php echo (!empty($emailErr)) ? 'error: ' : ''; ?>">
-                                    <b><label>EMAIL</label></b>
-                                    <input type="email" required name="email" class="form-control" value="<?php echo $email; ?>" minlength="1">
-                                    <span class="help-block"><?php echo $emailErr; ?></span>
+                                <!-- CORREO -->
+                                <div class="form-group <?php echo (!empty($correoErr)) ? 'error: ' : ''; ?>">
+                                    <b><label>CORREO</label></b>
+                                    <input type="email" required name="correo" class="form-control" value="<?php echo $correo; ?>" minlength="1">
+                                    <span class="help-block"><?php echo $correoErr; ?></span>
                                 </div>
                             </td>
                         </tr>
@@ -211,12 +209,12 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                         </tr>
                         <tr>
                             <td>
-                                <!--ADMIN-->
+                                <!--TIPO-->
                                 <div class="form-group">
-                                    <b><label>ADMIN</label></b>
-                                    <select name="admin" class="custom-select custom-select-sm">
-                                        <option value="SI" <?php echo (strstr($admin, 'SI')) ? 'selected' : ''; ?>>SI</option>
-                                        <option value="NO" <?php echo (strstr($admin, 'NO')) ? 'selected' : ''; ?>>NO</option>
+                                    <b><label>TIPO</label></b>
+                                    <select name="tipo" class="custom-select custom-select-sm">
+                                        <option value="ADMIN" <?php echo (strstr($tipo, 'ADMIN')) ? 'selected' : ''; ?>>ADMIN</option>
+                                        <option value="USER" <?php echo (strstr($tipo, 'USER')) ? 'selected' : ''; ?>>USER</option>
                                     </select>
                                 </div>
                             </td>

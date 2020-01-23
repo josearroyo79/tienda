@@ -10,21 +10,21 @@ class Usuario {
     private $id;
     private $nombre;
     private $apellidos;
-    private $email;
-    private $pass;
-    private $admin;
+    private $correo;
+    private $password;
+    private $tipo;
     private $telefono;
     private $imagen;
     private $fecha;
     
     // Constructor
-    public function __construct($id, $nombre, $apellidos, $email, $password, $admin, $telefono, $imagen, $fecha) {
+    public function __construct($id, $nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
-        $this->email = $email;
+        $this->correo = $correo;
         $this->password = $password;
-        $this->admin = $admin;
+        $this->tipo = $tipo;
         $this->telefono = $telefono;
         $this->imagen = $imagen;
         $this->fecha = $fecha;
@@ -44,14 +44,14 @@ class Usuario {
         return $this->apellidos;
     }
 
-    function getEmail() {
-        return $this->email;
+    function getCorreo() {
+        return $this->correo;
     }
     function getPassword() {
         return $this->password;
     }
-    function getAdmin() {
-        return $this->admin;
+    function getTipo() {
+        return $this->tipo;
     }
 
     function getTelefono() {
@@ -78,16 +78,16 @@ class Usuario {
         $this->apellidos = $apellidos;
     }
     
-    function setEmail($email) {
-        $this->email = $email;
+    function setCorreo($correo) {
+        $this->correo = $correo;
     }
     
     function setPassword($password) {
         $this->password = $password;
     }
 
-    function setAdmin($admin) {
-        $this->admin= $admin;
+    function setTipo($tipo) {
+        $this->tipo= $tipo;
     } 
 
     function setTelefono($telefono) {
