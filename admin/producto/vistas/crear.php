@@ -1,12 +1,10 @@
 <?php
-/*error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
 session_start();
-if(!isset($_SESSION['USUARIO']['email'])){
-    //echo $_SESSION['USUARIO']['email'];
-    //exit();
-    header("location: ../../../login.php");
+if (!isset($_SESSION['USUARIO']['correo'])) {
+    header("location: /tienda/login.php");
     exit();
-}*/
+}
 
 require_once $_SERVER['DOCUMENT_ROOT']."/tienda/admin/producto/dirs.php";
 require_once CONTROLLER_PATH."ControladorProducto.php";

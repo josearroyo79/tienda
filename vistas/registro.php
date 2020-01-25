@@ -1,14 +1,8 @@
 <?php
-error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-session_start();
-if (!isset($_SESSION['USUARIO']['correo'])) {
-    header("location: /tienda/login.php");
-    exit();
-}
 // Incluimos los directorios a trabajar
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
-require_once CONTROLLER_PATH . "ControladorImagenUser.php";
+require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
@@ -55,7 +49,6 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
 
         // Procesamos la contraseña
         if (isset($_POST["password"])) {
-            //$password = hash("sha256",filtrado($_POST["password"])); PARA QUE LA CONTRASEÑA DE ALMACENE CODIFICADA EN SHA256
             $password = filtrado($_POST["password"]);
         } else {
             $passwordErr = "Contraseña no válida";
@@ -65,7 +58,7 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
         if (isset($_POST["tipo"])) {
             $tipo = filtrado($_POST["tipo"]);
         } else {
-            $tipoErr = "Debe elegir al menos una opción.";
+            $tipo = "USER";
         }
 
         // Procesamos telefono
@@ -89,7 +82,7 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
             $errores[]=  $fechaErr;
 
         }else{
-            $fecha = date("d/m/Y",strtotime($fecha));
+            $fecha = $hoy;
         }
 
         // Procesamos la imagen
@@ -150,9 +143,9 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
         <div>
             <div class="col-md-12">
                 <div>
-                    <h2>Crear Usuario</h2>
+                    <h2>Formulario de registro</h2>
                 </div>
-                <p>Por favor rellene este formulario para añadir un nuevo usuario a la base de datos de usuarios.</p>
+                <p>Por favor rellene este formulario para registrarse como usuario en el sistema.</p>
                 <!-- Formulario-->
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
 
@@ -182,13 +175,6 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
                         <span class="help-block"><?php echo $passwordErr; ?></span>
                     </div>
                     </br>
-                    <!--Tipo-->
-                    <b><label>Tipo</label></b>
-                    <select name="tipo" class="custom-select custom-select-sm">
-                        <option value="ADMIN" <?php echo (strstr($tipo, 'ADMIN')) ? 'selected' : ''; ?>>ADMIN</option>
-                        <option value="USER" <?php echo (strstr($tipo, 'USER')) ? 'selected' : ''; ?>>USER</option>
-                    </select>
-                    </br></br></br>
                     <!-- Telefono -->
                     <div class="form-group <?php echo (!empty($telefonoErr)) ? 'error: ' : ''; ?>">
                         <b><label>Telefono</label></b>
@@ -204,12 +190,6 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
                         <span class="help-block"><?php echo $imagenErr; ?></span>
                     </div>
                     </br>
-                    <!-- Fecha -->
-                    <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
-                        <b><label>Fecha</label></b>
-                        <input type="date" required name="fecha" class="form-control" value="<?php echo $fecha; ?>" minlength="1">
-                        <span class="help-block"><?php echo $fechaErr; ?></span>
-                    </div>
                     <!-- Botones -->
                     <button type="submit" name="aceptar" value="aceptar" class="btn peach-gradient"><i class="fas fa-save"></i> Aceptar</button>
                     <button type="reset" value="reset" class="btn btn-brown"><i class="fas fa-broom"></i> Limpiar</button>
@@ -221,4 +201,5 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
 </div>
 <br><br><br>
 <!-- Pie de la página web -->
+
 <?php require_once VIEW_PATH . "pie.php"; ?>

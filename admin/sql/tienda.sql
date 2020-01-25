@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-01-2020 a las 20:52:12
+-- Tiempo de generación: 23-01-2020 a las 23:32:58
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `unidades` text COLLATE utf8_spanish_ci NOT NULL,
   `imagen` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `productos`
@@ -65,22 +65,22 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` text COLLATE utf8_spanish_ci NOT NULL,
   `apellidos` text COLLATE utf8_spanish_ci NOT NULL,
-  `email` text COLLATE utf8_spanish_ci NOT NULL,
+  `correo` text COLLATE utf8_spanish_ci NOT NULL,
   `password` text COLLATE utf8_spanish_ci NOT NULL,
-  `admin` varchar(2) COLLATE utf8_spanish_ci NOT NULL,
+  `tipo` varchar(5) COLLATE utf8_spanish_ci NOT NULL,
   `telefono` int(9) NOT NULL,
   `imagen` text COLLATE utf8_spanish_ci NOT NULL,
   `fecha` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `email`, `password`, `admin`, `telefono`, `imagen`, `fecha`) VALUES
-(29, 'Administrador', 'Admin', 'admin@admin.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'SI', 123456789, 'e3f52a62556f357a9a33a46b55af8d85.png', '20/01/2020'),
-(30, 'pepe', 'pepe', 'pepe@pepe.es', '7c9e7c1494b2684ab7c19d6aff737e460fa9e98d5a234da1310c97ddf5691834', 'NO', 123456788, 'df4329d36f057f5ab3eb94bc1d84aeb9.png', '07/01/2020');
+INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `correo`, `password`, `tipo`, `telefono`, `imagen`, `fecha`) VALUES
+(35, 'Administrador', 'sudosu', 'admin@admin.com', 'admin', 'ADMIN', 654621354, '9168fa96db95cda218867976147b50f2.png', '23/01/2020'),
+(41, 'prueba', 'prueba', 'prueba@prueba.com', 'prueba', 'USER', 246454654, '1ed0a86ece07e15c8052e160c54b8da7.png', '23-01-2020');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

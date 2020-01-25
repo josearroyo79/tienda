@@ -1,19 +1,19 @@
 <?php
 // Incluimos el controlador a los objetos a usar
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagenUser.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen =  $fecha = "";
+$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen = $fecha = "";
 $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = $fechaErr = "";
 $imagenAnterior = "";
 
 $errores = [];
 
 // Procesamos la información obtenida por el get
-if (isset($_POST["id"]) && !empty($_POST["id"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get hidden input value
     $id = $_POST["id"];
 
@@ -32,27 +32,25 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     $apellidos = filtrado($_POST["apellidos"]);
 
-    $correo = filtrado($_POST["correo"]);
-
-    $password = filtrado($_POST["password"]);
-
-    $tipo = filtrado($_POST["tipo"]);
-
-    // Procesamos fecha
-    $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
-    $hoy = date("d-m-Y", time());
-
-    // Comparamos las fechas
-    $fecha_mat = new DateTime($fecha);
-    $fecha_hoy = new DateTime($hoy);
-    $interval = $fecha_hoy->diff($fecha_mat);
-
-    if ($interval->format('%R%a días') > 0) {
-        $fechaErr = "La fecha no puede ser superior a la fecha actual";
-        $errores[] =  $fechaErr;
-    } else {
-        $fecha = date("d/m/Y", strtotime($fecha));
+    $correo = filtrado($_POST['correo']);
+    if (empty($correo)) {
+        $correoErr = "El correo no es correcto o no puede estar vacío";
+        $errores[] = $correoErr;
     }
+
+    $controlador = ControladorUsuario::getControlador();
+
+    if (($controlador->buscarCorreo($correo) != 0) && ($controlador->buscarCorreo($correo) != $id)) {
+        $correoErr = "Ya existe un usuario en la BD con dicho correo electrónico";
+        $errores[] = $correoErr;
+    }
+
+    $password = filtrado($_POST['password']);
+    if (empty($password)) {
+        $passwordErr = "Contraseña incorrecta.";
+        $errores[] = $passwordErr;
+    }
+    $tipo = filtrado($_POST["tipo"]);
 
     $telefono = filtrado($_POST["telefono"]);
 
@@ -99,11 +97,26 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $imagen = trim($_POST["imagenAnterior"]);
     }
 
+    // Procesamos fecha
+    $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
+    $hoy = date("d-m-Y", time());
+
+    // Comparamos las fechas
+    $fecha_mat = new DateTime($fecha);
+    $fecha_hoy = new DateTime($hoy);
+    $interval = $fecha_hoy->diff($fecha_mat);
+
+    if ($interval->format('%R%a días') > 0) {
+        $fechaErr = "La fecha no puede ser superior a la fecha actual";
+        $errores[] =  $fechaErr;
+    } else {
+        $fecha = date("d/m/Y", strtotime($fecha));
+    }
 
     // Chequeamos los errores antes de insertar en la base de datos
     if (
-        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
-        empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
+        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) &&
+        empty($telefonoErr) && empty($imagenErr)
     ) {
         // creamos el controlador de alumnado
         $controlador = ControladorUsuario::getControlador();
@@ -164,6 +177,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                 <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
                     <table class="table table-hover">
                         <tr>
+                            <!-- NOMBRE -->
                             <td>
                                 <b><label>NOMBRE</label></b>
                                 <div class="md-form <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
@@ -174,7 +188,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                             <!-- IMAGEN -->
                             <td>
                                 <b><label>IMAGEN</label></b><br>
-                                <img src='<?php echo "../imagenes/" . $usuario->getImagen() ?>' class='rounded' class='img-thumbnail' width='150' height='auto'>
+                                <img src='<?php echo "/tienda/admin/usuarios/imagenes/" . $usuario->getImagen() ?>' class='rounded' class='img-thumbnail' width='150' height='auto'>
                             </td>
                         </tr>
                     </table>
@@ -210,7 +224,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td hidden>
                                 <!--TIPO-->
                                 <div class="form-group">
                                     <b><label>TIPO</label></b>
@@ -232,7 +246,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td hidden>
                                 <!-- Fecha -->
                                 <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
                                     <b><label>Fecha de registro</label></b>
