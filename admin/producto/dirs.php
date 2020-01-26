@@ -5,7 +5,7 @@ if ( !defined('ROOT_PATH') )
     define('ROOT_PATH', dirname(__FILE__)."/");
 
 if ( !defined('MODEL_PATH') )
-    define('MODEL_PATH', ROOT_PATH."..modelos/");
+    define('MODEL_PATH', ROOT_PATH."../modelos/");
 
 if ( !defined('VIEW_PATH') )
     define('VIEW_PATH', ROOT_PATH."vistas/");

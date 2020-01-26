@@ -164,7 +164,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 ?>
 
 <!-- Cabecera de la página web -->
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
+<?php require_once VIEW2_PATH . "cabecera.php"; ?>
 <!-- Cuerpo de la página web -->
 <div class="wrapper">
     <div class="container-fluid">
@@ -275,4 +275,4 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 </div>
 <br><br><br>
 <!-- Pie de la página web -->
-<?php require_once VIEW_PATH . "pie.php"; ?>
+<?php require_once VIEW2_PATH . "pie.php"; ?>

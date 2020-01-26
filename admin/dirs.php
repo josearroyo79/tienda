@@ -5,6 +5,9 @@ if ( !defined('ROOT_PATH') )
 if ( !defined('VIEW_PATH') )
     define('VIEW_PATH', ROOT_PATH."vistas/");
 
+if ( !defined('VIEW2_PATH') )
+    define('VIEW2_PATH', ROOT_PATH."../vistas/");
+
 if ( !defined('CONTROLLER_PATH') )
     define('CONTROLLER_PATH', ROOT_PATH."controladores/");
 

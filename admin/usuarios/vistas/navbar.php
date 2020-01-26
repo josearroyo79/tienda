@@ -8,9 +8,8 @@
     // Abrimos las sesiones para leerla
     error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     session_start();
-    if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com" ){
+    if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com") {
       // Menú normal
-      echo '<li class="nav-item"><a class="nav-link" href="/tienda/admin/usuarios/vistas/contacto.php">Contacto</a></li>';
     } else {
       // Menu de administrador
       echo '<li class="nav-item">';
@@ -23,6 +22,9 @@
     }
     ?>
    <!--Para todos-->
+   <li class="nav-item">
+     <a class="nav-link" href="/tienda/admin/usuarios/vistas/contacto.php">Contacto</a>
+   </li>
    <li class="nav-item">
      <a class="nav-link" href="/tienda/admin/usuarios/vistas/informacion.php">Información</a>
    </li>
