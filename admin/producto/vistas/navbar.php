@@ -2,7 +2,7 @@
  <ul class="nav justify-content-center grey lighten-4 py-4">
    <img src="/tienda/admin/usuarios/imagenes/RR.png" alt="RR" width="40px" id="rr">
    <li class="nav-item">
-     <a class="nav-link active" href=<?php echo "/tienda/admin/producto/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
+     <a class="nav-link active" href=<?php echo "/tienda/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
    </li>
    <?php
     // Abrimos las sesiones para leerla

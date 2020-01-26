@@ -148,7 +148,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $tipo = $usuario->getTipo();
         $telefono = $usuario->getTelefono();
         $imagen = $usuario->getImagen();
-        $fecha = $usuario->getFecha();
         $imagenAnterior = $imagen;
     } else {
         // hay un error
