@@ -249,7 +249,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                 <!-- Fecha -->
                                 <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
                                     <b><label>Fecha de registro</label></b>
-                                    <input type="date" required name="fecha" class="form-control" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha))); ?>" minlength="1">
+                                    <input type="date" name="fecha" class="form-control" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha))); ?>" minlength="1">
                                     <span class="help-block"><?php echo $fechaErr; ?></span>
                                 </div>
                                 <!-- IMAGEN-->

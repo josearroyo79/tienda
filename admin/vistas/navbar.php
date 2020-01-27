@@ -65,9 +65,6 @@
     ?>
    <!--Para todos-->
    <li class="nav-item">
-     <a class="nav-link" href="/tienda/admin/vistas/contacto.php">Contacto</a>
-   </li>
-   <li class="nav-item">
      <a class="nav-link" href="/tienda/admin/vistas/informacion.php">Información</a>
    </li>
 
