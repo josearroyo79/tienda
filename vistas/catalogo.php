@@ -15,12 +15,62 @@ require_once VIEW_PATH . "cabecera.php";
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <style>
     @import "/tienda/style_catalogue/style_catalogue.css";
-</style>
+.search-box{
+	position: absolute;
+	top: 15%;
+    left: 15%;
+	transform: translate(-50%,-50%);
+	background:#353b48;
+	height: 60px;
+	border-radius: 50px;
+	padding: 10px;
+}
 
+.search-box:hover .search-txt{
+	width: 200px;
+	padding: 0 6px;
+}
+
+.search-box:hover .search-btn{
+	background: #fff;
+}
+
+
+.search-btn{
+	color:#e84118;
+	float: right;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #487eb0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.search-txt{
+	border:none;
+	outline: none;
+	background: none;
+	float: left;
+	padding: 0;
+	color:#fff;
+	font-size: 16px;
+	line-height: 40px;
+	width: 0;
+	transition: width 400ms;
+
+}
+</style>
+<!--BUSCADOR-->
 <form class="form-inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="no_imprimir">
-    <div class="form-group mx-sm-5 mb-2">
-        <input type="text" class="form-control" id="buscar" name="producto" placeholder="Nombre o Marca">
-    </div>
+    <div class="search-box">
+		<input id="buscar" name="producto" type="text" class="search-txt" placeholder="Buscar producto">
+		<a class="search-btn">
+			<i class="fas fa-search"></i>
+		</a>
+	</div>
 </form>
 <?php
 
@@ -71,9 +121,9 @@ if (count($resultados->datos) > 0) {
         echo '</div>';
         echo '</div>';
         echo '<ul class="social">';
-        echo '<li><a href="" data-tip="Ver producto"><i class="fa fa-search"></i></a></li>';
-        echo '<li><a href="" data-tip="Añadir a la lista de deseos"><i class="fa fa-shopping-bag"></i></a></li>';
-        echo '<li><a href="" data-tip="Añadir al carrito"><i class="fa fa-shopping-cart"></i></a></li>';
+        echo '<li><a href="/tienda/admin/producto/vistas/ficha.php?id=' . encode($producto->getId()) . '" data-tip="Ver producto"><i class="fa fa-search"></i></a></li>';
+        echo '<li><a href="#" data-tip="Añadir a la lista de deseos"><i class="fa fa-shopping-bag"></i></a></li>';
+        echo '<li><a href="#" data-tip="Añadir al carrito"><i class="fa fa-shopping-cart"></i></a></li>';
         echo '</ul>';
         echo '</div>';
         echo '</div>';
