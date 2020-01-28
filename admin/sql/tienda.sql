@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-01-2020 a las 23:32:58
+-- Tiempo de generación: 28-01-2020 a las 18:55:31
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -47,11 +47,10 @@ CREATE TABLE IF NOT EXISTS `productos` (
 --
 
 INSERT INTO `productos` (`id`, `nombre`, `tipo`, `marca`, `precio`, `unidades`, `imagen`) VALUES
-(1, 'tractor', '0-3', 'hl', '4.50', '55', '17f41f78d5426fe452f7cdea16cf2e18.jpeg'),
-(2, 'Camiónn de Bomberos Playmobil', '6-10', 'Playmobil', '49.99', '10', '84420d4010f5b0f8de072cf15af42db4.jpeg'),
-(3, 'Moto', '6-10', 'Ducati', '106.99', '4', 'c09b8f354bc6e13172c1f8729e4f8617.jpeg'),
-(4, 'Baby Boom Muñeco', '3-6', 'BabyBoom', '9.99', '500', '60e397abaf28f565b1c8ff76893dc69c.jpeg'),
-(5, 'Oso de Peluche', '0-3', 'Douglas', '2', '100', 'a4d2e3f0f67162ad3297eb274b13dcd4.jpeg'),
+(2, 'CamiÃ³n de bomberos', '6-10', 'Playmobil', '180.94', '15', '83ca376134160b7e5c983a7224e1142c.jpeg'),
+(3, 'Moto de juguete', '6-10', 'Ducati', '124.19', '3', '27706b97c8612922e2c944477157532d.jpeg'),
+(4, 'MuÃ±eco Baby Boom', '3-6', 'BabyBoom', '45.99', '54', 'ab635b9564a5700e86eee5eaffd4f63a.jpeg'),
+(5, 'Oso de Peluche', '0-3', 'Douglas', '14.95', '7', '4b4de8b0457dcbb4f26f0115630db23f.jpeg'),
 (6, 'Monopoly', '6-10', 'Monopoly', '19.99', '8', '788cf11e62a68e565831572330576c55.jpeg');
 
 -- --------------------------------------------------------
@@ -72,15 +71,15 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `imagen` text COLLATE utf8_spanish_ci NOT NULL,
   `fecha` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `correo`, `password`, `tipo`, `telefono`, `imagen`, `fecha`) VALUES
-(35, 'Administrador', 'sudosu', 'admin@admin.com', 'admin', 'ADMIN', 654621354, '9168fa96db95cda218867976147b50f2.png', '23/01/2020'),
-(41, 'prueba', 'prueba', 'prueba@prueba.com', 'prueba', 'USER', 246454654, '1ed0a86ece07e15c8052e160c54b8da7.png', '23-01-2020');
+(42, 'Administrador', 'Admin', 'admin@admin.com', 'admin', 'ADMIN', 654654654, '480c32be7c507eb4946e4b511809737b.png', '01/01/2020'),
+(43, 'Pepito', 'Prueba', 'prueba@prueba.com', 'prueba', 'USER', 666666666, '06e466d1c9bb911b315f988803dabbf4.png', '27/01/2020');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
