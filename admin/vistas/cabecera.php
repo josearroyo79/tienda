@@ -80,6 +80,13 @@ if (isset($_COOKIE['ACCESO'])) {
                 display: none
             }
         }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 53px;
+        }
     </style>
 
     <script type="text/javascript">

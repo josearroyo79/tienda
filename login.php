@@ -8,6 +8,7 @@
 		background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
 		background-size: cover;
 		background-repeat: no-repeat;
+		height: 100%;
 	}
 
 	.container {
@@ -86,6 +87,13 @@
 	.links a {
 		margin-left: 4px;
 	}
+
+	footer {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 53px;
+	}
 </style>
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
@@ -104,8 +112,8 @@ $controlador->salirSesion();
 
 // Procesamos la indetificación
 if (isset($_POST["correo"]) && isset($_POST["password"])) {
-    $controlador = ControladorAcceso::getControlador();
-    $controlador->procesarIdentificacion($_POST['correo'], $_POST['password']);
+	$controlador = ControladorAcceso::getControlador();
+	$controlador->procesarIdentificacion($_POST['correo'], $_POST['password']);
 }
 ?>
 <title>Iniciar sesión</title>
@@ -116,7 +124,7 @@ if (isset($_POST["correo"]) && isset($_POST["password"])) {
 				<h3>Inicio de sesión</h3>
 			</div>
 			<div class="card-body">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -134,7 +142,7 @@ if (isset($_POST["correo"]) && isset($_POST["password"])) {
 						<input type="checkbox">Recordar credenciales
 					</div>
 					<div class="form-group">
-					<button type="submit" class="btn btn-info btn-block my-4">Entrar</button>
+						<button type="submit" class="btn btn-info btn-block my-4">Entrar</button>
 					</div>
 				</form>
 			</div>

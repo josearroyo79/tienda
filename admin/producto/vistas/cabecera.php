@@ -25,6 +25,7 @@ if (isset($_COOKIE['ACCESO'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Gestión de productos</title>
@@ -71,11 +72,19 @@ if (isset($_COOKIE['ACCESO'])) {
         .nav li:hover>ul {
             display: block;
         }
-/*CSS para no imprimir las etiquetas que tengan id="no_imprimir"*/
+
+        /*CSS para no imprimir las etiquetas que tengan id="no_imprimir"*/
         @media print {
             #no_imprimir {
                 display: none
             }
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 53px;
         }
     </style>
 
