@@ -8,7 +8,6 @@
 		background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
 		background-size: cover;
 		background-repeat: no-repeat;
-		height: 100%;
 	}
 
 	.container {
@@ -87,7 +86,6 @@
 	.links a {
 		margin-left: 4px;
 	}
-
 	footer {
 		position: absolute;
 		bottom: 0;
