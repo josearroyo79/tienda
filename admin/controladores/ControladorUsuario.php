@@ -89,7 +89,7 @@ class ControladorUsuario {
     public function buscarUsuario($id){ 
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "SELECT* FROM usuarios WHERE id = :id";
+        $consulta = "SELECT * FROM usuarios WHERE id = :id";
         $parametros = array(':id' => $id);
         $filas = $bd->consultarBD($consulta, $parametros);
         $res = $bd->consultarBD($consulta,$parametros);

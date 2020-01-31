@@ -5,7 +5,7 @@
      <a class="nav-link active" href=<?php echo "/tienda/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
    </li>
    <?php
-    //error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
+    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     // Incluimos los ficheros que ncesitamos
     // Incluimos los directorios a trabajar
     require_once CONTROLLER_PATH . "ControladorUsuario.php";

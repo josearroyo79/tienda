@@ -5,7 +5,7 @@
      <a class="nav-link active" href=<?php echo "/tienda/admin/usuarios/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
    </li>
    <?php
-    //error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
+    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     // Incluimos los ficheros que ncesitamos
     // Incluimos los directorios a trabajar
     require_once CONTROLLER_PATH . "ControladorUsuario.php";
@@ -48,7 +48,7 @@
       $usuario->getFecha();
     }
     // Abrimos las sesiones para leerla
-    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
+    //error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     session_start();
     if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com") {
       // Menú normal

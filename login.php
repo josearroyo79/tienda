@@ -8,6 +8,7 @@
 		background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
 		background-size: cover;
 		background-repeat: no-repeat;
+		height: 100%;
 	}
 
 	.container {
@@ -86,6 +87,7 @@
 	.links a {
 		margin-left: 4px;
 	}
+
 	footer {
 		position: absolute;
 		bottom: 0;
@@ -97,6 +99,8 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorBD.php";
 require_once CONTROLLER_PATH . "ControladorAcceso.php";
+
+ob_start();
 
 //Debemos decir que no estamos identificando
 $controlador = ControladorAcceso::getControlador();

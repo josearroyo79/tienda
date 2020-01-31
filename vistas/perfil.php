@@ -1,19 +1,19 @@
 <?php
 // Incluimos el controlador a los objetos a usar
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagenUser.php";
 require_once UTILITY_PATH . "funciones.php";
 
 // Variables temporales
-$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen = $fecha = "";
+$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen =  $fecha = "";
 $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = $fechaErr = "";
 $imagenAnterior = "";
 
 $errores = [];
 
 // Procesamos la información obtenida por el get
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST["id"]) && !empty($_POST["id"])) {
     // Get hidden input value
     $id = $_POST["id"];
 
@@ -21,36 +21,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     /// Procesamos el nombre
     $nombreVal = filtrado(($_POST["nombre"]));
-    if (empty($nombreVal)) {
-        $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-        // Un ejemplo de validar expresiones regulares directamente desde PHP
-    } elseif (!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $nombreVal)) { //filter_var($nombreVal, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/([^\s][A-zÀ-ž\s]+$)/")))){
-        $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-    } else {
+    if(empty($nombreVal)){
+        $nombreErr = "Por favor introduzca un nombre";
+    } else{
         $nombre = $nombreVal;
     }
 
     $apellidos = filtrado($_POST["apellidos"]);
 
-    $correo = filtrado($_POST['correo']);
-    if (empty($correo)) {
-        $correoErr = "El correo no es correcto o no puede estar vacío";
-        $errores[] = $correoErr;
-    }
+    $correo = filtrado($_POST["correo"]);
 
-    $controlador = ControladorUsuario::getControlador();
+    $password = filtrado($_POST["password"]);
 
-    if (($controlador->buscarCorreo($correo) != 0) && ($controlador->buscarCorreo($correo) != $id)) {
-        $correoErr = "Ya existe un usuario en la BD con dicho correo electrónico";
-        $errores[] = $correoErr;
-    }
-
-    $password = filtrado($_POST['password']);
-    if (empty($password)) {
-        $passwordErr = "Contraseña incorrecta.";
-        $errores[] = $passwordErr;
-    }
     $tipo = filtrado($_POST["tipo"]);
+
+    // Procesamos fecha
+    $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
+    $hoy = date("d-m-Y", time());
+
+    // Comparamos las fechas
+    $fecha_mat = new DateTime($fecha);
+    $fecha_hoy = new DateTime($hoy);
+    $interval = $fecha_hoy->diff($fecha_mat);
+
+    if ($interval->format('%R%a días') > 0) {
+        $fechaErr = "La fecha no puede ser superior a la fecha actual";
+        $errores[] =  $fechaErr;
+    } else {
+        $fecha = date("d/m/Y", strtotime($fecha));
+    }
 
     $telefono = filtrado($_POST["telefono"]);
 
@@ -97,26 +96,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $imagen = trim($_POST["imagenAnterior"]);
     }
 
-    // Procesamos fecha
-    $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
-    $hoy = date("d-m-Y", time());
-
-    // Comparamos las fechas
-    $fecha_mat = new DateTime($fecha);
-    $fecha_hoy = new DateTime($hoy);
-    $interval = $fecha_hoy->diff($fecha_mat);
-
-    if ($interval->format('%R%a días') > 0) {
-        $fechaErr = "La fecha no puede ser superior a la fecha actual";
-        $errores[] =  $fechaErr;
-    } else {
-        $fecha = date("d/m/Y", strtotime($fecha));
-    }
 
     // Chequeamos los errores antes de insertar en la base de datos
     if (
-        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) &&
-        empty($telefonoErr) && empty($imagenErr)
+        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
+        empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
     ) {
         // creamos el controlador de alumnado
         $controlador = ControladorUsuario::getControlador();
@@ -148,6 +132,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $tipo = $usuario->getTipo();
         $telefono = $usuario->getTelefono();
         $imagen = $usuario->getImagen();
+        $fecha = $usuario->getFecha();
         $imagenAnterior = $imagen;
     } else {
         // hay un error
@@ -163,7 +148,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 ?>
 
 <!-- Cabecera de la página web -->
-<?php require_once VIEW2_PATH . "cabecera.php"; ?>
+<?php require_once VIEW_PATH . "cabecera.php"; ?>
 <!-- Cuerpo de la página web -->
 <div class="wrapper">
     <div class="container-fluid">
@@ -176,7 +161,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                 <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
                     <table class="table table-hover">
                         <tr>
-                            <!-- NOMBRE -->
                             <td>
                                 <b><label>NOMBRE</label></b>
                                 <div class="md-form <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
@@ -222,8 +206,8 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td hidden>
+                        <tr hidden>
+                            <td>
                                 <!--TIPO-->
                                 <div class="form-group">
                                     <b><label>TIPO</label></b>
@@ -244,12 +228,12 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td hidden>
+                        <tr hidden>
+                            <td>
                                 <!-- Fecha -->
                                 <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
                                     <b><label>Fecha de registro</label></b>
-                                    <input type="date" name="fecha" class="form-control" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha))); ?>" minlength="1">
+                                    <input type="date" required name="fecha" class="form-control" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha))); ?>" minlength="1">
                                     <span class="help-block"><?php echo $fechaErr; ?></span>
                                 </div>
                                 <!-- IMAGEN-->
@@ -274,4 +258,4 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 </div>
 <br><br><br>
 <!-- Pie de la página web -->
-<?php require_once VIEW2_PATH . "pie.php"; ?>
+<?php require_once VIEW_PATH . "pie.php"; ?>
