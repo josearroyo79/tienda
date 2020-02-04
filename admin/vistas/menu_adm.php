@@ -14,12 +14,11 @@ session_start();
 if (!isset($_SESSION['USUARIO']['correo'])) {
     header("location: /tienda/login.php");
     exit();
+} else if ($_SESSION['tipo'] != "ADMIN"){
+    header("location: vistas/error.php");
+        exit();
 }
 
-if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com") {
-    header("location: vistas/error.php");
-    exit();
-} else {
     echo '<h1>ESTE ES EL MENÚ DE ADMINISTRADOR</h1>';
     echo "<div class='span1'>";
     echo "<a id='boton' href='producto/index.php' class='btn btn-primary'>";
@@ -45,6 +44,5 @@ if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) !
     echo '<span><strong>SALIR</strong></span>';
     echo '</a>';
     echo '</div>';
-}
 ?>
 <br><br><br>

@@ -5,7 +5,6 @@
      <a class="nav-link active" href=<?php echo "/tienda/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
    </li>
    <?php
-    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     // Incluimos los ficheros que ncesitamos
     // Incluimos los directorios a trabajar
     require_once CONTROLLER_PATH . "ControladorUsuario.php";
@@ -50,9 +49,13 @@
     // Abrimos las sesiones para leerla
     error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     session_start();
-    if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com") {
-      // Menú normal
-    } else {
+    if (!isset($_SESSION['USUARIO']['correo'])) {
+        header("location: /tienda/login.php");
+        exit();
+    } else if ($_SESSION['tipo'] != "ADMIN"){
+        header("location: vistas/error.php");
+            exit();
+    }
       // Menu de administrador
       echo '<li class="nav-item">';
       echo '<a class="nav-link" href="#"><i class="fas fa-tools"></i> Administrador</a>';
@@ -61,7 +64,6 @@
       echo '<li><a href=""><i class="fas fa-arrow-right"></i> Menu admin 2</a></li>';
       echo '</ul>';
       echo '</li>';
-    }
     ?>
    <!--Para todos-->
    <li class="nav-item">

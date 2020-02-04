@@ -5,7 +5,7 @@
      <a class="nav-link active" href=<?php echo "/tienda/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
    </li>
    <?php
-    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
+    //error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     // Incluimos los ficheros que ncesitamos
     // Incluimos los directorios a trabajar
     require_once CONTROLLER_PATH . "ControladorUsuario.php";
@@ -27,7 +27,7 @@
 
     //Menu ADMINISTRADOR
 
-    // Consulta a realizar
+    // Consulta a realizar -- esto lo cambiaré para la semana que viene
     $consulta = "SELECT * FROM usuarios WHERE correo LIKE :correo";
     $parametros = array(':correo' => "%" . $correo . "%");
     $limite = 3; // Limite del paginador
@@ -52,7 +52,6 @@
     session_start();
     if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com") {
       // Menú normal
-
     } else {
       // Menu de administrador
       echo '<li class="nav-item">';
@@ -68,16 +67,13 @@
    <li class="nav-item">
      <a class="nav-link" href="/tienda/admin/vistas/informacion.php">Información</a>
    </li>
-   
 
    <?php
     if (!isset($_SESSION['USUARIO']['correo'])) {
       echo '<li class="nav-item">';
       echo '<a class="nav-link2" href="/tienda/login.php"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>';
       echo '</li>';
-      
     } else {
-      echo '<li><a class="text-success" href="carrito.php"><i class="fas fa-shopping-basket"></i></a></li>';
       echo '<li><a href="/tienda/vistas/perfil.php?id=' . encode($usuario->getId()) . '"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['USUARIO']['correo'] . '</a></li>';
       echo '<li><a href="/tienda/login.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';
     }

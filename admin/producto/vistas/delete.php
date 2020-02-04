@@ -45,65 +45,56 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 <!-- Cuerpo de la página web -->
 <div class="wrapper">
     <div class="container-fluid">
+
         <div class="row">
             <div class="col-md-12">
                 <div class="page-header">
-                    <h1>Ficha de productos</h1>
+                    <h1>Borrar Producto</h1>
                 </div>
-                <table class="table table-hover">
+                <!-- Muestro los datos del alumno-->
+                <table>
                     <tr>
-                        <td>
-                            <!-- Muestro los datos del usuario-->
-                            <b><label>NOMBRE</label></b>
-                            <p class="form-control-static"><?php echo $producto->getNombre(); ?></p>
+                        <td class="col-xs-11" class="align-top">
+                            <div class="form-group" class="align-left">
+                                <!-- Muestro los datos del alumno-->
+                                <div class="form-group">
+                                    <label>Nombre</label>
+                                    <p class="form-control-static"><?php echo $producto->getNombre(); ?></p>
+                                </div>
                         </td>
-                        <td>
-                            <b><label>IMAGEN</label></b></br>
-                            <img src='<?php echo "../imagen_producto/" . $producto->getImagen() ?>' class='rounded' class='img-thumbnail' width='100' height='auto'>
+                        <td class="align-left">
+                            <label>Fotografía</label><br>
+                            <img src='<?php echo "../imagen_producto/" . $producto->getImagen() ?>' class='rounded' class='img-thumbnail' width='48' height='auto'>
                         </td>
                     </tr>
                 </table>
-                <table class="table table-hover">
-                    <tr>
-                        <td>
-                            <b><label>TIPO</label></b>
-                            <p class="form-control-static"><?php echo $producto->getTipo(); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b><label>MARCA</label></b>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <p class="form-control-static"><?php echo $producto->getTipo(); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Marca</label>
                             <p class="form-control-static"><?php echo $producto->getMarca(); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b><label>PRECIO</label></b>
-                            <p class="form-control-static"><?php echo $producto->getPrecio()."€"; ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b><label>UNIDADES</label></b>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio</label>
+                        <p class="form-control-static"><?php echo $producto->getPrecio()."€"; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Unidades</label>
                             <p class="form-control-static"><?php echo $producto->getUnidades(); ?></p>
-                        </td>
-                    </tr>
-                </table>
+                    </div>
                 <!-- Me llamo a mi mismo pero pasando GET -->
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <div class="alert alert-danger" role="alert">
-                        <input type="hidden" name="id" value="<?php echo trim($id); ?>" />
-                        <p>¿Está seguro que desea borrar este producto?</p><br>
+                    <div class="alert alert-danger fade in">
+                        <input type="hidden" name="id" value="<?php echo trim($id); ?>"/>
+                        <p>¿Está seguro que desea borrar este articulo?</p><br>
                         <p>
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Borrar</button>
-                            <a href="/tienda/admin/producto/index.php" class="btn btn-unique"><i class="fas fa-undo-alt"></i> Volver</a>
+                            <button type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>  Borrar</button>
+                            <a href="../index.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                         </p>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
             </div>
         </div>        
     </div>

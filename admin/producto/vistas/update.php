@@ -33,16 +33,11 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     } else{
         $marca = $marcaVal;
     }
-    if(isset($_POST["precio"])){
-        $precio = filtrado($_POST["precio"]);
-    }
-    //$precio = filtrado($_POST["precio"]);
 
-    //$unidades = filtrado($_POST["unidades"]);
-    if(isset($_POST["unidades"])){
-        $unidades = filtrado($_POST["unidades"]);
-    }
-    
+    $precio = filtrado($_POST["precio"]);
+
+    $unidades = filtrado($_POST["unidades"]);
+
     
     if($_FILES['imagen']['size']>0 && count($errores)==0){
         $propiedades = explode("/", $_FILES['imagen']['type']);
@@ -158,10 +153,10 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         <input type="text" required name="marca" value="<?php echo $marca; ?>"><hr>
 
         <label>Precio</label>: 
-        <input type="number" name="precio" min="0" max="99999" step="0.01" value="<?php echo $precio; ?>">€<hr>
+        <input type="number" name="precio" min="0" max="99999" step="0.01" value="0"><hr>
 
         <label>Unidades</label>: 
-        <input type="number" name="unidades" min="0" max="999" step="1" value="<?php echo $unidades; ?>"><hr>
+        <input type="number" name="unidades" min="0" max="999" step="1" value="0"><hr>
 
         <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>
         <label>Imagen: </label>

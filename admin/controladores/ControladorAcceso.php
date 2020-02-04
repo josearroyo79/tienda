@@ -59,13 +59,22 @@ class ControladorAcceso {
             $filas=$res->fetchAll(PDO::FETCH_OBJ);
             //var_dump($filas);
             if (count($filas) > 0) {
-                 // abrimos las sesiones
-                 //session_start();
-                 // Almacenamos el usuario en la sesion.
-                 $_SESSION['USUARIO']['correo']=$correo;
-                 header("location: /tienda/index.php"); 
-                 exit();              
-            } else {
+                // abrimos las sesiones
+                session_start();
+                // Almacenamos el usuario en la sesion.
+                $usuario = new usuario($filas[0]->id, $filas[0]->nombre, $filas[0]->apellidos, $filas[0]->correo, $filas[0]->password, $filas[0]->tipo, $filas[0]->imagen, $filas[0]->telefono, $filas[0]->f_alta);
+                $_SESSION['nombre'] = $usuario->getNombre();
+               $_SESSION['apellido'] = $usuario->getApellidos();
+               $_SESSION['tipo'] = $usuario->getTipo();
+               $_SESSION['correo'] = $usuario->getCorreo();
+               $_SESSION['imagen'] = $usuario->getImagen();
+               $_SESSION['id'] = $usuario->getId();
+                $_SESSION['USUARIO']['correo']=$correo;
+               
+                header("location: /tienda/index.php"); 
+                exit();              
+                             
+           } else {
                 echo "<div class='wrapper'>";
                     echo "<div class='container-fluid'>";
                         echo "<div class='row'>";
