@@ -4,6 +4,9 @@ session_start();
 if (!isset($_SESSION['USUARIO']['correo'])) {
     header("location: /tienda/login.php");
     exit();
+} else if ($_SESSION['tipo'] != "ADMIN"){
+    header("location: /tienda/admin/vistas/error.php");
+        exit();
 }
 
 require_once $_SERVER['DOCUMENT_ROOT']."/tienda/admin/producto/dirs.php";

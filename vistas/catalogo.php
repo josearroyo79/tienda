@@ -95,7 +95,7 @@ $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
 // Consulta a realizar -- esto lo cambiaré para la semana que viene
 $consulta = "SELECT * FROM productos WHERE nombre LIKE :nombre OR marca LIKE :marca";
 $parametros = array(':nombre' => "%" . $nombre . "%", ':nombre' => "%" . $nombre . "%", ':marca' => "%" . $marca . "%");
-$limite = 10; // Limite del paginador
+$limite = 100; // Limite del paginador
 $paginador  = new Paginador($consulta, $parametros, $limite);
 $resultados = $paginador->getDatos($pagina);
 
@@ -117,7 +117,7 @@ if (count($resultados->datos) > 0) {
         echo '<div class="product-content">';
         echo '<h3 class="title"><a href="#">' . $producto->getNombre() . '</a></h3>';
         echo '<div class="price">' . $producto->getPrecio() . ' €';
-        //echo '<span>$14.00</span>';
+        //echo '<span>$14.00</span>'; --> PARA PONER DESCUENTO
         echo '</div>';
         echo '</div>';
         echo '<ul class="social">';

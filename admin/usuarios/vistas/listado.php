@@ -4,9 +4,9 @@ session_start();
 if (!isset($_SESSION['USUARIO']['correo'])) {
     header("location: /tienda/login.php");
     exit();
-} elseif (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com") {
-    header("location: /tienda/admin/usuarios/vistas/auth.php");
-    exit();
+} else if ($_SESSION['tipo'] != "ADMIN"){
+    header("location: /tienda/admin/vistas/error.php");
+        exit();
 }
 ?>
 <div class="container-fluid">
