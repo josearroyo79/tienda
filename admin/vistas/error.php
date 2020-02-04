@@ -3,121 +3,249 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <style>
-* {
-  margin: 0;
-  padding: 0;
-}
+h4{
+        color: #253858;
+        margin-bottom: .8rem;
+        position: relative;
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.5rem;
+    }
+    p{
+        margin-top: 0;
+        margin-bottom: 1rem;
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        color: rgb(113, 120, 126);
+        font-family: 'Lato', sans-serif;
+    }
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+    .btn-primary {
+        color: #fff;
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+    .btn-round {
+        border-radius: 30px !important;
+        text-decoration: none;
+    }
 
-a {
-  text-decoration: none;
-}
-
-body {
-  font-weight: 600;
-  color: #343434;
-}
-
-.error_section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  background-image: linear-gradient(-225deg, #1A1A1A, #343434);
-}
-.error_section_subtitle {
-  color: #25F193;
-  text-transform: uppercase;
-  letter-spacing: 5pt;
-  font-weight: 500;
-  font-size: 0.8rem;
-  margin-bottom: -5em;
-}
-.error_section .error_title {
-  --x-shadow: 0;
-  --y-shadow: 0;
-  --x:50%;
-  --y:50%;
-  font-size: 15rem;
-  transition: all 0.2s ease;
-  position: relative;
-  padding: 2rem;
-}
-.error_section .error_title:hover {
-  transition: all 0.2s ease;
-  text-shadow: var(--x-shadow) var(--y-shadow) 10px #1A1A1A;
-}
-.error_section .error_title p {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  background-image: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.05), transparent);
-  background-position: var(--x) var(--y);
-  background-repeat: no-repeat;
-  text-shadow: none;
-  --webkit-background-clip: text;
-  --webkit-text-fill-color: transparent;
-  transition: all 0.1s ease;
-}
-
-.btn {
-  padding: 0.8em 1.5em;
-  border-radius: 99999px;
-  background-image: linear-gradient(to top, #03A9F4, #00BCD4);
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2), inset 0px -2px 5px 0px rgba(0, 0, 0, 0.2);
-  border: none;
-  cursor: pointer;
-  text-shadow: 0px 1px #343434;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 1.5pt;
-  font-size: 0.8rem;
-  font-weight: 700;
-  transition: ease-out 0.2s all;
-}
-.btn:hover {
-  text-shadow: 0px 1px 1px #ffffff;
-  transform: translateY(-5px);
-  box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.1), inset 0px -3px 7px 0px rgba(0, 0, 0, 0.2);
-  transition: ease-out 0.2s all;
-}
+    .btn {
+        font-size: 15px;
+        font-weight: 600;
+        padding: 9px 25px;
+        border-width: 2px;
+        box-shadow: 0 3px 8px 0 rgba(41,49,89,.15), inset 0 0 0 1px hsla(0,0%,100%,.1);
+    }
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: .25rem;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    .btn:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
+    /*[404 error page]
+--------------------------*/
+    .error-content {
+        padding: 0 0 70px;
+    }
+    .error-text{
+        text-align: center;
+    }
+    .error {
+        font-size: 180px;
+        font-weight: 100;
+    }
+    @keyframes bob {
+        0% {
+            top: 0;
+        }
+        50% {
+            top: 0.2em;
+        }
+    }
+    .im-sheep {
+        display: inline-block;
+        position: relative;
+        font-size: 1em;
+        margin-bottom: 70px;
+    }
+    .im-sheep * {
+        transition: transform 0.3s;
+    }
+    .im-sheep .top {
+        position: relative;
+        top: 0;
+        animation: bob 1s infinite;
+    }
+    .im-sheep:hover .head {
+        transform: rotate(0deg);
+    }
+    .im-sheep:hover .head .im-eye {
+        width: 1.25em;
+        height: 1.25em;
+    }
+    .im-sheep:hover .head .im-eye:before {
+        right: 30%;
+    }
+    .im-sheep:hover .top {
+        animation-play-state: paused;
+    }
+    .im-sheep .head {
+        display: inline-block;
+        width: 5em;
+        height: 5em;
+        border-radius: 100%;
+        background: #253858;
+        vertical-align: middle;
+        position: relative;
+        top: 1em;
+        transform: rotate(30deg);
+    }
+    .im-sheep .head:before {
+        content: '';
+        display: inline-block;
+        width: 80%;
+        height: 50%;
+        background: #253858;
+        position: absolute;
+        bottom: 0;
+        right: -10%;
+        border-radius: 50% 40%;
+    }
+    .im-sheep .head:hover .im-ear.one, .im-sheep .head:hover .im-ear.two {
+        transform: rotate(0deg);
+    }
+    .im-sheep .head .im-eye {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        border-radius: 100%;
+        background: white;
+        position: absolute;
+        overflow: hidden;
+    }
+    .im-sheep .head .im-eye:before {
+        content: '';
+        display: inline-block;
+        background: black;
+        width: 50%;
+        height: 50%;
+        border-radius: 100%;
+        position: absolute;
+        right: 10%;
+        bottom: 10%;
+        transition: all 0.3s;
+    }
+    .im-sheep .head .im-eye.one {
+        right: -2%;
+        top: 1.7em;
+    }
+    .im-sheep .head .im-eye.two {
+        right: 2.5em;
+        top: 1.7em;
+    }
+    .im-sheep .head .im-ear {
+        background: #253858;
+        width: 50%;
+        height: 30%;
+        border-radius: 100%;
+        position: absolute;
+    }
+    .im-sheep .head .im-ear.one {
+        left: -10%;
+        top: 5%;
+        transform: rotate(-30deg);
+    }
+    .im-sheep .head .im-ear.two {
+        top: 2%;
+        right: -5%;
+        transform: rotate(20deg);
+    }
+    .im-sheep .body {
+        display: inline-block;
+        width: 7em;
+        height: 7em;
+        border-radius: 100%;
+        background: #0054D1;
+        position: relative;
+        vertical-align: middle;
+        margin-right: -3em;
+    }
+    .im-sheep .im-legs {
+        display: inline-block;
+        position: absolute;
+        top: 80%;
+        left: 10%;
+        z-index: -1;
+    }
+    .im-sheep .im-legs .im-leg {
+        display: inline-block;
+        background: #141214;
+        width: 0.5em;
+        height: 2.5em;
+        margin: 0.2em;
+    }
+    .im-sheep::before {
+        left: 0;
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 112%;
+        width: 100%;
+        height: 18%;
+        border-radius: 100%;
+        background: rgba(0, 0, 0, 0.2);
+    }
 </style>
-<script>
 
- 
-const title = document.querySelector('.error_title')
-
-
-//////// Light //////////
-document.onmousemove = function(e) {
-  let x = e.pageX - window.innerWidth/2;
-  let y = e.pageY - window.innerHeight/2;
-  
-  title.style.setProperty('--x', x + 'px')
-  title.style.setProperty('--y', y + 'px')
-}
-
-////////////// Shadow ///////////////////
-title.onmousemove = function(e) {
-  let x = e.pageX - window.innerWidth/2;
-  let y = e.pageY - window.innerHeight/2;
-
-  let rad = Math.atan2(y, x).toFixed(2); 
-  let length = Math.round(Math.sqrt((Math.pow(x,2))+(Math.pow(y,2)))/10); 
-
-  let x_shadow = Math.round(length * Math.cos(rad));
-  let y_shadow = Math.round(length * Math.sin(rad));
-
-  title.style.setProperty('--x-shadow', - x_shadow + 'px')
-  title.style.setProperty('--y-shadow', - y_shadow + 'px')
-
-}
-</script>
-    <section class="error_section">
-      <p class="error_section_subtitle">¡OOPS Ha habido algún problema!</p>
-      <h1 class="error_title">
-        <p>404</p>
-        404
-      </h1>
-      <a href="/tienda/index.php" class="btn">Volver al inicio</a>
-    </section>
+<div class="error-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="error-text">
+                    <h1 class="error">¡ERR0R!</h1>
+                    <div class="im-sheep">
+                        <div class="top">
+                            <div class="body"></div>
+                            <div class="head">
+                                <div class="im-eye one"></div>
+                                <div class="im-eye two"></div>
+                                <div class="im-ear one"></div>
+                                <div class="im-ear two"></div>
+                            </div>
+                        </div>
+                        <div class="im-legs">
+                            <div class="im-leg"></div>
+                            <div class="im-leg"></div>
+                            <div class="im-leg"></div>
+                            <div class="im-leg"></div>
+                        </div>
+                    </div>
+                    <h4>¡OOPS Algo no ha funcionado!</h4>
+                    <p>No tienes permisos suficientes para entar aquí o hay algún error...</p>
+                    <a href="/tienda/index.php" class="btn btn-primary btn-round">Ir a la página principal</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,7 @@
     // Abrimos las sesiones para leerla
     error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     session_start();
-    if (!isset($_SESSION['USUARIO']['correo']) || ($_SESSION['USUARIO']['correo']) != "admin@admin.com") {
+    if ($_SESSION['tipo'] != "ADMIN") {
       // Menú normal
     } else {
       // Menu de administrador
