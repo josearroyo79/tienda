@@ -12,7 +12,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     $producto = $controlador->buscarProducto($id);
     if (is_null($producto)) {
         // hay un error
-        header("location: error.php");
+        header("location: /tienda/admin/vistas/error.php");
         exit();
     }
 }

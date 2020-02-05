@@ -50,17 +50,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         $unidades = filtrado($_POST["unidades"]);
     }
     
-
+//IMAGEN
     $propiedades = explode("/", $_FILES['imagen']['type']);
     $extension = $propiedades[1];
     $tam_max = 1000000; // 1MB
     $tam = $_FILES['imagen']['size'];
     $mod = true;
 
-    //if($extension != "jpg" || $extension != "png"){
-      //  $mod = false;
-       // $imagenErr= "Formato debe ser jpg/png";
-   // }
+    // Si no coicide la extensión
+    if ($extension != "jpg" && $extension != "jpeg" && $extension != "png") {
+        $mod = false;
+        $imagenErr = "Formato debe ser jpg/jpeg/png";
+    }
 
     if($tam>$tam_max){
         $mod = false;
@@ -82,7 +83,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
             header("location: ../index.php");
             exit();
         }else{
-            header("location: error.php");
+            header("location: /tienda/admin/vistas/error.php");
             exit();
         }
     }else{
@@ -126,7 +127,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
         <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>
         <label>Imagen: </label>
-        <input type="file" required name="imagen" class="form-control-file" id="imagen" accept="image/jpeg"><?php echo $imagenErr;?><hr>
+        <input type="file" required name="imagen" class="form-control-file" id="imagen" accept="image/jpeg, image/png"><?php echo $imagenErr;?><hr>
         <button type="submit" name= "aceptar" value="aceptar" class="btn btn-success"> <span class="glyphicon glyphicon-floppy-save"></span>  Aceptar</button>
         <button type="reset" value="reset" class="btn btn-info"> <span class="glyphicon glyphicon-repeat"></span>  Limpiar</button>
         <a href="../index.php" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Cancelar</a>

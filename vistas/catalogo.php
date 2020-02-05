@@ -82,13 +82,12 @@ if (!isset($_POST["producto"])) {
     $nombre = filtrado($_POST["producto"]);
     $marca = filtrado($_POST["producto"]);
 }
-// Cargamos el controlador de alumnos
+// Cargamos el controlador de producto y usuarios
 $controlador = ControladorProducto::getControlador();
 
 // Parte del paginador
 $pagina = (isset($_GET['page'])) ? $_GET['page'] : 1;
 $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
-
 
 //$lista = $controlador->listarAlumnos($nombre, $dni); //-- > Lo hará el paginador
 

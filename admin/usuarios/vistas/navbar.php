@@ -2,10 +2,10 @@
  <ul class="nav justify-content-center grey lighten-4 py-4">
    <img src="/tienda/admin/usuarios/imagenes/RR.png" alt="RR" width="40px" id="rr">
    <li class="nav-item">
-     <a class="nav-link active" href=<?php echo "/tienda/admin/usuarios/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
+     <a class="nav-link active" href=<?php echo "/tienda/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
    </li>
    <?php
-    //error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
+    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     // Incluimos los ficheros que ncesitamos
     // Incluimos los directorios a trabajar
     require_once CONTROLLER_PATH . "ControladorUsuario.php";
@@ -48,7 +48,6 @@
       $usuario->getFecha();
     }
     // Abrimos las sesiones para leerla
-    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     session_start();
     if ($_SESSION['tipo'] != "ADMIN") {
       // Menú normal
@@ -58,7 +57,7 @@
       echo '<a class="nav-link" href="#"><i class="fas fa-tools"></i> Administrador</a>';
       echo '<ul>';
       echo '<li><a href="/tienda/admin"><i class="fas fa-arrow-right"></i>Panel de administración</a></li>';
-      echo '<li><a href=""><i class="fas fa-arrow-right"></i> Menu admin 2</a></li>';
+      //echo '<li><a href=""><i class="fas fa-arrow-right"></i> Menu admin 2</a></li>';
       echo '</ul>';
       echo '</li>';
     }
@@ -67,9 +66,10 @@
    <li class="nav-item">
      <a class="nav-link" href="/tienda/index.php">Catálogo</a>
    </li>
+   <!--
    <li class="nav-item">
-     <a class="nav-link" href="/tienda/admin/usuarios/vistas/informacion.php">Información</a>
-   </li>
+     <a class="nav-link" href="/tienda/admin/vistas/informacion.php">Información</a>
+   </li>-->
 
    <?php
     if (!isset($_SESSION['USUARIO']['correo'])) {

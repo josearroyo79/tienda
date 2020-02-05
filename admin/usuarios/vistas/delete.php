@@ -11,7 +11,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     $usuario = $controlador->buscarUsuario($id);
     if (is_null($usuario)) {
         // hay un error
-        header("location: error.php");
+        header("location: /tienda/admin/vistas/error.php");
         exit();
     }
 }
@@ -27,11 +27,11 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
             header("location: ../index.php");
             exit();
         } else {
-            header("location: error.php");
+            header("location: /tienda/admin/vistas/error.php");
             exit();
         }
     } else {
-        header("location: error.php");
+        header("location: /tienda/admin/vistas/error.php");
         exit();
     }
 }

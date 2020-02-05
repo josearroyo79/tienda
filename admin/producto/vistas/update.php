@@ -33,11 +33,16 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     } else{
         $marca = $marcaVal;
     }
+    if(isset($_POST["precio"])){
+        $precio = filtrado($_POST["precio"]);
+    }
+    //$precio = filtrado($_POST["precio"]);
 
-    $precio = filtrado($_POST["precio"]);
-
-    $unidades = filtrado($_POST["unidades"]);
-
+    //$unidades = filtrado($_POST["unidades"]);
+    if(isset($_POST["unidades"])){
+        $unidades = filtrado($_POST["unidades"]);
+    }
+    
     
     if($_FILES['imagen']['size']>0 && count($errores)==0){
         $propiedades = explode("/", $_FILES['imagen']['type']);
@@ -91,7 +96,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             header("location: ../index.php");
             exit();
         }else{
-            header("location: error.php");
+            header("location: /tienda/admin/vistas/error.php");
            // echo "Error0";
             exit();
         }
@@ -116,13 +121,13 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         $imagenAnterior = $imagen;
     }else{
     // hay un error
-        header("location: error.php");
+        header("location: /tienda/admin/vistas/error.php");
        // echo "Error1";
         exit();
     }
 }else{
      // hay un error
-        header("location: error.php");
+        header("location: /tienda/admin/vistas/error.php");
        // echo "Error2";
         exit();
 }
@@ -153,14 +158,14 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         <input type="text" required name="marca" value="<?php echo $marca; ?>"><hr>
 
         <label>Precio</label>: 
-        <input type="number" name="precio" min="0" max="99999" step="0.01" value="0"><hr>
+        <input type="number" name="precio" min="0" max="99999" step="0.01" value="<?php echo $precio; ?>">€<hr>
 
         <label>Unidades</label>: 
-        <input type="number" name="unidades" min="0" max="999" step="1" value="0"><hr>
+        <input type="number" name="unidades" min="0" max="999" step="1" value="<?php echo $unidades; ?>"><hr>
 
         <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>
         <label>Imagen: </label>
-        <input type="file" required name="imagen" class="form-control-file" id="imagen" accept="image/jpeg"><?php echo $imagenErr;?><hr>
+        <input type="file" required name="imagen" class="form-control-file" id="imagen" accept="image/jpeg, image/png"><?php echo $imagenErr;?><hr>
         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
         <input type="hidden" name="imagenAnterior" value="<?php echo $imagenAnterior; ?>"/>
         <button type="submit" value="aceptar" class="btn btn-warning"> <span class="glyphicon glyphicon-refresh"></span>  Modificar</button>

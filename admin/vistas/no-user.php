@@ -224,6 +224,7 @@ h4{
             <div class="col-md-12 ">
                 <div class="error-text">
                     <h1 class="error">¡ERR0R!</h1>
+                    <h2> Usuario incorrecto</h2>
                     <div class="im-sheep">
                         <div class="top">
                             <div class="body"></div>
@@ -241,8 +242,9 @@ h4{
                             <div class="im-leg"></div>
                         </div>
                     </div>
-                    <h4>¡OOPS Algo no ha funcionado!</h4>
-                    <p>No tienes permisos suficientes para entar aquí o hay algún error de procesamiento...</p>
+                    <h4>¡OOPS Parece que los credenciales introducidos no son los correctos!</h4>
+                    <p>Puedes volver a intentar el inicio de sesión o volver a la página principal...</p>
+                    <a href="/tienda/login.php" class="btn btn-primary btn-round">Volver a intentar</a>
                     <a href="/tienda/index.php" class="btn btn-primary btn-round">Ir a la página principal</a>
                 </div>
             </div>

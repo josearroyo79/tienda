@@ -138,7 +138,7 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
                 header("location: ../index.php");
                 exit();
             } else {
-                header("location: error.php");
+                header("location: /tienda/admin/vistas/error.php");
                 exit();
             }
         }

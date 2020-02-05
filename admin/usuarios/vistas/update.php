@@ -114,7 +114,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
             header("location: ../index.php");
             exit();
         } else {
-            header("location: error.php");
+            header("location: /tienda/admin/vistas/error.php");
             exit();
         }
     } else {
@@ -139,12 +139,12 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $imagenAnterior = $imagen;
     } else {
         // hay un error
-        header("location: error.php");
+        header("location: /tienda/admin/vistas/error.php");
         exit();
     }
 } else {
     // hay un error
-    header("location: error.php");
+    header("location: /tienda/admin/vistas/error.php");
     exit();
 }
 
@@ -167,7 +167,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                             <td>
                                 <b><label>NOMBRE</label></b>
                                 <div class="md-form <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
-                                    <input placeholder="Nombre" required name="nombre" type="text" id="inputPlaceholderEx" class="form-control" value="<?php echo $nombre; ?>" pattern="([^\s][A-zÀ-ž\s]+)" title="El nombre no puede contener números" minlength="3">
+                                    <input placeholder="Nombre" required name="nombre" type="text" id="inputPlaceholderEx" class="form-control" value="<?php echo $nombre = $usuario->getNombre(); ?>" pattern="([^\s][A-zÀ-ž\s]+)" title="El nombre no puede contener números" minlength="3">
                                     <span class="help-block"><?php echo $nombreErr; ?></span>
                                 </div>
                             </td>
@@ -243,7 +243,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                 <div class="form-group <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>">
                                     <label>IMAGEN</label>
                                     <!-- Solo acepto imagenes jpg -->
-                                    <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg" accept="image/png">
+                                    <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/jpeg, image/png">
                                     <span class="help-block"><?php echo $imagenErr; ?></span>
                                 </div>
                             </td>

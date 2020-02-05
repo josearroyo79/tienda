@@ -16,7 +16,7 @@
       echo '<a class="nav-link" href="#"><i class="fas fa-tools"></i> Administrador</a>';
       echo '<ul>';
       echo '<li><a href="/tienda/admin"><i class="fas fa-arrow-right"></i>Panel de administración</a></li>';
-      echo '<li><a href=""><i class="fas fa-arrow-right"></i> Menu admin 2</a></li>';
+      //echo '<li><a href=""><i class="fas fa-arrow-right"></i> Menu admin 2</a></li>';
       echo '</ul>';
       echo '</li>';
     }
@@ -25,9 +25,10 @@
    <li class="nav-item">
      <a class="nav-link" href="/tienda/index.php">Catálogo</a>
    </li>
+   <!--
    <li class="nav-item">
-     <a class="nav-link" href="/tienda/admin/producto/vistas/informacion.php">Información</a>
-   </li>
+     <a class="nav-link" href="/tienda/admin/vistas/informacion.php">Información</a>
+   </li>-->
 
    <?php
     if (!isset($_SESSION['USUARIO']['correo'])) {
