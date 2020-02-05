@@ -60,10 +60,10 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 
             //Menu ADMINISTRADOR
 
-            // Consulta a realizar -- esto lo cambiaré para la semana que viene
+            // Consulta a realizar
             $consulta = "SELECT * FROM usuarios WHERE nombre LIKE :nombre";
             $parametros = array(':nombre' => "%" . $nombre . "%");
-            $limite = 3; // Limite del paginador
+            $limite = 100; // Limite del paginador
             $paginador  = new Paginador($consulta, $parametros, $limite);
             $resultados = $paginador->getDatos($pagina);
             if (count($resultados->datos) > 0) {
