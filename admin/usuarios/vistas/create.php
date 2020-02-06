@@ -99,7 +99,7 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
         if ($_FILES['imagen']['size'] > 0) {
             $propiedades = explode("/", $_FILES['imagen']['type']);
             $extension = $propiedades[1];
-            $tam_max = 5000000; // 5000 KBytes
+            $tam_max = 5000000; // 5 MB
             $tam = $_FILES['imagen']['size'];
             $mod = true; // Si vamos a modificar
 

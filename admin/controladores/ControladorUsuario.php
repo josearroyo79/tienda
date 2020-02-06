@@ -141,6 +141,28 @@ class ControladorUsuario {
             return null;
         }    
     }
+
+
+    //CREO ESTA FUNCIÓN PARA BUSCAR EL CORREO DEL USUARIO DE LA SESIÓN y dar el error si hubiese alguno igual que el que se
+    //quiere registrar en la BBDD.
+    public function buscarUsuarioCorreo($correo){ 
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+        $consulta = "SELECT * FROM usuarios  WHERE correo = :correo";
+        $parametros = array(':correo' => $correo);
+        $filas = $bd->consultarBD($consulta, $parametros);
+        $res = $bd->consultarBD($consulta,$parametros);
+        $filas=$res->fetchAll(PDO::FETCH_OBJ);
+        if (count($filas) > 0) {
+            foreach ($filas as $a) {
+                $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->correo, $a->password, $a->tipo, $a->telefono, $a->imagen, $a->fecha);
+            }
+            $bd->cerrarBD();
+            return $usuario;
+        }else{
+            return null;
+        }    
+    }
     
     public function borrarUsuario($id){ 
         $estado=false;

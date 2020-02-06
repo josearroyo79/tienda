@@ -22,10 +22,8 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                         <label for="producto" class="sr-only">Nombre o marca</label>
                         <input type="text" class="form-control" id="buscar" name="producto" placeholder="Nombre o Marca">
                     </div>
-                    <!--<button type="submit" class="btn btn-primary mb-2"> <span class="glyphicon glyphicon-search"></span>  Buscar</button>-->
-                    <!-- Aquí va el nuevo botón para dar de alta, podría ir al final -->
-                    <a href="utilidades/descargar.php?opcion=TXT" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-floppy-save"></span> TXT</a>
-                    <a href="utilidades/descargar.php?opcion=PDF" class="btn btn-primary btn-warning"><span class="glyphicon glyphicon-floppy-save"></span> PDF</a>
+                    <a href="../utilidades/descargar.php?opcion=XMLProd" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-floppy-save"></span> XML</a>
+                    <a href="../utilidades/descargar.php?opcion=PDFProd" class="btn btn-primary btn-warning"><span class="glyphicon glyphicon-floppy-save"></span> PDF</a>
                     <a href="/tienda/admin/producto/vistas/crear.php"class="btn btn-primary btn-success">Crear <span class="glyphicon glyphicon-pencil"></span></a>
                 </form>
             </div>
@@ -38,8 +36,7 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
             require_once CONTROLLER_PATH."ControladorProducto.php";
             require_once CONTROLLER_PATH . "Paginador.php";
             require_once UTILITY_PATH."funciones.php";
-            // creamos la consulta dependiendo si venimos o no del formulario
-            // para el buscador: select * from alumnado where nombre like "%%" or apellidos like "%%"
+
             if (!isset($_POST["producto"])) {
                 $nombre = "";
                 $marca = "";
@@ -47,7 +44,7 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 $nombre = filtrado($_POST["producto"]);
                 $marca = filtrado($_POST["producto"]);
             }
-            // Cargamos el controlador de alumnos
+            // Cargamos el controlador de producto
             $controlador = ControladorProducto::getControlador();
             
             // Parte del paginador
@@ -55,9 +52,8 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
             $enlaces = ( isset($_GET['enlaces']) ) ? $_GET['enlaces'] : 10;
 
 
-            //$lista = $controlador->listarAlumnos($nombre, $dni); //-- > Lo hará el paginador
 
-             // Consulta a realizar -- esto lo cambiaré para la semana que viene
+             // Consulta para el buscador
              $consulta = "SELECT * FROM productos WHERE nombre LIKE :nombre OR marca LIKE :marca";
              $parametros = array(':nombre' => "%".$nombre."%", ':nombre' => "%".$nombre."%", ':marca' => "%".$marca."%");
              $limite = 4; // Limite del paginador
@@ -66,7 +62,6 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 
 
             // Si hay filas (no nulo), pues mostramos la tabla
-            //if (!is_null($lista) && count($lista) > 0) {
             if(count( $resultados->datos)>0){
                 echo "<table class='table table-bordered table-striped'>";
                 echo "<thead>";
@@ -83,8 +78,6 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 echo "<tbody>";
                 // Recorremos los registros encontrados
                 foreach ($resultados->datos as $l) {
-                //foreach ($lista as $alumno) {
-                    // Esto lo hago para no cambiaros el resto de codigo, si no podría usar a directamente
                     $producto = new Producto($l->id, $l->nombre, $l->tipo, $l->marca, $l->precio, $l->unidades, $l->imagen);
                     // Pintamos cada fila
                     echo "<tr>";

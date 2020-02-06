@@ -6,8 +6,7 @@
    </li>
    <?php
    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-    // Incluimos los ficheros que ncesitamos
-    // Incluimos los directorios a trabajar
+   
     require_once CONTROLLER_PATH . "ControladorUsuario.php";
     require_once CONTROLLER_PATH . "Paginador.php";
     require_once UTILITY_PATH . "funciones.php";
@@ -20,14 +19,13 @@
 
     $controlador = ControladorUsuario::getControlador();
 
-    // Parte del paginador
     $pagina = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
 
 
     //Menu ADMINISTRADOR
 
-    // Consulta a realizar -- esto lo cambiaré para la semana que viene
+    // Consulta
     $consulta = "SELECT * FROM usuarios WHERE correo LIKE :correo";
     $parametros = array(':correo' => "%" . $correo . "%");
     $limite = 3; // Limite del paginador

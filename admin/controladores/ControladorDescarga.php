@@ -38,27 +38,36 @@ class ControladorDescarga
         return self::$instancia;
     }
 
-    public function descargarTXT()
+    public function descargarXMLProd()
     {
-        $this->fichero = "catalogo.txt";
-        header("Content-Type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=" . $this->fichero . ""); //archivo de salida
-
-        $controlador = ControladorProducto::getControlador();
+        $this->fichero = "productos.xml";
+        $lista = $controlador = ControladorProducto::getControlador();
         $lista = $controlador->listarProductos("", "");
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $productos = $doc->createElement('productos');
 
-        // Si hay filas (no nulo), pues mostramos la tabla
-        if (!is_null($lista) && count($lista) > 0) {
-            foreach ($lista as $producto) {
-                echo "Nombre: " . $producto->getNombre() . " -- Tipo: " . $producto->getTipo() . "  -- Marca: " . $producto->getMarca() .
-                    " -- Precio: " . $producto->getPrecio() . " -- Precio: " . $producto->getUnidades();
-            }
-        } else {
-            echo "No se ha encontrado articulos";
+        foreach ($lista as $a) {
+            $producto = $doc->createElement('producto');
+            
+            $producto->appendChild($doc->createElement('nombre', $a->getNombre()));
+            $producto->appendChild($doc->createElement('tipo', $a->getTipo()));
+            $producto->appendChild($doc->createElement('marca', $a->getMarca()));
+            $producto->appendChild($doc->createElement('precio', $a->getPrecio()));
+            $producto->appendChild($doc->createElement('unidades', $a->getUnidades()));
+            $producto->appendChild($doc->createElement('imagen', $a->getImagen()));
+
+            //Insertamos
+            $productos->appendChild($producto);
         }
+
+        $doc->appendChild($productos);
+        header('Content-type: application/xml');
+        echo $doc->saveXML();
+
+        exit;
     }
    
-    public function descargarPDF(){
+    public function descargarPDFProd(){
         $spro ='<h2 class="pull-left">Catálogo</h2>';
         $lista = $controlador = ControladorProducto::getControlador();
         $lista = $controlador->listarProductos("", "");

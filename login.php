@@ -98,17 +98,17 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorBD.php";
 require_once CONTROLLER_PATH . "ControladorAcceso.php";
 
-//Debemos decir que no estamos identificando
+//Para acceder a la parte del login no podemos estar en una sesión, así que se le llama a la funcion
+//salirSesion
 $controlador = ControladorAcceso::getControlador();
 $controlador->salirSesion();
 ?>
 
 <?php require_once VIEW_PATH . "cabecera.php"; ?>
-<!-- Barra de Navegacion -->
 
 <?php
 
-// Procesamos la indetificación
+// Llamamos a la funcion creada para procesar la información de acceso compuesto por correo + password
 if (isset($_POST["correo"]) && isset($_POST["password"])) {
 	$controlador = ControladorAcceso::getControlador();
 	$controlador->procesarIdentificacion($_POST['correo'], $_POST['password']);

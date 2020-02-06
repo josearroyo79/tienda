@@ -81,7 +81,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     </tr>
                 </table>
                 <p><a href="/tienda/admin/usuarios/index.php" class="btn btn-info"><i class="fas fa-check-circle"></i> Aceptar</a></p>
-                <a href="../utilidades/descargar.php?opcion=PDFUsuario&id=<?php echo $_GET["id"] ?>" type="button" class="btn btn-outline-secondary waves-effect" target="_blank"><i class="fas fa-file-pdf"></i> Descargar en PDF este usuario</a>
+                <a href="../../utilidades/descargar.php?opcion=PDFUsuario&id=<?php echo $_GET["id"] ?>" type="button" class="btn btn-outline-secondary waves-effect" target="_blank"><i class="fas fa-file-pdf"></i> Descargar en PDF este usuario</a>
             </div>
         </div>
     </div>

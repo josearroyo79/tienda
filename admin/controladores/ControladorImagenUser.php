@@ -32,7 +32,6 @@ class ControladorImagen {
         if (file_exists($fichero)) {
             unlink($fichero);
             return true;
-            //throw new Exception('No se puede borrar el fichero ' . $fichero . ' Por favor cierre otras aplicaciones que lo pueden estar usando.');
         }
         return false;;
     }
@@ -42,9 +41,7 @@ class ControladorImagen {
         $extension = explode("/", $_FILES['imagen']['type']);
         $nombreImagen = md5($_FILES['imagen']['tmp_name'] . $_FILES['imagen']['name']) . "." . $extension[1];
         if (!move_uploaded_file($_FILES['imagen']['tmp_name'], ROOT_PATH . "imagenes/$nombreImagen")) {
-            //header("location: error.php");
-            //exit();
-            $nombreImagen = $imagenAnterior;
+           $nombreImagen = $imagenAnterior;
         }
         return $nombreImagen;
     }

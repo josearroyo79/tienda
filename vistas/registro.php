@@ -1,18 +1,17 @@
 <?php
-// Incluimos los directorios a trabajar
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagen.php";
 require_once UTILITY_PATH . "funciones.php";
 
-// Variables temporales
+// Variables
 $nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen = ""; $fecha = "";
 $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = ""; $fechaErr = "";
 
-    // Procesamos el formulario al pulsar el botón aceptar de esta ficha
+    // Procesamos el formulario cuando se pase por el botón de aceptar
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]) {
 
-        // Procesamos el nombre
+        // Procesamos el nombre que tendrá un pattern
         $nombreVal = filtrado(($_POST["nombre"]));
         if (empty($nombreVal)) {
             $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
@@ -23,12 +22,11 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
             $nombre = $nombreVal;
         }
 
-        // Buscamos que no exista el usuario
+        // Buscamos coincidencias en el nombre de usuario en la BBDD con el que quiere registrarse
         $controlador = ControladorUsuario::getControlador();
         $usuario = $controlador->buscarUsuarioNombre($nombreVal);
         if (isset($usuario)) {
-            alerta(print_r($usuario->getNombre()));
-            $nombreErr = "Ya existe un usuario con nombre:" . $nombreVal . " en la Base de Datos";
+            $nombreErr = '¡ERR0R! ----- El nombre "' . $nombreVal . '" ya está registrado en esta web.';
         } else {
             $nombre = $nombreVal;
         }
@@ -40,11 +38,21 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
             $apellidosErr = "Apellido no válido";
         }
 
-        // Procesamos correo
-        if (isset($_POST["correo"])) {
-            $correo = filtrado($_POST["correo"]);
+        // Procesamos el correo
+        $correoVal = filtrado(($_POST["correo"]));
+        if (empty($nombreVal)) {
+            $correoErr = "Por favor introduzca un correo válido.";
         } else {
-            $correoErr = "Correo no válido";
+            $correo = $correoVal;
+        }
+
+        // Buscamos que no exista el correo exactamente igual que el nombre
+        $controlador = ControladorUsuario::getControlador();
+        $usuario = $controlador->buscarUsuarioCorreo($correoVal);
+        if (isset($usuario)) {
+            $correoErr = '¡ERR0R! ----- El correo "' . $correoVal . '" ya está registrado en esta web.';
+        } else {
+            $correo = $correoVal;
         }
 
         // Procesamos la contraseña
@@ -55,13 +63,15 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
         }
 
         // Procesamos tipo
+        // Aquí pongo que si se le selecciona un tipo que se ponga el seleccionado y si no se selecciona,
+        // por defecto es USER.
         if (isset($_POST["tipo"])) {
             $tipo = filtrado($_POST["tipo"]);
         } else {
             $tipo = "USER";
         }
 
-        // Procesamos telefono
+        // Procesamos telefono (tiene pattern en el input)
         if (isset($_POST["telefono"])) {
             $telefono = filtrado($_POST["telefono"]);
         } else {
@@ -89,24 +99,23 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
         if ($_FILES['imagen']['size'] > 0) {
             $propiedades = explode("/", $_FILES['imagen']['type']);
             $extension = $propiedades[1];
-            $tam_max = 5000000; // 5000 KBytes
+            $tam_max = 5000000; // 5 MB
             $tam = $_FILES['imagen']['size'];
-            $mod = true; // Si vamos a modificar
+            $mod = true;
 
-            // Si no coicide la extensión
+            // La extensión debe ser jpeg o png, sino, error
             if ($extension != "jpg" && $extension != "jpeg" && $extension != "png") {
                 $mod = false;
                 $imagenErr = "Formato debe ser jpg/jpeg/png";
             }
-            // si no tiene el tamaño
+            // Tamaño máximo
             if ($tam > $tam_max) {
                 $mod = false;
                 $imagenErr = "Tamaño superior al limite de: " . ($tam_max / 1000) . " KBytes";
             }
 
-            // Si todo es correcto, mod = true
+            //Se codifica en md5 la imagen para que sea imposible que coincidan. se añade el nombre y la fecha y hora al md5
             if ($mod) {
-                // salvamos la imagen
                 $imagen = md5($_FILES['imagen']['tmp_name'] . $_FILES['imagen']['name'] . time()) . "." . $extension;
                 $controlador = ControladorImagen::getControlador();
                 if (!$controlador->salvarImagen($imagen)) {
@@ -114,20 +123,22 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
                 }
             }
         }
-        // Chequeamos los errores antes de insertar en la base de datos
+
+        // Si todas las variables de error están vacías, para adelante con todo
         if (
             empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
             empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
         ) {
-            // Creamos el controlador de alumnado
+            // Llamamos al controlador y almacenamos en la función los parámetros que se pasen:
             $controlador = ControladorUsuario::getControlador();
             $estado = $controlador->almacenarUsuario($nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha);
             if ($estado) {
-                //El registro se ha lamacenado corectamente
+                // Si es correcto:
                 alerta("Usuario creado con éxito");
                 header("location: ../index.php");
                 exit();
             } else {
+                // Si hay algún error:
                 header("location: error.php");
                 exit();
             }
@@ -135,9 +146,8 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
     }
 ?>
 
-<!-- Cabecera de la página web -->
 <?php require_once VIEW_PATH . "cabecera.php"; ?>
-<!-- Cuerpo de la página web -->
+
 <div>
     <div>
         <div>
@@ -200,6 +210,5 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
     </div>
 </div>
 <br><br><br>
-<!-- Pie de la página web -->
 
 <?php require_once VIEW_PATH . "pie.php"; ?>

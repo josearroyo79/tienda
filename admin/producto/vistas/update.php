@@ -88,7 +88,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
     if(empty($nombreErr) && empty($tipoErr) && empty($marcaErr) && empty($precioErr) && 
         empty($unidadesErr) && empty($imagenErr)){
-       // creamos el controlador de alumnado
+       // creamos el controlador de Producto
         $controlador = ControladorProducto::getControlador();
         $estado = $controlador->actualizarProducto($id, $nombre, $tipo, $marca, $precio, $unidades, $imagen);
         if($estado){

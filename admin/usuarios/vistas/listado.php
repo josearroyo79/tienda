@@ -23,7 +23,7 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 <?php
                 echo "<a href='../utilidades/descargar.php?opcion=XML' type='button' class='btn btn-deep-orange' target='_blank'><i class='fas fa-cloud-download-alt'></i> XML</a>";
                 echo "<a href='../utilidades/descargar.php?opcion=PDF' type='button' class='btn btn-outline-secondary waves-effect' target='_blank'><i class='fas fa-file-pdf'></i> PDF</a>";
-                echo "<a href='javascript:window.print()' type='button' class='btn btn-outline-info waves-effect'><i class='fas fa-print'></i> IMPRIMIR</a>";
+                //echo "<a href='javascript:window.print()' type='button' class='btn btn-outline-info waves-effect'><i class='fas fa-print'></i> IMPRIMIR</a>";
                 echo "<a href='vistas/create.php' class='btn aqua-gradient'><i class='fas fa-user-plus'></i> Añadir usuario</a>";
                 //}
                 ?>

@@ -1,4 +1,7 @@
 <?php
+
+//seguro para no poder acceder por url en caso de no estar logueado.
+
 error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
 session_start();
 if (!isset($_SESSION['USUARIO']['correo'])) {
@@ -76,6 +79,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
             $imagenErr = "Error al procesar la imagen y subirla al servidor";
         }
     }
+
+    //Si no hay ningún error almacenamos el producto y sino muestra la alerta de fallo
+
     if(empty($nombreErr) && empty($tipoErr) && empty($marcaErr) && empty($precioErr) && empty($unidadesErr) && empty($imagenErr)){
         $controlador = ControladorProducto::getControlador();
         $estado = $controlador->almacenarProducto($nombre, $tipo, $marca, $precio, $unidades, $imagen);

@@ -1,4 +1,7 @@
 <?php
+
+//Igual que el read pero en lugar de volver a la admon de producto, volver al catalogo.
+
 // Incluimos el controlador a los objetos a usar
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/producto/dirs.php";
 require_once CONTROLLER_PATH . "ControladorProducto.php";
@@ -69,7 +72,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                     </tr>
                 </table>
                 <p><a href="/tienda/index.php" class="btn btn-info"><i class="fas fa-check-circle"></i> Aceptar</a></p>
-                <!--<a href="../utilidades/descargar.php?opcion=PDFUsuario&id=<¡php echo $_GET["id"] ?>" type="button" class="btn btn-outline-secondary waves-effect" target="_blank"><i class="fas fa-file-pdf"></i> Descargar en PDF este usuario</a>-->
             </div>
         </div>
     </div>

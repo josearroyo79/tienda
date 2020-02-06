@@ -5,14 +5,13 @@ require_once CONTROLLER_PATH."ControladorProducto.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
 
-// Obtenemos los datos del alumno que nos vienen de la página anterior
+// Obtenemos los datos del producto que nos vienen de la página anterior
 if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
-    // Cargamos el controlador de alumnos
+    // Cargamos el controlador de producto
     $id = decode($_GET["id"]);
     $controlador = ControladorProducto::getControlador();
     $producto = $controlador->buscarProducto($id);
     if (is_null($producto)) {
-        // hay un error
         header("location: /tienda/admin/vistas/error.php");
         exit();
     }
@@ -24,7 +23,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $producto = $controlador->buscarProducto($_POST["id"]);
     if ($controlador->borrarProducto($_POST["id"])) {
         //Se ha borrado y volvemos a la página principal
-       // Debemos borrar la foto del alumno
+       // Debemos borrar la foto del producto
        $controlador = ControladorImagen::getControlador();
        if($controlador->eliminarImagen($producto->getImagen())){
             header("location: ../index.php");
@@ -89,7 +88,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                         </td>
                     </tr>
                 </table>
-                <!-- Me llamo a mi mismo pero pasando GET -->
+                <!-- Me llamo a mi mismo para procesar el borrado -->
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <div class="alert alert-danger" role="alert">
                         <input type="hidden" name="id" value="<?php echo trim($id); ?>" />

@@ -6,8 +6,7 @@
    </li>
    <?php
     error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-    // Incluimos los ficheros que ncesitamos
-    // Incluimos los directorios a trabajar
+    
     require_once CONTROLLER_PATH . "ControladorUsuario.php";
     require_once MODEL_PATH . "Usuario.php";
     require_once CONTROLLER_PATH . "Paginador.php";
@@ -21,23 +20,22 @@
 
     $controlador = ControladorUsuario::getControlador();
 
-    // Parte del paginador
     $pagina = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
     
 
     //Menu ADMINISTRADOR
 
-    // Consulta a realizar -- esto lo cambiaré para la semana que viene
+    // Consulta
     $consulta = "SELECT * FROM usuarios WHERE correo LIKE :correo";
     $parametros = array(':correo' => "%" . $correo . "%");
-    $limite = 100; // Limite del paginador
+    $limite = 100;
     $paginador  = new Paginador($consulta, $parametros, $limite);
     $resultados = $paginador->getDatos($pagina);
     foreach ($resultados->datos as $a) {
 
       $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->correo, $a->password, $a->tipo, $a->telefono, $a->imagen, $a->fecha);
-      // Pintamos cada fila
+
       $usuario->getId();
       $usuario->getNombre();
       $usuario->getApellidos();
@@ -48,12 +46,12 @@
       $usuario->getImagen();
       $usuario->getFecha();
     }
-    // Abrimos las sesiones para leerla
+    // Si la sesión del usuario no tiene el parametro tipo con el valor admin:
     session_start();
     if ($_SESSION['tipo'] != "ADMIN") {
       // Menú normal
     } else {
-      // Menu de administrador
+      // Menu de administrador (en caso de que tenga como parametro de tipo "ADMIN") se le muestra el menú
       echo '<li class="nav-item">';
       echo '<a class="nav-link" href="#"><i class="fas fa-tools"></i> Administrador</a>';
       echo '<ul>';
@@ -74,6 +72,7 @@
       echo '<a class="nav-link2" href="/tienda/login.php"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>';
       echo '</li>';
     } else {
+      // EN ESTE BOTÓN QUE ES EN EL QUE APARECE LOGUEADO EL CORREO, CUANDO SE LE PULSE DEBE COGER EL ID DEL USUARIO DE LA SESIÓN:
       echo '<li><a href="/tienda/vistas/perfil.php?id=' . encode($_SESSION['id']) . '"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['USUARIO']['correo'] . '</a></li>';
       echo '<li><a href="/tienda/login.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';
     }
