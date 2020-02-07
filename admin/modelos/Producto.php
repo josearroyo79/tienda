@@ -1,18 +1,7 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Luchador
- *
- * @author link
- */
 class Producto {
-    //put your code here
+    
     private $id;
     private $nombre;
     private $tipo;
@@ -21,9 +10,6 @@ class Producto {
     private $unidades;
     private $imagen;
 
-
-    
-    // Constructor
     public function __construct($id, $nombre, $tipo, $marca, $precio, $unidades, $imagen) {
         $this->id = $id;
         $this->nombre = $nombre;
@@ -34,7 +20,6 @@ class Producto {
         $this->imagen = $imagen;
     }
     
-    // **** GETS & SETS
     function getId() {
         return $this->id;
     }

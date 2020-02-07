@@ -5,18 +5,10 @@ require_once UTILITY_PATH . "funciones.php";
 
 class ControladorUsuario {
 
-     // Variable instancia para Singleton
     static private $instancia = null;
     
-    // constructor--> Private por el patrón Singleton
-    private function __construct() {
-        //echo "Conector creado";
-    }
-    
-    /**
-     * Patrón Singleton. Ontiene una instancia del Manejador de la BD
-     * @return instancia de conexion
-     */
+    private function __construct() {}
+
     public static function getControlador() {
         if (self::$instancia == null) {
             self::$instancia = new ControladorUsuario();
@@ -28,17 +20,17 @@ class ControladorUsuario {
         $lista=[];
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        // creamos la consulta pero esta vez paremtrizada
+        
         $consulta = "SELECT * FROM usuarios WHERE nombre LIKE :nombre";
         $parametros = array(':nombre' => "%".$nombre."%");
-        // Obtenemos las filas directamente como objetos con las columnas de la tabla
+        
         $res = $bd->consultarBD($consulta,$parametros);
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
-        //var_dump($filas);
+        
         if (count($filas) > 0) {
             foreach ($filas as $a) {
                 $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->correo, $a->password, $a->tipo, $a->telefono, $a->imagen, $a->fecha);
-                // Lo añadimos
+
                 $lista[] = $usuario;
             }
             $bd->cerrarBD();
@@ -49,21 +41,21 @@ class ControladorUsuario {
     }
 
     public function listarUsuario($id){
-        // Creamos la conexión a la BD
+        
         $lista=[];
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        // creamos la consulta pero esta vez paremtrizada
+        
         $consulta = "SELECT * FROM usuarios WHERE id LIKE :id";
         $parametros = array(':id' => "%".$id."%");
-        // Obtenemos las filas directamente como objetos con las columnas de la tabla
+        
         $res = $bd->consultarBD($consulta,$parametros);
         $filas=$res->fetchAll(PDO::FETCH_OBJ);
-        //var_dump($filas);
+        
         if (count($filas) > 0) {
             foreach ($filas as $a) {
                 $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->correo, $a->password, $a->tipo, $a->telefono, $a->imagen, $a->fecha);
-                // Lo añadimos
+
                 $lista[] = $usuario;
             }
             $bd->cerrarBD();

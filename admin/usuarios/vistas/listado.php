@@ -27,20 +27,12 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 echo "<a href='vistas/create.php' class='btn aqua-gradient'><i class='fas fa-user-plus'></i> Añadir usuario</a>";
                 //}
                 ?>
-                <?php
-                //Codificacion admin:
-
-                //echo hash("sha256","user");
-                ?>
             </form>
         </div>
-        <!-- Linea para dividir -->
         <div class="page-header clearfix">
         </div>
         <?php
         error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-        // Incluimos los ficheros que ncesitamos
-        // Incluimos los directorios a trabajar
         require_once CONTROLLER_PATH . "ControladorUsuario.php";
         require_once CONTROLLER_PATH . "Paginador.php";
         require_once UTILITY_PATH . "funciones.php";
@@ -53,17 +45,12 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
         
         $controlador = ControladorUsuario::getControlador();
 
-        // Parte del paginador
         $pagina = (isset($_GET['page'])) ? $_GET['page'] : 1;
         $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
 
-
-            //Menu ADMINISTRADOR
-
-            // Consulta a realizar
             $consulta = "SELECT * FROM usuarios WHERE nombre LIKE :nombre";
             $parametros = array(':nombre' => "%" . $nombre . "%");
-            $limite = 100; // Limite del paginador
+            $limite = 100;
             $paginador  = new Paginador($consulta, $parametros, $limite);
             $resultados = $paginador->getDatos($pagina);
             if (count($resultados->datos) > 0) {
@@ -83,11 +70,10 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
-                // Recorremos los registros encontrados
                 foreach ($resultados->datos as $a) {
                     
                     $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->correo, $a->password, $a->tipo, $a->telefono, $a->imagen, $a->fecha);
-                    // Pintamos cada fila
+
                     echo "<tr>";
                     echo "<td>" . base64_encode($usuario->getId()) . "</td>";
                     echo "<td>" . $usuario->getNombre() . "</td>";
@@ -111,7 +97,7 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 echo $paginador->crearLinks($enlaces);
                 echo "</ul>";
             } else {
-                // Si no hay nada seleccionado
+
                 echo "<p class='lead'><em>No se ha encontrado datos de usuarios.</em></p>";
             }
         ?>
@@ -120,7 +106,6 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 </div>
 <div id="no_imprimir">
     <?php
-    // Leemos la cookie
     /*if (isset($_COOKIE['CONTADOR'])) {
         echo $contador;
         echo $acceso;

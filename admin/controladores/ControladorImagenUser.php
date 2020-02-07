@@ -9,9 +9,7 @@ class ControladorImagen {
     
     static private $instancia = null;
     
-    private function __construct() {
-        //echo "Conector creado";
-    }
+    private function __construct() {}
     
     public static function getControlador() {
         if (self::$instancia == null) {

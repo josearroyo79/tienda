@@ -11,10 +11,7 @@ class ControladorDescargaUser
     
     static private $instancia = null;
 
-    private function __construct()
-    {
-        //echo "Conector creado";
-    }
+    private function __construct(){}
     public static function getControlador()
     {
         if (self::$instancia == null) {
@@ -190,27 +187,24 @@ class ControladorDescargaUser
             $spro.="</tr>";
             $spro.="</thead>";
             $spro.="<tbody>";
-            // Recorremos los registros encontrados
+            
             foreach ($lista as $producto) {
-                // Pintamos cada fila
+                
                 $spro.="<tr>";
                 $spro.="<td>" . $producto->getNombre() . "</td>";
                 $spro.="<td>" . $producto->getTipo() . "</td>";
                 $spro.="<td>" . $producto->getMarca() . "</td>";
-                //$sal.="<td>" . str_repeat("*",strlen($alumno->getPassword())) . "</td>";
                 $spro.="<td>" . $producto->getPrecio() . "</td>";
                 $spro.="<td>" . $producto->getUnidades() . "</td>";
-                // Para sacar una imagen hay que decirle el directprio real donde está
+                // Ruta donde se almacenan la IMG
                 $spro.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/producto/imagen_producto/".$producto->getImagen()."'  style='max-width: 12mm; max-height: 12mm'></td>";
                 $spro.="</tr>";
             }
             $spro.="</tbody>";
             $spro.="</table>";
         } else {
-            // Si no hay nada seleccionado
             $spro.="<p class='lead'><em>No se ha encontrado productos.</em></p>";
         }
-        //https://github.com/spipu/html2pdf/blob/master/doc/basic.md
         $pdf=new HTML2PDF('R','A5','es','true','UTF-8');
         $pdf->writeHTML($spro);
         $pdf->output('listado.pdf');

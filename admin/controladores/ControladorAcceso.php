@@ -1,26 +1,14 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 require_once CONTROLLER_PATH."ControladorBD.php";
 
 class ControladorAcceso {
-    // Variable instancia para Singleton
+    
     static private $instancia = null;
     
-    // constructor--> Private por el patrón Singleton
-    private function __construct() {
-        //echo "Conector creado";
-    }
+    
+    private function __construct() {}
 
-    /**
-     * Patrón Singleton. Ontiene una instancia de controlador
-     * @return instancia del controlador
-     */
     public static function getControlador() {
         if (self::$instancia == null) {
             self::$instancia = new ControladorAcceso();
@@ -29,12 +17,12 @@ class ControladorAcceso {
     }
     
     public function salirSesion() {
-        // Recuperamos la información de la sesión
+        // Cogemos la sesión
         session_start();
-        // Y la eliminamos las variables de la sesión y cookies
+        // Se quitan las variables añadidas en la sesión
         unset($_SESSION['USUARIO']);
 
-        // ahora o las borramos todas o las destruimos, yo haré todo para que se vea
+        // Se borran las sesiones
         session_unset();
         session_destroy();
     }
@@ -53,8 +41,8 @@ class ControladorAcceso {
             // Consulta de usuarios por correo y contraseña
             $consulta = "SELECT * FROM usuarios WHERE correo=:correo and password=:password";
             $parametros = array(':correo' => $correo, ':password' => $password);
-
-            // Obtenemos las filas directamente como objetos con las columnas de la tabla
+            
+            // Transforma en objetos las filas de la BBDD
             $res = $bd->consultarBD($consulta,$parametros);
             $filas=$res->fetchAll(PDO::FETCH_OBJ);
             
@@ -84,8 +72,6 @@ class ControladorAcceso {
             ?>
             <meta http-equiv="refresh" content="0; url=/tienda/admin/vistas/no-user.php">
             <?php
-
-                //<!-- Pie de la página web -->
                 require_once VIEW_PATH."pie.php";
                 exit();
             }

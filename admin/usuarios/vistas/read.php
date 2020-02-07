@@ -1,27 +1,21 @@
 <?php
-// Incluimos el controlador a los objetos a usar
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once UTILITY_PATH . "funciones.php";
 
-// Comprobamos la existencia del parámetro id antes de usarlo
+// Buscamos el id a ver si existe
 if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
-    // Cargamos el controlador de usuarios
+    
     $id = decode($_GET["id"]);
     $controlador = ControladorUsuario::getControlador();
     $usuario = $controlador->buscarUsuario($id);
     if (is_null($usuario)) {
-        // hay un error
         header("location: /tienda/admin/vistas/error.php");
         exit();
     }
 }
-?>
 
-<!-- Cabecera de la página web -->
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
-
-<!-- Cuerpo de la página web -->
+require_once VIEW_PATH . "cabecera.php"; ?>
 <div class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -32,7 +26,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                 <table class="table table-hover">
                     <tr>
                         <td>
-                            <!-- Muestro los datos del usuario-->
                             <b><label>NOMBRE</label></b>
                             <p class="form-control-static"><?php echo $usuario->getNombre(); ?></p>
                         </td>
@@ -87,5 +80,4 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     </div>
 </div>
 <br><br><br>
-<!-- Pie de la página web -->
 <?php require_once VIEW_PATH . "pie.php"; ?>

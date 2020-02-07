@@ -1,5 +1,4 @@
 <?php
-// Incluimos el controlador a los objetos a usar
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagenUser.php";
@@ -10,13 +9,12 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     $controlador = ControladorUsuario::getControlador();
     $usuario = $controlador->buscarUsuario($id);
     if (is_null($usuario)) {
-        // hay un error
         header("location: /tienda/admin/vistas/error.php");
         exit();
     }
 }
 
-// Los datos del formulario al procesar el sí.
+// Se procesan los datos del formulario
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $controlador = ControladorUsuario::getControlador();
     $usuario = $controlador->buscarUsuario($_POST["id"]);
@@ -36,10 +34,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     }
 }
 
-?>
-<!-- Cabecera de la página web -->
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
-<!-- Cuerpo de la página web -->
+ require_once VIEW_PATH . "cabecera.php"; ?>
 <div class="wrapper">
     <div class="container-fluid">
 
@@ -48,18 +43,17 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                 <div class="page-header">
                     <h1>Borrar usuario</h1>
                 </div>
-                <!-- Muestro los datos del usuario-->
                 <table class="table table-hover">
                     <tr>
                         <td>
                             <div class="form-group" class="align-left">
-                                <!-- Muestro los datos del usuario-->
+                                <!-- NOMBRE -->
                                 <div class="form-group">
                                     <b><label>NOMBRE</label></b>
                                     <p class="form-control-static"><?php echo $usuario->getNombre(); ?></p>
                                 </div>
                             </div>
-                        </td>
+                        </td><!-- IMAGEN -->
                         <td class="align-right">
                             <b><label>IMAGEN</label></b></br>
                             <img src='<?php echo "../imagenes/" . $usuario->getImagen() ?>' class='rounded' class='img-thumbnail' width='150' height='auto'>
@@ -67,44 +61,43 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                     </tr>
                 </table>
                 <table class="table table-hover">
-                    <tr>
+                    <tr><!-- APELLIDOS -->
                         <td>
                             <b><label>APELLIDOS</label></b>
                             <p class="form-control-static"><?php echo $usuario->getApellidos(); ?></p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr><!-- CORREO -->
                         <td>
                             <b><label>CORREO</label></b>
                             <p class="form-control-static"><?php echo $usuario->getCorreo(); ?></p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr><!-- CONTRASEÑA -->
                         <td>
                             <b><label>CONTRASEÑA</label></b>
                             <p class="form-control-static"><?php echo $usuario->getPassword(); ?></p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr><!-- TIPO -->
                         <td>
                             <b><label>TIPO</label></b>
                             <p class="form-control-static"><?php echo $usuario->getTipo(); ?></p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr><!-- TELEFONO -->
                         <td>
                             <b><label>TELEFONO</label></b>
                             <p class="form-control-static"><?php echo $usuario->getTelefono(); ?></p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr><!-- FECHA -->
                         <td>
                             <b><label>FECHA</label></b>
                             <p class="form-control-static"><?php echo $usuario->getFecha(); ?></p>
                         </td>
                     </tr>
                 </table>
-                <!-- Me llamo a mi mismo pero pasando GET -->
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <div class="alert alert-danger" role="alert">
                         <input type="hidden" name="id" value="<?php echo trim($id); ?>" />
@@ -120,5 +113,4 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     </div>
 </div>
 <br><br><br>
-<!-- Pie de la página web -->
 <?php require_once VIEW_PATH . "pie.php"; ?>

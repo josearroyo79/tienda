@@ -1,41 +1,41 @@
 <?php
-// Incluimos el controlador a los objetos a usar
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagenUser.php";
 require_once UTILITY_PATH . "funciones.php";
 
-// Variables temporales
 $nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen =  $fecha = "";
 $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = $fechaErr = "";
 $imagenAnterior = "";
 
 $errores = [];
 
-// Procesamos la información obtenida por el get
+// Ejecutamos lo que se metió en el formulario POST
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
-    // Get hidden input value
+
     $id = $_POST["id"];
-
-    // Voy a hacer un array list de errores para no procesar la imagen
-
-    /// Procesamos el nombre
+    
+    // Procesamos el nombre
     $nombreVal = filtrado(($_POST["nombre"]));
     if (empty($nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-        // Un ejemplo de validar expresiones regulares directamente desde PHP
-    } elseif (!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $nombreVal)) { //filter_var($nombreVal, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/([^\s][A-zÀ-ž\s]+$)/")))){
+        
+    } elseif (!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
     } else {
         $nombre = $nombreVal;
     }
 
+    // Procesamos el nombre
     $apellidos = filtrado($_POST["apellidos"]);
 
+    // Procesamos el correo
     $correo = filtrado($_POST["correo"]);
 
+    // Procesamos el password
     $password = filtrado($_POST["password"]);
 
+    // Procesamos el tipo
     $tipo = filtrado($_POST["tipo"]);
 
     // Procesamos fecha
@@ -57,34 +57,26 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $telefono = filtrado($_POST["telefono"]);
 
     // Procesamos la imagen
-    // Si nos ha llegado algo mayor que cer
     if ($_FILES['imagen']['size'] > 0 && count($errores) == 0) {
         $propiedades = explode("/", $_FILES['imagen']['type']);
         $extension = $propiedades[1];
-        $tam_max = 500000; // 500 KBytes
+        $tam_max = 500000;
         $tam = $_FILES['imagen']['size'];
         $mod = true;
-        // Si no coicide la extensión
         if ($extension != "jpg" && $extension != "jpeg" && $extension != "png") {
             $mod = false;
             $imagenErr = "Formato debe ser jpg/jpeg";
         }
-        // si no tiene el tamaño
         if ($tam > $tam_max) {
             $mod = false;
             $imagenErr = "Tamaño superior al limite de: " . ($tam_max / 1000) . " KBytes";
         }
-
-        // Si todo es correcto, mod = true
         if ($mod) {
-            // salvamos la imagen
             $imagen = md5($_FILES['imagen']['tmp_name'] . $_FILES['imagen']['name'] . time()) . "." . $extension;
             $controlador = ControladorImagen::getControlador();
             if (!$controlador->salvarImagen($imagen)) {
                 $imagenErr = "Error al procesar la imagen y subirla al servidor";
             }
-
-            // Borramos la antigua
             $imagenAnterior = trim($_POST["imagenAnterior"]);
             if ($imagenAnterior != $imagen) {
                 if (!$controlador->eliminarImagen($imagenAnterior)) {
@@ -92,25 +84,20 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                 }
             }
         } else {
-            // Si no la hemos modificado
             $imagen = trim($_POST["imagenAnterior"]);
         }
     } else {
         $imagen = trim($_POST["imagenAnterior"]);
     }
 
-
-    // Chequeamos los errores antes de insertar en la base de datos
     if (
         empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
         empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
     ) {
-        // creamos el controlador de alumnado
         $controlador = ControladorUsuario::getControlador();
         $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha);
         if ($estado) {
             $errores = [];
-            // El registro se ha almacenado corectamente
             header("location: ../index.php");
             exit();
         } else {
@@ -122,7 +109,6 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     }
 }
 
-// Comprobamos que existe el id antes de ir más lejos
 if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     $id =  decode($_GET["id"]);
     $controlador = ControladorUsuario::getControlador();
@@ -138,21 +124,16 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $fecha = $usuario->getFecha();
         $imagenAnterior = $imagen;
     } else {
-        // hay un error
         header("location: /tienda/admin/vistas/error.php");
         exit();
     }
 } else {
-    // hay un error
     header("location: /tienda/admin/vistas/error.php");
     exit();
 }
 
-?>
+require_once VIEW_PATH . "cabecera.php"; ?>
 
-<!-- Cabecera de la página web -->
-<?php require_once VIEW_PATH . "cabecera.php"; ?>
-<!-- Cuerpo de la página web -->
 <div class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -163,7 +144,7 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                 <p>Por favor edite la nueva información para actualizar la ficha.</p>
                 <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
                     <table class="table table-hover">
-                        <tr>
+                        <tr><!-- NOMBRE -->
                             <td>
                                 <b><label>NOMBRE</label></b>
                                 <div class="md-form <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">

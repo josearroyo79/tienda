@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-02-2020 a las 23:19:33
+-- Tiempo de generación: 07-02-2020 a las 08:44:25
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `imagen` text COLLATE utf8_spanish_ci NOT NULL,
   `fecha` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -79,8 +79,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `correo`, `password`, `tipo`, `telefono`, `imagen`, `fecha`) VALUES
 (52, 'Administrador', 'ROOT', 'admin@admin.com', 'admin', 'ADMIN', 426759813, 'aa7d8a8ec4a1b914d1b9897dd1af1c1b.png', '05/02/2020'),
-(55, 'RaÃºl', 'MuÃ±oz', 'raulbohonal06@gmail.com', 'raul', 'ADMIN', 321654987, 'e3720785355b16f6ee973091d48169ef.png', '20/07/1998'),
-(56, 'Prueba', 'EsNormal', 'prueba@prueba.com', 'prueba', 'USER', 987159654, '52250a37057294d4c339bfe5e497ab22.png', '05/02/2020');
+(56, 'Prueba', 'EsNormal', 'prueba@prueba.com', 'prueba', 'USER', 987159654, '52250a37057294d4c339bfe5e497ab22.png', '05/02/2020'),
+(57, 'Raul', 'MuÃ±oz', 'raul@raul.com', 'raul', 'ADMIN', 654654645, '714a63165c06cad07e517a22bab17a84.png', '07/02/2020');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

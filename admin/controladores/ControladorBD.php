@@ -1,17 +1,7 @@
 <?php
-
-/**
- * Description of ConectorBD
- * V. 1.1
- * @author link
- */
-
-/**
- * Conector BD usando objetos MySQL con PDO
- */
 class ControladorBD {
     
-    // Configuración del servidor
+    // Info servidor
     private $servername = "localhost";
     private $username = "root";
     private $password = "";
@@ -19,61 +9,37 @@ class ControladorBD {
     private $server ="mysql";
     
     // Variables
-    private $bd; // Relativo a la conexion de la base de datos
-    private $rs; // ResultSet donde se almacena las consultas
-    private $st; // donde se almacena el statement paremetrizado
+    private $bd; // BBDD
+    private $rs; // ResultSet, almacen de consultas
+    private $st; // Statement parametrizado
     
-    // Variable instancia para Singleton
     static private $instancia = null;
 
-    // constructor--> Private por el patrón Singleton
-    private function __construct() {
-        //echo "Conector creado";
-    }
-    
-     /**
-     * Patrón Singleton. Ontiene una instancia del Manejador de la BD
-     * @return instancia de conexion
-     */
+    private function __construct() {}
+
     public static function getControlador() {
         if (self::$instancia == null) {
             self::$instancia = new ControladorBD();
         }
         return self::$instancia;
     }
-
-    /**
-     * Abre la conexión a la BD
-     */
+    
     public function abrirBD() {
         try {
-            // Preparado para mysql
-            //$this->bd = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
             $this->bd = new PDO($this->server.":host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
-            // Ponemos el modo de errores de PDO a excepciones
+
             $this->bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //echo "Conexión satisfactoria"; 
+
         } catch (PDOException $e) {
             die("conexión fallida " . $e->getMessage());
         }
     }
-
-    /**
-     * Cierra la conexión y el manejador de la BD
-     */
+    
     public function cerrarBD() {
-        //$this->bd->close();
         $this->bd = null;
         $this->rs = null;
         $this->st = null;
-        //echo "BD cerrada";
     }
-
-    /**
-     * Actualiza la BD a través de una consulta
-     * @param type $consulta
-     * @return boolean
-     */
 
     public function actualizarBD($consulta, $parametros=null) {
         if($parametros!=null)
@@ -95,12 +61,6 @@ class ControladorBD {
         return $this->st->execute($parametros);
     }
 
-
-   
-    /**
-     * REaliza una consulta a la BD
-     */
-
     public function consultarBD($consulta, $parametros=null){
         if($parametros!=null)
             return $this->consultarBDParametros($consulta,$parametros);
@@ -119,11 +79,7 @@ class ControladorBD {
         $this->st->execute($parametros);
         return $this->st;
     }
-
-    /**
-     * Devuelve los datos de conexion
-     * @return type
-     */
+    
     public function datosConexion() {
         return $this->servername;
     }

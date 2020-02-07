@@ -1,12 +1,7 @@
 <?php
 
-/**
- * Description of Usuario
- *
- * @author link
- */
 class Usuario {
-    //put your code here
+    
     private $id;
     private $nombre;
     private $apellidos;
@@ -17,7 +12,6 @@ class Usuario {
     private $imagen;
     private $fecha;
     
-    // Constructor
     public function __construct($id, $nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha) {
         $this->id = $id;
         $this->nombre = $nombre;
@@ -30,7 +24,6 @@ class Usuario {
         $this->fecha = $fecha;
     }
     
-    // **** GETS & SETS
     function getId() {
         return $this->id;
     }

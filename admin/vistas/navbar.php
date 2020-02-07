@@ -25,16 +25,15 @@
 
     //Menu ADMINISTRADOR
 
-    // Consulta
     $consulta = "SELECT * FROM usuarios WHERE correo LIKE :correo";
     $parametros = array(':correo' => "%" . $correo . "%");
-    $limite = 3; // Limite del paginador
+    $limite = 3;
     $paginador  = new Paginador($consulta, $parametros, $limite);
     $resultados = $paginador->getDatos($pagina);
     foreach ($resultados->datos as $a) {
 
       $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->correo, $a->password, $a->tipo, $a->telefono, $a->imagen, $a->fecha);
-      // Pintamos cada fila
+
       $usuario->getId();
       $usuario->getNombre();
       $usuario->getApellidos();
@@ -45,7 +44,6 @@
       $usuario->getImagen();
       $usuario->getFecha();
     }
-    // Abrimos las sesiones para leerla
     error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
     session_start();
     if (!isset($_SESSION['USUARIO']['correo'])) {
@@ -55,7 +53,6 @@
         header("location: vistas/error.php");
             exit();
     }
-      // Menu de administrador
       echo '<li class="nav-item">';
       echo '<a class="nav-link" href="#"><i class="fas fa-tools"></i> Administrador</a>';
       echo '<ul>';

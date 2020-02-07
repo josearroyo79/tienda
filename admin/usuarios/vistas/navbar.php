@@ -6,8 +6,6 @@
    </li>
    <?php
     error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-    // Incluimos los ficheros que ncesitamos
-    // Incluimos los directorios a trabajar
     require_once CONTROLLER_PATH . "ControladorUsuario.php";
     require_once CONTROLLER_PATH . "Paginador.php";
     require_once UTILITY_PATH . "funciones.php";
@@ -20,23 +18,18 @@
 
     $controlador = ControladorUsuario::getControlador();
 
-    // Parte del paginador
     $pagina = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
 
-
-    //Menu ADMINISTRADOR
-
-    // Consulta a realizar -- esto lo cambiaré para la semana que viene
     $consulta = "SELECT * FROM usuarios WHERE correo LIKE :correo";
     $parametros = array(':correo' => "%" . $correo . "%");
-    $limite = 3; // Limite del paginador
+    $limite = 3;
     $paginador  = new Paginador($consulta, $parametros, $limite);
     $resultados = $paginador->getDatos($pagina);
     foreach ($resultados->datos as $a) {
 
       $usuario = new Usuario($a->id, $a->nombre, $a->apellidos, $a->correo, $a->password, $a->tipo, $a->telefono, $a->imagen, $a->fecha);
-      // Pintamos cada fila
+
       $usuario->getId();
       $usuario->getNombre();
       $usuario->getApellidos();
@@ -47,7 +40,7 @@
       $usuario->getImagen();
       $usuario->getFecha();
     }
-    // Abrimos las sesiones para leerla
+
     session_start();
     if ($_SESSION['tipo'] != "ADMIN") {
       // Menú normal
@@ -62,7 +55,7 @@
       echo '</li>';
     }
     ?>
-   <!--Para todos-->
+   <!--MENÚ ABIERTO-->
    <li class="nav-item">
      <a class="nav-link" href="/tienda/index.php">Catálogo</a>
    </li>

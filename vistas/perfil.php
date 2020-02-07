@@ -22,11 +22,18 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     } else{
         $nombre = $nombreVal;
     }
+
     // Procesamos apellido
     $apellidos = filtrado($_POST["apellidos"]);
 
-    //Procesamos el correo
-    $correo = filtrado($_POST["correo"]);
+    // Buscamos que no exista el correo exactamente igual que el nombre
+    $controlador = ControladorUsuario::getControlador();
+    $usuario = $controlador->buscarUsuarioCorreo($correoVal);
+    if (isset($usuario)) {
+        $correoErr = '¡ERR0R! ----- El correo "' . $correoVal . '" ya está registrado en esta web.';
+    } else {
+        $correo = $correoVal;
+    }
 
     //Procesamos la contraseña
     $password = filtrado($_POST["password"]);
