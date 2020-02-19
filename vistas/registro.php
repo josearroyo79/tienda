@@ -57,7 +57,7 @@ $nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr
 
         // Procesamos la contraseña
         if (isset($_POST["password"])) {
-            $password = filtrado($_POST["password"]);
+            $password = hash("sha256",filtrado($_POST["password"])); //PARA QUE LA CONTRASEÑA DE ALMACENE CODIFICADA EN SHA256
         } else {
             $passwordErr = "Contraseña no válida";
         }

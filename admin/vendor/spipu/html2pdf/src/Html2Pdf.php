@@ -28,7 +28,6 @@ use Spipu\Html2Pdf\Debug\DebugInterface;
 use Spipu\Html2Pdf\Debug\Debug;
 
 require_once dirname(__FILE__) . '/config/tcpdf.config.php';
-
 class Html2Pdf
 {
     /**
@@ -69,7 +68,7 @@ class Html2Pdf
      */
     private $svgDrawer;
 
-    protected $_langue           = 'fr';        // locale of the messages
+    protected $_langue           = 'es';        // locale of the messages
     protected $_orientation      = 'P';         // page orientation : Portrait ou Landscape
     protected $_format           = 'A4';        // page format : A4, A3, ...
     protected $_encoding         = '';          // charset encoding

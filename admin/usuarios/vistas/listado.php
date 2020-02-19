@@ -10,8 +10,9 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 }
 ?>
 <style>
-    @import '/tienda/estilos/style_buttons/style_buttons.css';
+    @import "/tienda/estilos/style_buttons/style_buttons.css";
     @import "/tienda/estilos/search/search.css";
+    @import "/tienda/estilos/style_listado/style_listado.css";
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -27,6 +28,7 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                         <i class="fas fa-search"></i>
                     </a>
                 </div>
+                
                 <?php
                 echo "<a href='../utilidades/descargar.php?opcion=XML' type='button' class='btn btn-warning btn-lg btn3d' target='_blank'><i class='fas fa-cloud-download-alt'></i> XML</a>";
                 echo "<a href='../utilidades/descargar.php?opcion=PDF' type='button' class='btn btn-danger btn-lg btn3d' target='_blank'><i class='fas fa-file-pdf'></i> PDF</a>";
@@ -45,8 +47,10 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 
         if (!isset($_POST["usuario"])) {
             $nombre = "";
+            $correo = "";
         } else {
             $nombre = filtrado($_POST["usuario"]);
+            $correo = filtrado($_POST["usuario"]);
         }
 
         $controlador = ControladorUsuario::getControlador();
@@ -54,8 +58,8 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
         $pagina = (isset($_GET['page'])) ? $_GET['page'] : 1;
         $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
 
-        $consulta = "SELECT * FROM usuarios WHERE nombre LIKE :nombre";
-        $parametros = array(':nombre' => "%" . $nombre . "%");
+        $consulta = "SELECT * FROM usuarios WHERE nombre LIKE :nombre or correo LIKE :correo";
+        $parametros = array(':nombre' => "%".$nombre."%", ':correo' => "%".$correo."%");
         $limite = 100;
         $paginador  = new Paginador($consulta, $parametros, $limite);
         $resultados = $paginador->getDatos($pagina);
@@ -86,7 +90,10 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 echo "<td>" . $usuario->getApellidos() . "</td>";
                 echo "<td>" . $usuario->getCorreo() . "</td>";
                 echo "<td>" . substr($usuario->getPassword() . '... encripted sha' .  256, 50) . "</td>";
-                echo "<td>" . $usuario->getTipo() . "</td>";
+                if ($usuario->getTipo() == 'ADMIN')
+                echo "<td scope='row'><span class='badge badge-dot mr-4'><i class='bg-warning'></i>" . $usuario->getTipo() . "</span></td>";
+                else
+                echo "<td scope='row'><span class='badge badge-dot'><i class='bg-info'></i>" . $usuario->getTipo() . "</span></td>";
                 echo "<td>" . $usuario->getTelefono() . "</td>";
                 echo "<td><img src='/tienda/admin/usuarios/imagenes/" . $usuario->getImagen() . "' width='80px' height='70px'></td>";
                 echo "<td>" . $usuario->getFecha() . "</td>";

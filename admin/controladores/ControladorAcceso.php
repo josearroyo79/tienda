@@ -27,12 +27,7 @@ class ControladorAcceso {
         session_destroy();
     }
     
-    public function reiniciarsesion()
-    {
-        $_SESSION['uds'] = 0;
-        $_SESSION['total'] = 0;
-        $_SESSION['carrito'] = array();
-    }
+    
 
     // FUNCIÓN LOGIN
     public function procesarIdentificacion($correo, $password){
@@ -58,14 +53,12 @@ class ControladorAcceso {
                 // Se almacenan los datos del usuario en un array de la sesión para después llamarlo en el apartado de "perfil"
                 $usuario = new usuario($filas[0]->id, $filas[0]->nombre, $filas[0]->apellidos, $filas[0]->correo, $filas[0]->password, $filas[0]->tipo, $filas[0]->imagen, $filas[0]->telefono, $filas[0]->f_alta);
                 $_SESSION['nombre'] = $usuario->getNombre();
-                $_SESSION['apellido'] = $usuario->getApellidos();
-                $_SESSION['tipo'] = $usuario->getTipo();
-                $_SESSION['correo'] = $usuario->getCorreo();
-                $_SESSION['imagen'] = $usuario->getImagen();
-                $_SESSION['id'] = $usuario->getId();
+               $_SESSION['apellido'] = $usuario->getApellidos();
+               $_SESSION['tipo'] = $usuario->getTipo();
+               $_SESSION['correo'] = $usuario->getCorreo();
+               $_SESSION['imagen'] = $usuario->getImagen();
+               $_SESSION['id'] = $usuario->getId();
                 $_SESSION['USUARIO']['correo']=$correo;
-
-                $_SESSION['uds'] = 0;
 
                 //Esta línea la puse porque me daba error el header en este punto con el PC de clase,
                 //así que lo cambié por un refresh
@@ -82,10 +75,5 @@ class ControladorAcceso {
                 require_once VIEW_PATH."pie.php";
                 exit();
             }
-    }
-    public function reiniciarCarrito(){
-        $_SESSION['uds'] = 0;
-        $_SESSION['total'] = 0;
-        $_SESSION['carrito'] = array();
     }
 }

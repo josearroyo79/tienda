@@ -5,7 +5,7 @@
     </style>
    <!--======================================Navigation Bar=================================================-->
    <nav class="navbar navbar-expand-lg navStyle">
-     <img src="/tienda/admin/usuarios/imagenes/RR.png" height="60px">
+     <img src="/tienda/admin/imagenes/RR.png" height="60px">
      <button class="navbar-toggler" data-toggle="collapse" data-target="#mainMenu">
        <span><i class="fas fa-align-right iconStyle"></i></span>
      </button>
@@ -34,7 +34,6 @@
 
 
           //Menu ADMINISTRADOR
-
           // Si la sesión del usuario no tiene el parametro tipo con el valor admin:
           session_start();
           if ($_SESSION['tipo'] != "ADMIN") {
@@ -49,6 +48,7 @@
           if (!isset($_SESSION['USUARIO']['correo'])) {
             echo '<li class="nav-item"><a href="/tienda/login.php" class="nav-link"><i class="fas fa-briefcase"></i>Iniciar sesión</a></li>';
           } else {
+            echo '<li class="nav-item"><a href="/tienda/vistas/carrito.php" class="nav-link">Carrito <i class="fas fa-shopping-cart"></i></a></li>';
             echo '<li class="nav-item"><a href="/tienda/vistas/perfil.php?id=' . encode($_SESSION['id']) . '" class="nav-link"><i class="fas fa-users-cog"></i>' . $_SESSION['USUARIO']['correo'] . '</a></li>';
             // EN ESTE BOTÓN QUE ES EN EL QUE APARECE LOGUEADO EL CORREO, CUANDO SE LE PULSE DEBE COGER EL ID DEL USUARIO DE LA SESIÓN:
             echo '<li class="nav-item"><a href="/tienda/login.php" class="nav-link"><i class="fas fa-sign-out-alt"></i>Salir</a></li>';

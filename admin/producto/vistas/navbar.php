@@ -1,6 +1,6 @@
  <!-- AQUÍ EMPIEZA EL NAVBAR-->
  <ul class="nav justify-content-center grey lighten-4 py-4">
-   <img src="/tienda/admin/usuarios/imagenes/RR.png" alt="RR" width="40px" id="rr">
+   <img src="/tienda/admin/imagenes/RR.png" alt="RR" width="40px" id="rr">
    <li class="nav-item">
      <a class="nav-link active" href=<?php echo "/tienda/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
    </li>
@@ -36,6 +36,7 @@
       echo '<a class="nav-link2" href="/tienda/login.php"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>';
       echo '</li>';
     } else {
+      echo '<li class="nav-item"><a href="/tienda/vistas/carrito.php" class="nav-link">Carrito <i class="fas fa-shopping-cart"></i></a></li>';
       echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['USUARIO']['correo'] . '</a></li>';
       echo '<li><a href="/tienda/login.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';
     }

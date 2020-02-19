@@ -4,7 +4,7 @@
     </style>
    <!--======================================Navigation Bar=================================================-->
    <nav class="navbar navbar-expand-lg navStyle">
-     <img src="/tienda/admin/usuarios/imagenes/RR.png" height="60px">
+     <img src="/tienda/admin/imagenes/RR.png" height="60px">
      <button class="navbar-toggler" data-toggle="collapse" data-target="#mainMenu">
        <span><i class="fas fa-align-right iconStyle"></i></span>
      </button>

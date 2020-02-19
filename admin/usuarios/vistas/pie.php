@@ -2,7 +2,7 @@
 <style>
     @import '/tienda/estilos/footer/footer.css';
 </style>
-<footer class="footer">
+<footer class="footer" id="no_imprimir">
     <div class="social-area">
         <ul>
             <li><a href="" title="Únete a nosotros en Facebook" class="shr-btn-facebook"><span>Facebook</span><i class="fa fa-facebook"></i></a></li>
@@ -12,7 +12,7 @@
         </ul>
     </div>
     <div class="credits">
-        <p>©2020 <span class="footer-white">Tienda de juguetes</span></p><img class="slice-footer" src="/tienda/admin/usuarios/imagenes/RR2.png" alt="Pizz and love">
+        <p>©2020 <span class="footer-white">Tienda de juguetes</span></p><img class="slice-footer" src="/tienda/admin/imagenes/RR2.png" alt="Pizz and love">
     </div>
 </footer>
 

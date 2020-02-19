@@ -7,7 +7,7 @@ class ControladorBD {
     private $password = "";
     private $dbname = "tienda";
     private $server ="mysql";
-
+    
     // Variables
     private $bd; // BBDD
     private $rs; // ResultSet, almacen de consultas
@@ -84,8 +84,8 @@ class ControladorBD {
         return $this->servername;
     }
 
-    private function alerta($texto) {
+    /*private function alerta($texto) {
         echo '<script type="text/javascript">alert("' . $texto . '")</script>';
-    }
+    }*/
 
 }

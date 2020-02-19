@@ -55,7 +55,7 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 
              // Consulta para el buscador
              $consulta = "SELECT * FROM productos WHERE nombre LIKE :nombre OR marca LIKE :marca";
-             $parametros = array(':nombre' => "%".$nombre."%", ':nombre' => "%".$nombre."%", ':marca' => "%".$marca."%");
+             $parametros = array(':nombre' => "%".$nombre."%", ':marca' => "%".$marca."%");
              $limite = 4; // Limite del paginador
              $paginador  = new Paginador($consulta, $parametros, $limite);
              $resultados = $paginador->getDatos($pagina);

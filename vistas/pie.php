@@ -12,7 +12,7 @@
         </ul>
     </div>
     <div class="credits">
-        <p>©2020 <span class="footer-white">Tienda de juguetes</span></p><img class="slice-footer" src="/tienda/admin/usuarios/imagenes/RR2.png" alt="Pizz and love">
+        <p>©2020 <span class="footer-white">Tienda de juguetes</span></p><img class="slice-footer" src="/tienda/admin/imagenes/RR2.png" alt="Pizz and love">
     </div>
 </footer>
 

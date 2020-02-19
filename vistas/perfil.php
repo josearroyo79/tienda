@@ -5,8 +5,8 @@ require_once CONTROLLER_PATH . "ControladorImagenUser.php";
 require_once UTILITY_PATH . "funciones.php";
 
 
-$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen =  $fecha = "";
-$nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = $fechaErr = "";
+$nombre = $apellidos = $correo = $password = $telefono = $imagen = "";
+$nombreErr = $apellidosErr = $correoErr = $passwordErr = $telefonoErr = $imagenErr = "";
 $imagenAnterior = "";
 
 $errores = [];
@@ -14,13 +14,12 @@ $errores = [];
 session_start();
 
 //Cogemos la id de sesión del usuario actual y la almaceno en una variable para ser comparada
-$idUsuario=encode($_SESSION['id']);
+$idUsuario = encode($_SESSION['id']);
 //Almaceno en la variable identificadorURI el identificador de url que se está pasando
-$identificadorURI=$_SERVER["REQUEST_URI"];
+$identificadorURI = $_SERVER["REQUEST_URI"];
 //Si el id de la url es igual que el id de la sesión del usuario, accede, no le digo nada, sino, error
 //porque significa que el id de la url es distinto al de la sesión por lo que es otro usuario accediendo a otra vista.
-if ($identificadorURI=="/tienda/vistas/perfil.php?id=$idUsuario"){
-    
+if ($identificadorURI == "/tienda/vistas/perfil.php?id=$idUsuario") {
 } else {
     header('location: /tienda/admin/vistas/error.php');
 }
@@ -31,62 +30,63 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     /// Procesamos el nombre
     $nombreVal = filtrado(($_POST["nombre"]));
-    if(empty($nombreVal)){
+    if (empty($nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre";
-    } else{
+    } else {
         $nombre = $nombreVal;
     }
 
     // Procesamos apellido
     $apellidos = filtrado($_POST["apellidos"]);
 
+    // Procesamos el correo
     // Buscamos que no exista el correo exactamente igual que el nombre
+    $correoVal = filtrado($_POST["correo"]);
     $controlador = ControladorUsuario::getControlador();
-    $usuario = $controlador->buscarUsuarioCorreo($correoVal);
-    if (isset($usuario)) {
-        $correoErr = '¡ERR0R! ----- El correo "' . $correoVal . '" ya está registrado en esta web.';
-    } else {
+    $usuario = $controlador->buscarusuario($id);
+
+    $correoactual = $usuario->getCorreo();
+
+    if (empty($correoVal)) {
+        $correoErr = "El campo de correo está vacío o no es válido";
+    } else if ($correoVal == $correoactual) {
         $correo = $correoVal;
-    }
-
-    //Procesamos la contraseña
-    $password = filtrado($_POST["password"]);
-
-    //Procesamos el tipo
-    $tipo = filtrado($_POST["tipo"]);
-
-    // Procesamos fecha
-    $fecha = date("d-m-Y", strtotime(filtrado($_POST["fecha"])));
-    $hoy = date("d-m-Y", time());
-
-    // Comparamos las fechas
-    $fecha_mat = new DateTime($fecha);
-    $fecha_hoy = new DateTime($hoy);
-    $interval = $fecha_hoy->diff($fecha_mat);
-
-    if ($interval->format('%R%a días') > 0) {
-        $fechaErr = "La fecha no puede ser superior a la fecha actual";
-        $errores[] =  $fechaErr;
     } else {
-        $fecha = date("d/m/Y", strtotime($fecha));
+        $usuario = $controlador->buscarUsuarioCorreo($correoVal);
+        if (isset($usuario)) {
+            $correoErr = '¡ERR0R! ----- El correo "' . $correoVal . '" ya está registrado en esta web.';
+        } else {
+            $correo = $correoVal;
+        }
     }
 
+    // Procesamos la contraseña
+    $passwordVal = filtrado($_POST["password"]);
+    $controlador = ControladorUsuario::getControlador();
+    $usuario = $controlador->buscarusuario($id);
+
+    if (empty($passwordVal)) {
+        $password = $usuario->getPassword();
+    } else {
+        $password = hash('sha256', $passwordVal);
+    }
+
+    //Procesamos el teléfono
     $telefono = filtrado($_POST["telefono"]);
 
     // Procesamos la imagen
-    
     if ($_FILES['imagen']['size'] > 0 && count($errores) == 0) {
         $propiedades = explode("/", $_FILES['imagen']['type']);
         $extension = $propiedades[1];
         $tam_max = 5000000; // 5 MB
         $tam = $_FILES['imagen']['size'];
         $mod = true;
-        
+
         if ($extension != "jpg" && $extension != "jpeg" && $extension != "png") {
             $mod = false;
             $imagenErr = "Formato debe ser jpg/jpeg/png";
         }
-        
+
         if ($tam > $tam_max) {
             $mod = false;
             $imagenErr = "Tamaño superior al limite de: " . ($tam_max / 1000) . " KBytes";
@@ -117,11 +117,11 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     // Chequeamos los errores antes de insertar en la base de datos
     if (
-        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
-        empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
+        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) &&
+        empty($telefonoErr) && empty($imagenErr)
     ) {
         $controlador = ControladorUsuario::getControlador();
-        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha);
+        $estado = $controlador->actualizarPerfil($id, $nombre, $apellidos, $correo, $password, $telefono, $imagen);
         if ($estado) {
             $errores = [];
             header("location: ../index.php");
@@ -130,8 +130,6 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
             header("location: /tienda/admin/vistas/error.php");
             exit();
         }
-    } else {
-        alerta("Hay errores al procesar el formulario revise los errores");
     }
 }
 
@@ -146,10 +144,8 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $apellidos = $usuario->getApellidos();
         $correo = $usuario->getCorreo();
         $password = $usuario->getPassword();
-        $tipo = $usuario->getTipo();
         $telefono = $usuario->getTelefono();
         $imagen = $usuario->getImagen();
-        $fecha = $usuario->getFecha();
         $imagenAnterior = $imagen;
     } else {
         header("location: error.php");
@@ -220,18 +216,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                 </div>
                             </td>
                         </tr>
-                        <tr hidden>
-                            <td>
-                                <!--TIPO-->
-                                <div class="form-group">
-                                    <b><label>TIPO</label></b>
-                                    <select name="tipo" class="custom-select custom-select-sm">
-                                        <option value="ADMIN" <?php echo (strstr($tipo, 'ADMIN')) ? 'selected' : ''; ?>>ADMIN</option>
-                                        <option value="USER" <?php echo (strstr($tipo, 'USER')) ? 'selected' : ''; ?>>USER</option>
-                                    </select>
-                                </div>
-                            </td>
-                        </tr>
                         <tr>
                             <td>
                                 <!-- TELEFONO -->
@@ -239,16 +223,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
                                     <b><label>TELEFONO</label></b>
                                     <input pattern="([0-9]{9})" type="tel" required name="telefono" class="form-control" value="<?php echo $telefono; ?>" minlength="9" maxlength="9" title="El teléfono tiene que tener 9 números. Sin letras.">
                                     <span class="help-block"><?php echo $telefonoErr; ?></span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr hidden>
-                            <td>
-                                <!-- Fecha -->
-                                <div class="form-group <?php echo (!empty($fechaErr)) ? 'error: ' : ''; ?>">
-                                    <b><label>Fecha de registro</label></b>
-                                    <input type="date" required name="fecha" class="form-control" value="<?php echo date('Y-m-d', strtotime(str_replace('/', '-', $fecha))); ?>" minlength="1">
-                                    <span class="help-block"><?php echo $fechaErr; ?></span>
                                 </div>
                             </td>
                         </tr>

@@ -4,8 +4,8 @@ require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once CONTROLLER_PATH . "ControladorImagenUser.php";
 require_once UTILITY_PATH . "funciones.php";
 
-$nombre = $apellidos = $correo = $password = $tipo = $telefono = $imagen =  $fecha = "";
-$nombreErr = $apellidosErr = $correoErr = $passwordErr = $tipoErr = $telefonoErr = $imagenErr = $fechaErr = "";
+$nombre = $apellidos = $correo = $tipo = $telefono = $imagen =  $fecha = "";
+$nombreErr = $apellidosErr = $correoErr = $tipoErr = $telefonoErr = $imagenErr = $fechaErr = "";
 $imagenAnterior = "";
 
 $errores = [];
@@ -23,12 +23,11 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
     $id = $_POST["id"];
-    
+
     // Procesamos el nombre
     $nombreVal = filtrado(($_POST["nombre"]));
     if (empty($nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
-        
     } elseif (!preg_match("/([^\s][A-zÀ-ž\s]+$)/", $nombreVal)) {
         $nombreErr = "Por favor introduzca un nombre válido con solo carávteres alfabéticos.";
     } else {
@@ -39,10 +38,23 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $apellidos = filtrado($_POST["apellidos"]);
 
     // Procesamos el correo
-    $correo = filtrado($_POST["correo"]);
-
-    // Procesamos el password
-    $password = hash("sha256",filtrado($_POST["password"]));
+        // Buscamos que no exista el correo exactamente igual que el nombre
+        $correoVal = filtrado($_POST["correo"]);
+        $controlador = ControladorUsuario::getControlador();
+        $usuario = $controlador->buscarusuario($id);
+        $correoactual = $usuario -> getCorreo();
+        if (empty($correoVal)) {
+            $correoErr = "El campo de correo está vacío o no es válido";
+        } else if ($correoVal == $correoactual) {
+            $correo = $correoVal;
+        } else {
+            $usuario = $controlador->buscarUsuarioCorreo($correoVal);
+            if (isset($usuario)) {
+                $correoErr = '¡ERR0R! ----- El correo "' . $correoVal . '" ya está registrado en esta web.';
+            } else {
+                $correo = $correoVal;
+            }
+        }
 
     // Procesamos el tipo
     $tipo = filtrado($_POST["tipo"]);
@@ -100,11 +112,11 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     }
 
     if (
-        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($passwordErr) && empty($tipoErr) &&
+        empty($nombreErr) && empty($apellidosErr) && empty($correoErr) && empty($tipoErr) &&
         empty($telefonoErr) && empty($imagenErr) && empty($fechaErr)
     ) {
         $controlador = ControladorUsuario::getControlador();
-        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha);
+        $estado = $controlador->actualizarUsuario($id, $nombre, $apellidos, $correo, $tipo, $telefono, $imagen, $fecha);
         if ($estado) {
             $errores = [];
             header("location: ../index.php");
@@ -113,8 +125,6 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
             header("location: /tienda/admin/vistas/error.php");
             exit();
         }
-    } else {
-        alerta("Hay errores al procesar el formulario revise los errores");
     }
 }
 
@@ -126,7 +136,6 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
         $nombre = $usuario->getNombre();
         $apellidos = $usuario->getApellidos();
         $correo = $usuario->getCorreo();
-        $password = $usuario->getPassword();
         $tipo = $usuario->getTipo();
         $telefono = $usuario->getTelefono();
         $imagen = $usuario->getImagen();
@@ -153,7 +162,8 @@ require_once VIEW_PATH . "cabecera.php"; ?>
                 <p>Por favor edite la nueva información para actualizar la ficha.</p>
                 <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
                     <table class="table table-hover">
-                        <tr><!-- NOMBRE -->
+                        <tr>
+                            <!-- NOMBRE -->
                             <td>
                                 <b><label>NOMBRE</label></b>
                                 <div class="md-form <?php echo (!empty($nombreErr)) ? 'error: ' : ''; ?>">
@@ -186,16 +196,6 @@ require_once VIEW_PATH . "cabecera.php"; ?>
                                     <b><label>CORREO</label></b>
                                     <input type="email" required name="correo" class="form-control" value="<?php echo $correo; ?>" minlength="1">
                                     <span class="help-block"><?php echo $correoErr; ?></span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <!-- CONTRASEÑA -->
-                                <div class="form-group <?php echo (!empty($passwordErr)) ? 'error: ' : ''; ?>">
-                                    <b><label>CONTRASEÑA</label></b>
-                                    <input type="password" name="password" class="form-control" value="<?php echo $password; ?>" minlength="1">
-                                    <span class="help-block"><?php echo $passwordErr; ?></span>
                                 </div>
                             </td>
                         </tr>

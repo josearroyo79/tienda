@@ -25,7 +25,7 @@ require_once VIEW_PATH . "cabecera.php";
 	</div>
 </form>
 <?php
-//echo hash("sha256","pepe");
+
 
 if (!isset($_POST["producto"])) {
     $nombre = "";

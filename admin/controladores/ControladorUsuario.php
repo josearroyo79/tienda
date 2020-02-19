@@ -167,16 +167,27 @@ class ControladorUsuario {
         return $estado;
     }
     
-    public function actualizarUsuario($id, $nombre, $apellidos, $correo, $password, $tipo, $telefono, $imagen, $fecha){
+    public function actualizarUsuario($id, $nombre, $apellidos, $correo, $tipo, $telefono, $imagen, $fecha){
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
-        $consulta = "UPDATE usuarios SET nombre=:nombre, apellidos=:apellidos, correo=:correo, password=:password, tipo=:tipo, 
+        $consulta = "UPDATE usuarios SET nombre=:nombre, apellidos=:apellidos, correo=:correo, tipo=:tipo, 
             telefono=:telefono, imagen=:imagen, fecha=:fecha WHERE id=:id";
-        $parametros= array(':id' => $id, ':nombre'=>$nombre, ':apellidos'=>$apellidos,':correo'=>$correo, ':password'=>$password,
+        $parametros= array(':id' => $id, ':nombre'=>$nombre, ':apellidos'=>$apellidos,':correo'=>$correo,
                             ':tipo'=>$tipo, ':telefono'=>$telefono,':imagen'=>$imagen,':fecha'=>$fecha);
         $estado = $bd->actualizarBD($consulta,$parametros);
         $bd->cerrarBD();
         return $estado;
     }
-    
+
+    public function actualizarPerfil($id, $nombre, $apellidos, $correo, $password, $telefono, $imagen){
+        $bd = ControladorBD::getControlador();
+        $bd->abrirBD();
+        $consulta = "UPDATE usuarios SET nombre=:nombre, apellidos=:apellidos, correo=:correo, password=:password, 
+            telefono=:telefono, imagen=:imagen, WHERE id=:id";
+        $parametros= array(':id' => $id, ':nombre'=>$nombre, ':apellidos'=>$apellidos,':correo'=>$correo, ':password'=>$password,
+                        ':telefono'=>$telefono,':imagen'=>$imagen,);
+        $estado = $bd->actualizarBD($consulta,$parametros);
+        $bd->cerrarBD();
+        return $estado;
+    }
 }

@@ -3,11 +3,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once MODEL_PATH . "Usuario.php";
 require_once VENDOR_PATH . "autoload.php";
+
 use Spipu\Html2Pdf\HTML2PDF;
 
-class ControladorDescargaUser
+class ControladorDescarga
 {
-    private $fichero;
+    //private $fichero;
     
     static private $instancia = null;
 
@@ -15,7 +16,7 @@ class ControladorDescargaUser
     public static function getControlador()
     {
         if (self::$instancia == null) {
-            self::$instancia = new ControladorDescargaUser();
+            self::$instancia = new ControladorDescarga();
         }
         return self::$instancia;
     }
@@ -52,41 +53,57 @@ class ControladorDescargaUser
         exit;
     }
 
-    
-
     public function descargarPDF(){
-        $slu ='<h2 class="pull-left">Fichas de los usuarios:</h2>';
+        
         $lista = $controlador = ControladorUsuario::getControlador();
         $lista = $controlador->listarUsuarios("", "");
         if (!is_null($lista) && count($lista) > 0) {
-            $slu.="<table class='table table-bordered table-striped'>";
-            $slu.="<thead>";
+            $slu.="<div class='main-content'>";
+            $slu.="<div class='container mt-7'>";
+            $slu.="<div class='row mt-5'>";
+            $slu.="<div class='col'>";
+            $slu.="<div class='card bg-default shadow'>";
+            $slu.="<div class='card-header bg-transparent border-0'>";
+            $slu.="<h3 class='text-white mb-0'>Fichas de los usuarios</h3>";
+            $slu.="</div>";
+            $slu.="<div class='table-responsive'>";
+            $slu.="<table class='table align-items-center table-dark table-flush'>";
+            $slu.="<thead class='thead-dark'>";
             $slu.="<tr>";
-            $slu.="<th>Nombre</th>";
-            $slu.="<th>Apellidos</th>";
-            $slu.="<th>Correo</th>";
-            $slu.="<th>Contraseña</th>";
-            $slu.="<th>Tipo</th>";
-            $slu.="<th>Telefono</th>";
-            $slu.="<th>Imagen</th>";
-            $slu.="<th>Fecha de registro</th>";
+            $slu.="<th scope='col'>Nombre</th>";
+            $slu.="<th scope='col'>Apellidos</th>";
+            $slu.="<th scope='col'>Correo</th>";
+            $slu.="<th scope='col'>Contraseña</th>";
+            $slu.="<th scope='col'>Tipo</th>";
+            $slu.="<th scope='col'>Telefono</th>";
+            $slu.="<th scope='col'>Imagen</th>";
+            $slu.="<th scope='col'>Fecha de registro</th>";
             $slu.="</tr>";
             $slu.="</thead>";
             $slu.="<tbody>";
             foreach ($lista as $usuario) {
                 $slu.="<tr>";
-                $slu.="<td>" . $usuario->getNombre() . "</td>";
-                $slu.="<td>" . $usuario->getApellidos() . "</td>";
-                $slu.="<td>" . $usuario->getCorreo() . "</td>";
-                $slu.="<td>" . hash("sha256",$usuario->getPassword()) . "</td>";
-                $slu.="<td>" . $usuario->getTipo() . "</td>";
-                $slu.="<td>" . $usuario->getTelefono() . "</td>";
-                $slu.="<td><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
-                $slu.="<td>" . $usuario->getFecha() . "</td>";
+                $slu.="<td scope='row'>" . $usuario->getNombre() . "</td>";
+                $slu.="<td scope='row'>" . $usuario->getApellidos() . "</td>";
+                $slu.="<td scope='row'>" . $usuario->getCorreo() . "</td>";
+                $slu.="<td scope='row'>" . hash("sha256",$usuario->getPassword()) . "</td>";
+                if ($usuario->getTipo() == 'ADMIN')
+                $slu.="<td scope='row'><span class='badge badge-dot mr-4'><i class='bg-warning'></i>" . $usuario->getTipo() . "</span></td>";
+                else
+                $slu.="<td scope='row'><span class='badge badge-dot'><i class='bg-info'></i>" . $usuario->getTipo() . "</span></td>";
+                $slu.="<td scope='row'>" . $usuario->getTelefono() . "</td>";
+                $slu.="<td scope='row'><img src='".$_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/imagenes/".$usuario->getImagen()."'  style='max-width: 20mm; max-height: 20mm'></td>";
+                $slu.="<td scope='row'>" . $usuario->getFecha() . "</td>";
                 $slu.="</tr>";
             }
             $slu.="</tbody>";
             $slu.="</table>";
+            $slu.="</div>";
+            $slu.="</div>";
+            $slu.="</div>";
+            $slu.="</div>";
+            $slu.="</div>";
+            $slu.="</div>";
         } else {
             $slu.="<p class='lead'><em>No se ha encontrado datos de usuarios</em></p>";
         }
