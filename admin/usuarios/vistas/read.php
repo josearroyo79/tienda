@@ -3,6 +3,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/usuarios/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
 require_once UTILITY_PATH . "funciones.php";
 
+session_start();
+if (!isset($_SESSION['USUARIO']['correo'])) {
+    header("location: /tienda/login.php");
+    exit();
+} else if ($_SESSION['tipo'] != "ADMIN") {
+    header("location: /tienda/admin/vistas/error.php");
+    exit();
+}
+
 // Buscamos el id a ver si existe
 if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     
@@ -16,6 +25,9 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 }
 
 require_once VIEW_PATH . "cabecera.php"; ?>
+<style>
+    @import '/tienda/estilos/style_buttons/style_buttons.css';
+</style>
 <div class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -73,8 +85,8 @@ require_once VIEW_PATH . "cabecera.php"; ?>
                         </td>
                     </tr>
                 </table>
-                <p><a href="/tienda/admin/usuarios/index.php" class="btn btn-info"><i class="fas fa-check-circle"></i> Aceptar</a></p>
-                <a href="../../utilidades/descargar.php?opcion=PDFUsuario&id=<?php echo $_GET["id"] ?>" type="button" class="btn btn-outline-secondary waves-effect" target="_blank"><i class="fas fa-file-pdf"></i> Descargar en PDF este usuario</a>
+                <p><a href="/tienda/admin/usuarios/index.php" class="btn btn-info btn-lg btn3d"><i class="fas fa-check-circle"></i> Aceptar</a></p>
+                <a href="../../utilidades/descargar.php?opcion=PDFUsuario&id=<?php echo $_GET["id"] ?>" type="button" class="btn btn-danger btn-lg btn3d" target="_blank"><i class="fas fa-file-pdf"></i> Descargar en PDF este usuario</a>
             </div>
         </div>
     </div>

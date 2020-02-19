@@ -7,7 +7,7 @@ class ControladorBD {
     private $password = "";
     private $dbname = "tienda";
     private $server ="mysql";
-    
+
     // Variables
     private $bd; // BBDD
     private $rs; // ResultSet, almacen de consultas

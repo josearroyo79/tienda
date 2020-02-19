@@ -14,6 +14,16 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     }
 }
 
+
+session_start();
+if (!isset($_SESSION['USUARIO']['correo'])) {
+    header("location: /tienda/login.php");
+    exit();
+} else if ($_SESSION['tipo'] != "ADMIN") {
+    header("location: /tienda/admin/vistas/error.php");
+    exit();
+}
+
 // Se procesan los datos del formulario
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $controlador = ControladorUsuario::getControlador();

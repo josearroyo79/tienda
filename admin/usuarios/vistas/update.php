@@ -10,6 +10,15 @@ $imagenAnterior = "";
 
 $errores = [];
 
+session_start();
+if (!isset($_SESSION['USUARIO']['correo'])) {
+    header("location: /tienda/login.php");
+    exit();
+} else if ($_SESSION['tipo'] != "ADMIN") {
+    header("location: /tienda/admin/vistas/error.php");
+    exit();
+}
+
 // Ejecutamos lo que se metió en el formulario POST
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
@@ -33,7 +42,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $correo = filtrado($_POST["correo"]);
 
     // Procesamos el password
-    $password = filtrado($_POST["password"]);
+    $password = hash("sha256",filtrado($_POST["password"]));
 
     // Procesamos el tipo
     $tipo = filtrado($_POST["tipo"]);

@@ -11,6 +11,20 @@ $imagenAnterior = "";
 
 $errores = [];
 
+session_start();
+
+//Cogemos la id de sesión del usuario actual y la almaceno en una variable para ser comparada
+$idUsuario=encode($_SESSION['id']);
+//Almaceno en la variable identificadorURI el identificador de url que se está pasando
+$identificadorURI=$_SERVER["REQUEST_URI"];
+//Si el id de la url es igual que el id de la sesión del usuario, accede, no le digo nada, sino, error
+//porque significa que el id de la url es distinto al de la sesión por lo que es otro usuario accediendo a otra vista.
+if ($identificadorURI=="/tienda/vistas/perfil.php?id=$idUsuario"){
+    
+} else {
+    header('location: /tienda/admin/vistas/error.php');
+}
+
 // Procesamos la información obtenida por POST
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
     $id = $_POST["id"];
