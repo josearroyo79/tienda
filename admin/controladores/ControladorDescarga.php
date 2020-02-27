@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
 require_once CONTROLLER_PATH . "ControladorUsuario.php";
+require_once CONTROLLER_PATH . "ControladorProducto.php";
 require_once MODEL_PATH . "Usuario.php";
 require_once VENDOR_PATH . "autoload.php";
 
@@ -155,6 +156,85 @@ class ControladorDescarga
         $pdf->output('usuarios.pdf');
     }
 
+    public function descargarfactura($id)
+    {
+        if (isset($_SESSION['carrito'])) {
+            $arreglo = $_SESSION['carrito'];
+        ob_end_clean();
+        $sal = "<h1 align='center';>Factura</h1>";
+        $sal .= "<h3 align='right';>Pedido nº:" . $_SESSION['ventas']['idVenta'] . "</h3>";
+        $fech = new DateTime($_SESSION['venta']['fecha']);
+        $sal .= "<h4 align='right';>Fecha de compra:" . $fech->format('d/m/Y') . "</h4>";
+        $sal .= "<h4 align='center';>Datos de pago:</h4>";
+        $sal .= "<h5 align='center';>Facturado a: " . $_SESSION['ventas']['nombre'] . "</h5>";
+        $sal .= "<h5 align='center';>Metodo de pago: Tarjeta de crédito/debito: ****************</h5>";
+        $sal .= "<h4 align='center';>Datos de Envío:</h4>";
+        $sal .= "<h5 align='center';>Email " . $_SESSION['ventas']['correo'] . "</h5>";
+        $sal .= "<h5 align='center';>Dirección " . $_SESSION['ventas']['direccion'] . "</h5>";
+        $sal .= "<h4 align='center';>Productos</h4>";
+        $sal .=  '<table class="table table-hover">';
+        $sal .= '<thead>';
+        $sal .=  '<tr>';
+        $sal .="<th>Producto</th>";
+        $sal .="<th>Cantidad</th>";
+        $sal .="<th class='text-center'>Precio</th>";
+        $sal .="<th class='text-center'>Total producto</th>";
+        $sal .="</tr>";
+        $sal .="</thead>";
+        $sal .="<tbody>";
+            foreach ($arreglo as $key => $fila) {
+            ?>
+                <tr>
+                    <td class="col-sm-8 col-md-6">
+                        <div class="media">
+                        <?php
+                        $id = $fila[0];
+                        $nombre = $fila[1];
+                        $marca = $fila[3];
+                        $precio = $fila[4];
+                        $unidades = $fila[5];
+                        $imagen = $fila[6];
+                        $total=$fila[7]*$fila[4];
+                        $total_compra +=  $total;
+                        echo '<a class="thumbnail pull-left" href="#"> <img class="media-object" src="/tienda/admin/producto/imagen_producto/'.$imagen.'" style="width: 72px; height: 72px;"/> </a>';
+                        echo '<div class="media-body">';
+                        echo '<h4 class="media-heading">' . $nombre . '</h4>';
+                        echo '<h5 class="media-heading"> Marca: ' . $marca . '</h5>';
+                        echo "</div>";
+                        echo '</div>';
+                        echo '</td>';
+                        echo '<td class="col-sm-1 col-md-1" style="text-align: center">';
+                        echo '<input disabled type="number" class="form-control" value="' . $fila[7] .'">';
+                        echo '</td>';
+                        echo '<td class="col-sm-1 col-md-1 text-center"><strong>' . $precio . '€</strong></td>';
+                        echo '<td class="col-sm-1 col-md-1 text-center"><strong>'.$total.'€</strong></td>';
+                        echo '<td class="col-sm-1 col-md-1">';
+                        echo '</tr>';
+                    }
+                    ?>
+                <tr>
+                    <td>   </td>
+                    <td>   </td>
+                    <td>   </td>
+                    <td>
+                        <h3>Total compra</h3>
+                    </td>
+                    <td class="text-right">
+                        <h3><strong><?php echo $total_compra ?>€</strong></h3>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<?php
+}
+        $pdf = new HTML2PDF('P', 'A4', 'es', 'true', 'UTF-8');
+        $pdf->writeHTML($sal);
+        $pdf->output('factura.pdf');
+
+    }
 
     //---------------------------------------------------DESCARGAS PRODUCTOS---------------------------------------------------
     public function descargarXMLProd()

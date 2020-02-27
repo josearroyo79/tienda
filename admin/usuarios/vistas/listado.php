@@ -90,10 +90,11 @@ if (!isset($_SESSION['USUARIO']['correo'])) {
                 echo "<td>" . $usuario->getApellidos() . "</td>";
                 echo "<td>" . $usuario->getCorreo() . "</td>";
                 echo "<td>" . substr($usuario->getPassword() . '... encripted sha' .  256, 50) . "</td>";
-                if ($usuario->getTipo() == 'ADMIN')
+                if ($usuario->getTipo() == 'ADMIN'){
                 echo "<td scope='row'><span class='badge badge-dot mr-4'><i class='bg-warning'></i>" . $usuario->getTipo() . "</span></td>";
-                else
+                }else{
                 echo "<td scope='row'><span class='badge badge-dot'><i class='bg-info'></i>" . $usuario->getTipo() . "</span></td>";
+                }
                 echo "<td>" . $usuario->getTelefono() . "</td>";
                 echo "<td><img src='/tienda/admin/usuarios/imagenes/" . $usuario->getImagen() . "' width='80px' height='70px'></td>";
                 echo "<td>" . $usuario->getFecha() . "</td>";

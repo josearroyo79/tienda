@@ -1,45 +1,64 @@
  <!-- AQUÍ EMPIEZA EL NAVBAR-->
- <ul class="nav justify-content-center grey lighten-4 py-4">
-   <img src="/tienda/admin/imagenes/RR.png" alt="RR" width="40px" id="rr">
-   <li class="nav-item">
-     <a class="nav-link active" href=<?php echo "/tienda/index.php"; ?>><i class="fas fa-home"></i>Inicio</a>
-   </li>
-   <?php
-    // Abrimos las sesiones para leerla
-    error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
-    session_start();
-    if ($_SESSION['tipo'] != "ADMIN") {
-      // Menú normal
-    } else {
-      // Menu de administrador
-      echo '<li class="nav-item">';
-      echo '<a class="nav-link" href="#"><i class="fas fa-tools"></i> Administrador</a>';
-      echo '<ul>';
-      echo '<li><a href="/tienda/admin"><i class="fas fa-arrow-right"></i>Panel de administración</a></li>';
-      //echo '<li><a href=""><i class="fas fa-arrow-right"></i> Menu admin 2</a></li>';
-      echo '</ul>';
-      echo '</li>';
-    }
-    ?>
-   <!--Para todos-->
-   <li class="nav-item">
-     <a class="nav-link" href="/tienda/index.php">Catálogo</a>
-   </li>
-   <!--
-   <li class="nav-item">
-     <a class="nav-link" href="/tienda/admin/vistas/informacion.php">Información</a>
-   </li>-->
+ <header>
+ <style>
+        @import '/tienda/estilos/navbar/navbar.css';
+    </style>
+   <!--======================================Navigation Bar=================================================-->
+   <nav class="navbar navbar-expand-lg navStyle">
+     <img src="/tienda/admin/imagenes/RR.png" height="60px">
+     <button class="navbar-toggler" data-toggle="collapse" data-target="#mainMenu">
+       <span><i class="fas fa-align-right iconStyle"></i></span>
+     </button>
+     <div class="collapse navbar-collapse" id="mainMenu">
+       <ul class="navbar-nav ml-auto navList">
+         <li class="nav-item"><a href=<?php echo "/tienda/index.php"; ?> class="nav-link"><i class="fas fa-home"></i>Inicio<span class="sr-only"></span></a></li>
 
-   <?php
-    if (!isset($_SESSION['USUARIO']['correo'])) {
-      echo '<li class="nav-item">';
-      echo '<a class="nav-link2" href="/tienda/login.php"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>';
-      echo '</li>';
-    } else {
-      echo '<li class="nav-item"><a href="/tienda/vistas/carrito.php" class="nav-link">Carrito <i class="fas fa-shopping-cart"></i></a></li>';
-      echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['USUARIO']['correo'] . '</a></li>';
-      echo '<li><a href="/tienda/login.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>';
-    }
-    ?>
- </ul>
- <br><br>
+         <?php
+          error_reporting(E_ALL & ~(E_STRICT | E_NOTICE));
+
+          require_once CONTROLLER_PATH . "ControladorProducto.php";
+          require_once MODEL_PATH . "Producto.php";
+          require_once CONTROLLER_PATH . "Paginador.php";
+          require_once UTILITY_PATH . "funciones.php";
+
+          if (!isset($_POST["correo"])) {
+            $nombre = "";
+          } else {
+            $nombre = filtrado($_POST["correo"]);
+          }
+
+          $controlador = ControladorProducto::getControlador();
+
+          $pagina = (isset($_GET['page'])) ? $_GET['page'] : 1;
+          $enlaces = (isset($_GET['enlaces'])) ? $_GET['enlaces'] : 10;
+
+
+          //Menu ADMINISTRADOR
+          // Si la sesión del usuario no tiene el parametro tipo con el valor admin:
+          session_start();
+          if ($_SESSION['tipo'] != "ADMIN") {
+            // Menú normal
+          } else {
+            // Menu de administrador (en caso de que tenga como parametro de tipo "ADMIN") se le muestra el menú
+            echo '<li class="nav-item"><a href="/tienda/admin" class="nav-link"><i class="fas fa-cogs"></i>Administración</a></li>';
+          }
+          ?>
+         <!--Para todos-->
+         <?php
+          if (!isset($_SESSION['USUARIO']['correo'])) {
+            echo '<li class="nav-item"><a href="/tienda/login.php" class="nav-link"><i class="fas fa-briefcase"></i>Iniciar sesión</a></li>';
+          } else {
+            echo '<li class="nav-item"><a href="/tienda/vistas/carrito.php" class="nav-link">Carrito <i class="fas fa-shopping-cart"></i></a></li>';
+            echo '<li class="nav-item"><a href="/tienda/vistas/perfil.php?id=' . encode($_SESSION['id']) . '" class="nav-link"><i class="fas fa-users-cog"></i>' . $_SESSION['USUARIO']['correo'] . '</a></li>';
+            // EN ESTE BOTÓN QUE ES EN EL QUE APARECE LOGUEADO EL CORREO, CUANDO SE LE PULSE DEBE COGER EL ID DEL USUARIO DE LA SESIÓN:
+            echo '<li class="nav-item"><a href="/tienda/login.php" class="nav-link"><i class="fas fa-sign-out-alt"></i>Salir</a></li>';
+          }
+          ?>
+                </ul>
+            </div>
+        </nav>              
+    </header>
+
+         
+       </ul>
+       <br><br>

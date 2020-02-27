@@ -20,4 +20,8 @@ switch ($opcion) {
     case 'PDFUsuario':
         $fichero->descargarPDFUsuario($id);
         break;
+    /*case 'FACTURA';
+        $id = decode($_GET["id"]);
+        $fichero->descargarfactura($id);
+        break;*/
 }

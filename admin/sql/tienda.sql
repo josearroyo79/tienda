@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-02-2020 a las 19:27:22
+-- Tiempo de generación: 21-02-2020 a las 12:42:20
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `imagen` text COLLATE utf8_spanish_ci NOT NULL,
   `fecha` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -79,8 +79,26 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `correo`, `password`, `tipo`, `telefono`, `imagen`, `fecha`) VALUES
 (92, 'Administrador', 'SUDOSU', 'admin@admin.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'ADMIN', 987654679, '14c89a8ee9a1b2f24b05da04af1658c7.png', '19/02/2020'),
-(93, 'Pepe', 'pepe', 'pepe@pepe.com', '7c9e7c1494b2684ab7c19d6aff737e460fa9e98d5a234da1310c97ddf5691834', 'USER', 651578465, '27dadb67eb938b85be1eb089d9e10f67.png', '19/02/2020'),
-(94, 'Prueba', 'prueba', 'prueba@prueba.com', '655e786674d9d3e77bc05ed1de37b4b6bc89f788829f9f3c679e7687b410c89b', 'USER', 654646948, '07e271b742598d681d733f2aa91b6755.png', '19/02/2020');
+(95, 'Pepe', 'pepe', 'pepe@pepe.com', '7c9e7c1494b2684ab7c19d6aff737e460fa9e98d5a234da1310c97ddf5691834', 'USER', 646876876, 'b0fe9327880c19f7a39dd13d4a5bf951.png', '21/02/2020');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ventas`
+--
+
+DROP TABLE IF EXISTS `ventas`;
+CREATE TABLE IF NOT EXISTS `ventas` (
+  `idVenta` int(30) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp(),
+  `total` float NOT NULL,
+  `nombre` text COLLATE utf8_unicode_ci NOT NULL,
+  `correo` text COLLATE utf8_unicode_ci NOT NULL,
+  `direccion` text COLLATE utf8_unicode_ci NOT NULL,
+  `nombreTarjeta` text COLLATE utf8_unicode_ci NOT NULL,
+  `numTarjeta` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`idVenta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

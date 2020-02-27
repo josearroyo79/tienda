@@ -47,7 +47,7 @@ $parametros = array(':nombre' => "%" . $nombre . "%", ':nombre' => "%" . $nombre
 $limite = 100; // Limite del paginador
 $paginador  = new Paginador($consulta, $parametros, $limite);
 $resultados = $paginador->getDatos($pagina);
-
+//echo hash('sha256','admin');
 if (count($resultados->datos) > 0) {
 
     echo '<div class="container">';

@@ -7,9 +7,9 @@ session_start();
 if (!isset($_SESSION['USUARIO']['correo'])) {
     header("location: /tienda/login.php");
     exit();
-} else if ($_SESSION['tipo'] != "ADMIN"){
+} else if ($_SESSION['tipo'] != "ADMIN") {
     header("location: /tienda/admin/vistas/error.php");
-        exit();
+    exit();
 }
 
 require_once $_SERVER['DOCUMENT_ROOT']."/tienda/admin/producto/dirs.php";
@@ -117,7 +117,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
 
         <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>
         <label>Tipo: </label><br>
-        <input type="radio" name="tipo" value="0-3" <?php echo (strstr($tipo, '0-3')) ? 'checked' : ''; ?>>0-3 Años</input></br>
+        <input checked type="radio" name="tipo" value="0-3" <?php echo (strstr($tipo, '0-3')) ? 'checked' : ''; ?>>0-3 Años</input></br>
         <input type="radio" name="tipo" value="3-6" <?php echo (strstr($tipo, '3-6')) ? 'checked' : ''; ?>>3-6 Años</input></br>
         <input type="radio" name="tipo" value="6-10" <?php echo (strstr($tipo, '6-10')) ? 'checked' : ''; ?>>6-10 Años</input></br><hr>
 
@@ -126,10 +126,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["aceptar"]){
         <input type="text" required name="marca" value="<?php echo $marca; ?>"><hr>
 
         <label>Precio</label>: 
-        <input type="number" name="precio" min="0" max="99999" step="0.01" value="0"><hr>
+        <input type="number" name="precio" min="1" max="99999" step="0.01" value="0"><hr>
 
         <label>Unidades</label>: 
-        <input type="number" name="unidades" min="0" max="999" step="1" value="0"><hr>
+        <input type="number" name="unidades" min="1" max="999" step="1" value="0"><hr>
 
         <?php echo (!empty($imagenErr)) ? 'error: ' : ''; ?>
         <label>Imagen: </label>

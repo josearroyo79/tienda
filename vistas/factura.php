@@ -1,18 +1,78 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tienda/admin/dirs.php";
-require_once CONTROLLER_PATH . "ControladorProducto.php";
-require_once UTILITY_PATH . "funciones.php";
-require_once CONTROLLER_PATH . "Paginador.php";
-require_once VIEW_PATH . "cabecera.php";
 
+// Lo que necesitamos
+require_once $_SERVER['DOCUMENT_ROOT']."/tienda/dirs.php";
+require_once CONTROLLER_PATH . "ControladorAcceso.php";
+require_once UTILITY_PATH . "funciones.php";
+//require_once VIEW_PATH . "../cabecera.php";
 session_start();
+if (isset($_SESSION['ventas']) & $_SESSION['carrito']) {
+  $arreglo = $_SESSION['ventas'] & $_SESSION['carrito'];
+}
+// Solo entramos si somos el usuario y hay items
+/*if ((!isset($_SESSION['USUARIO']['email']) || $_SESSION['carrito'] != 0)) {
+    header("location: /tienda/admin/vistas/error.php");
+    exit();
+}*/
+
+//Vaciamos las sesiones que utilizamos en la compra una vez que se ha terminado todo el tramite del carrito
+if (isset($_POST['finalizar'])) {
+alerta("Gracias por confiar y realizar su compra con nosotros");
+$_SESSION['carrito']=[];
+$_SESSION['ventas']=[];
+redir("/tienda/index.php");
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Factura</title>
+  </head>
+  <body class="centro">
+    <header class="clearfix">
+      <div id="company">
+        <h2 class="name">Jugueteria</h2>
+        <div>Calle Jerusalen nº14 s/n</div>
+        <div>+34 60585369</div>
+        <div><a href="mailto:juguete@factura.com">juguete@factura.com</a></div>
+      </div>
+      </div>
+    </header>
+    <main>
+      <div id="details" class="clearfix">
+        <div id="client">
+                    <h3 class="pull-right">Numero de pedido: <?php
+                $fecha2 = new DateTime;
+                echo $fecha2->format('Ydm'). $_SESSION['id']++; 
+            ?></h3>
+        </div>
+        <div id="invoice">
+        <strong>Facturado a:</strong><br>
+        <h3 class="pull-right">Numero de pedido: <?php echo $_SESSION['ventas']['idVenta']; ?></h3>
+            <?php echo $fila[3]; ?><br> 
+            <?php echo $_SESSION['correo']; ?><br>
+            <?php echo $_SESSION['direccion']; ?><br>
+            <strong>Método de pago:</strong><br>
+            Tarjeta de crédito/debito: ****************<br>
+            <strong>Fecha de compra:</strong><br>
+            <?php
+                $fecha2 = new DateTime;
+                echo $fecha2->format('d/m/Y'); 
+            ?>
+        </div>
+      </div>
+      <hr>
+
+
+      <?php
 
 if (isset($_SESSION['carrito'])) {
     $arreglo = $_SESSION['carrito'];
 ?>
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-10 col-md-offset-1">
+        <div>
+            <div>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -36,11 +96,9 @@ if (isset($_SESSION['carrito'])) {
                                     $precio = $fila[4];
                                     $unidades = $fila[5];
                                     $imagen = $fila[6];
-
-                                   
                                     $total=$fila[7]*$fila[4];
                                     $total_compra +=  $total;
-                                    echo '<a class="thumbnail pull-left"> <img class="media-object" src="/tienda/admin/producto/imagen_producto/'.$imagen.'" style="width: 72px; height: 72px;"/> </a>';
+                                    echo '<a class="thumbnail pull-left" href="#"> <img class="media-object" src="/tienda/admin/producto/imagen_producto/'.$imagen.'" style="width: 72px; height: 72px;"/> </a>';
                                     echo '<div class="media-body">';
                                     echo '<h4 class="media-heading">' . $nombre . '</h4>';
                                     echo '<h5 class="media-heading"> Marca: ' . $marca . '</h5>';
@@ -48,7 +106,7 @@ if (isset($_SESSION['carrito'])) {
                                     echo '</div>';
                                     echo '</td>';
                                     echo '<td class="col-sm-1 col-md-1" style="text-align: center">';
-                                    echo  $fila[7];
+                                    echo '<input disabled type="number" class="form-control" value="' . $fila[7] .'">';
                                     echo '</td>';
                                     echo '<td class="col-sm-1 col-md-1 text-center"><strong>' . $precio . '€</strong></td>';
                                     echo '<td class="col-sm-1 col-md-1 text-center"><strong>'.$total.'€</strong></td>';
@@ -67,36 +125,18 @@ if (isset($_SESSION['carrito'])) {
                                     <h3><strong><?php echo $total_compra ?>€</strong></h3>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>   </td>
-                                <td>   </td>
-                                <td>   </td>
-                                <td>
-                                    <a href="/tienda/index.php" type="button" class="btn btn-default">
-                                        <span class="glyphicon glyphicon-shopping-cart"></span> Continuar comprando
-                                    </a></td>
-                                <td>
-                                    <a href="/tienda/vistas/resumen.php" type="button" class="btn btn-success">
-                                        Pagar <span class="glyphicon glyphicon-play"></span>
-                                    </a></td>
-                            </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 <?php
-} else {
-    ?>
-    <style>
-    .no_carrito{
-        margin-left:30%;
-        width: 500px;
-    }
-    </style>
-    <h3 align="center">El carrito está vacío, llénelo.</h3></br>
-    <img class="no_carrito" src="/tienda/admin/imagenes/no_carrito.png" alt="Carrito vacío :(">
-    <?php
 }
 
 ?>
+   <?php
+            echo "<a href='/tienda/utilidades/descargar.php?opcion=FACTURA&id=".encode($_SESSION['idVenta']). " ' target='_blank' class='btn btn-primary'><span class='glyphicon glyphicon-download'></span>  PDF</a>";
+            ?>
+  
+        <h2>GRACIAS POR SU COMPRA</h2>
+</main>

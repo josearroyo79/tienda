@@ -5,6 +5,14 @@ require_once CONTROLLER_PATH."ControladorProducto.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
 
+session_start();
+if (!isset($_SESSION['USUARIO']['correo'])) {
+    header("location: /tienda/login.php");
+    exit();
+} else if ($_SESSION['tipo'] != "ADMIN") {
+    header("location: /tienda/admin/vistas/error.php");
+    exit();
+}
 
 $nombre = $tipo = $marca = $precio = $unidades = $imagen = "";
 $nombreErr = $tipoErr = $marcaErr = $precioErr = $unidadesErr = $imagenErr = "";
@@ -149,7 +157,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 
         <?php echo (!empty($tipoErr)) ? 'error: ' : ''; ?>
         <label>Tipo: </label><br>
-        <input type="radio" name="tipo" value="0-3" <?php echo (strstr($tipo, '0-3')) ? 'checked' : ''; ?>>0-3 Años</input></br>
+        <input checked type="radio" name="tipo" value="0-3" <?php echo (strstr($tipo, '0-3')) ? 'checked' : ''; ?>>0-3 Años</input></br>
         <input type="radio" name="tipo" value="3-6" <?php echo (strstr($tipo, '3-6')) ? 'checked' : ''; ?>>3-6 Años</input></br>
         <input type="radio" name="tipo" value="6-10" <?php echo (strstr($tipo, '6-10')) ? 'checked' : ''; ?>>6-10 Años</input></br><hr>
 

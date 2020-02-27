@@ -5,6 +5,15 @@ require_once CONTROLLER_PATH."ControladorProducto.php";
 require_once CONTROLLER_PATH."ControladorImagen.php";
 require_once UTILITY_PATH."funciones.php";
 
+session_start();
+if (!isset($_SESSION['USUARIO']['correo'])) {
+    header("location: /tienda/login.php");
+    exit();
+} else if ($_SESSION['tipo'] != "ADMIN") {
+    header("location: /tienda/admin/vistas/error.php");
+    exit();
+}
+
 // Obtenemos los datos del producto que nos vienen de la página anterior
 if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     // Cargamos el controlador de producto

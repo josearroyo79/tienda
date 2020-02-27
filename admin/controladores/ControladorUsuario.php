@@ -180,6 +180,17 @@ class ControladorUsuario {
     }
 
     public function actualizarPerfil($id, $nombre, $apellidos, $correo, $password, $telefono, $imagen){
+        $bd=ControladorBD::getControlador();
+        $bd->abrirBD();
+        $consulta="UPDATE usuarios SET nombre=:nombre, apellidos=:apellidos, correo=:correo, password=:password, telefono=:telefono, imagen=:imagen WHERE id=:id";
+        $parametros= array(':id' => $id, ':nombre'=>$nombre,':apellidos'=>$apellidos,':correo'=>$correo,':password'=>$password,':telefono'=>$telefono,':imagen'=>$imagen);
+        $estado= $bd-> actualizarBD($consulta,$parametros);
+        $bd->cerrarBD();
+        return $estado;
+    }
+
+
+   /* public function actualizarPerfil($id, $nombre, $apellidos, $correo, $password, $telefono, $imagen){
         $bd = ControladorBD::getControlador();
         $bd->abrirBD();
         $consulta = "UPDATE usuarios SET nombre=:nombre, apellidos=:apellidos, correo=:correo, password=:password, 
@@ -189,5 +200,5 @@ class ControladorUsuario {
         $estado = $bd->actualizarBD($consulta,$parametros);
         $bd->cerrarBD();
         return $estado;
-    }
+    }*/
 }
