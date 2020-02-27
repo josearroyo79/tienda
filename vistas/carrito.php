@@ -6,6 +6,10 @@ require_once CONTROLLER_PATH . "Paginador.php";
 require_once VIEW_PATH . "cabecera.php";
 
 session_start();
+if (!isset($_SESSION['USUARIO']['correo'])) {
+    header("location: /tienda/login.php");
+    exit();
+}
 
 if (isset($_SESSION['carrito'])) {
     $arreglo = $_SESSION['carrito'];
@@ -36,23 +40,26 @@ if (isset($_SESSION['carrito'])) {
                                     $precio = $fila[4];
                                     $unidades = $fila[5];
                                     $imagen = $fila[6];
-
                                    
                                     $total=$fila[7]*$fila[4];
                                     $total_compra +=  $total;
-                                    echo '<a class="thumbnail pull-left"> <img class="media-object" src="/tienda/admin/producto/imagen_producto/'.$imagen.'" style="width: 72px; height: 72px;"/> </a>';
+                                    echo '<a class="thumbnail pull-left" href="#"> <img class="media-object" src="/tienda/admin/producto/imagen_producto/'.$imagen.'" style="width: 72px; height: 72px;"/> </a>';
                                     echo '<div class="media-body">';
                                     echo '<h4 class="media-heading">' . $nombre . '</h4>';
                                     echo '<h5 class="media-heading"> Marca: ' . $marca . '</h5>';
+                                    echo '<span>Stock: </span><strong>'.$unidades.'</strong>';
                                     echo "</div>";
                                     echo '</div>';
                                     echo '</td>';
                                     echo '<td class="col-sm-1 col-md-1" style="text-align: center">';
-                                    echo  $fila[7];
+                                    echo '<input disabled type="number" class="form-control" value="' . $fila[7] .'">';
                                     echo '</td>';
                                     echo '<td class="col-sm-1 col-md-1 text-center"><strong>' . $precio . '€</strong></td>';
                                     echo '<td class="col-sm-1 col-md-1 text-center"><strong>'.$total.'€</strong></td>';
                                     echo '<td class="col-sm-1 col-md-1">';
+                                    echo '<a href="/tienda/vistas/borrar_carrito.php?id=' . encode($id) . '" type="button" class="btn btn-danger">';
+                                    echo '<span class="glyphicon glyphicon-remove"></span> Borrar producto';
+                                    echo '</a></td>';
                                     echo '</tr>';
                                 }
                                 ?>
